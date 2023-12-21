@@ -1,0 +1,13 @@
+
+# IDE
+/nbproject/
+.idea/*
+
+# Project
+.sass-cache
+assets/dist/
+node_modules/
+
+_RESSOURCES/
+
+.git.zip
