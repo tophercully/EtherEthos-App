@@ -1,89 +1,172 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/sre6srl.css" />
+    <meta name="description" content="" />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://use.typekit.net/sre6srl.css">
-  <meta name="description" content="">
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon.png" />
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#fafafa" />
+  </head>
 
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#fafafa">
-</head>
-
-<body>
-
-  <!-- Add your site or application content here -->
-  <header class="header">
-    <div class="header__container">
-      <div class="header__brand">
-        <div class="header__logo">
-          <img src="img/EtherEthos.png" alt="logo">
+  <body>
+    <!-- Add your site or application content here -->
+    <header class="header">
+      <div class="header__container">
+        <div class="header__brand">
+          <div class="header__logo-container">
+            <img class="header__logo" src="img/EtherEthos.png" alt="logo" />
+          </div>
+          <div class="header__title-container">
+            <h1 class="header__title">EtherEthos</h1>
+          </div>
         </div>
-        <div class="header__title-container">
-          <h1 class="header__title">EtherEthos</h1>
+        <div class="header__navigation">
+          <a href="#" class="header__navigation-link">FAQ</a>
+          <div class="header__wallet-container">
+            <button class="header__wallet-button">
+              <span class="header__wallet-button-text">CONNECT</span
+              ><img
+                src="./svg/wallet.svg"
+                alt="Wallet logo"
+                class="header__wallet-icon"
+              />
+            </button>
+          </div>
         </div>
       </div>
-      <div class="header__navigation">
-        <div class="header__link-container">
-          <a href="#" class="header__navigation-link">F.A.Q.</a>
-        </div>
-        <div class="header__wallet-container">
-          <button class="header__wallet-button">CONNECT</button>
-        </div>
-      </div>
+    </header>
 
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="hero__container">
-      <div class="hero__info">
-        <h2 class="hero__title">Decentralized Profiles</h2>
-        <p class="hero__subtitle">Embodying Ethereum’s Spirit</p>
-      </div>
-      <div class="hero__text-container">
-        <p class="hero__text">EtherEthos is a free, decentralized, fully composable profile primitive. It allows any Ethereum address to store and manage its own data, and it allows both smart-contracts and web apps to incorporate this data into their applications. There is no API and no dependencies besides Ethereum. EtherEthos supports account delegation via delegate.xyz and via smart contract ownership.</p>
-        <p class="hero__notes">**Note that user submitted data is not verified for accuracy or honesty. Data from on-chain will be formatted like <code>this</code></p>
-      </div>
-    </div>
-    <div class="hero__search-container">
-      <div class="hero__search">
-        <h3. class="hero__search-title">Search for an account</h3>
-        <input type="text" class="hero__search-input" placeholder="Account address">
-        <button class="hero__search-button">Search</button>
-      </div>
-    </div>
-  </section>
-
-  <main class="main">
-    <section class="tags">
-      <div class="tags__container">
-        <div class="tags__info">
-          <h3 class="tags__title">Tags</h3>
-          <p class="tags__subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
+    <section class="hero">
+      <div class="hero__container container">
+        <div class="hero__info">
+          <h2 class="hero__title">Decentralized Profiles</h2>
+          <p class="hero__subtitle">Embodying Ethereum’s Spirit</p>
         </div>
-        <ul class="tags__tags-list">
-          <li class="tags__item"><p class="tags__name">Station3 Patron</p></li>
-          <li class="tags__item"><p class="tags__name">Genartclub</p></li>
-        </ul>
+        <div class="hero__text-container">
+          <p class="hero__text text">
+            EtherEthos is a free, decentralized, fully composable profile
+            primitive. It allows any Ethereum address to store and manage its
+            own data, and it allows both smart-contracts and web apps to
+            incorporate this data into their applications. There is no API and
+            no dependencies besides Ethereum. EtherEthos supports account
+            delegation via delegate.xyz and via smart contract ownership.
+          </p>
+          <p class="hero__notes note">
+            **Note that user submitted data is not verified for accuracy or
+            honesty. Data from on-chain will be formatted like <code>this</code>
+          </p>
+        </div>
+      </div>
+      <div class="hero__search-container">
+        <div class="hero__search">
+          <p class="hero__search-title title-3">Search for an account</p>
+          <div class="hero__search-input-container">
+            <input
+              type="text"
+              class="hero__search-input"
+              placeholder="Account address"
+            />
+            <button class="hero__search-button">Search</button>
+          </div>
+        </div>
       </div>
     </section>
-  </main>
 
-
-
-</body>
-<script src="js/app.js"></script>
+    <main data-main class="main view">
+      <section data-module class="tags module">
+        <div class="module__container container module-view">
+          <div class="module__info">
+            <h3 class="module__title title">Tags</h3>
+            <p class="module__subtitle subtitle">
+              These are user-submitted keywords / tags to denote interests or
+              roles.
+            </p>
+          </div>
+          <ul class="module__basic-list tag-list">
+            <li class="module__basic-item tag-item">
+              <code data-tag class="module__item-name">Station3 Patron</code>
+            </li>
+            <li class="module__basic-item tag-item">
+              <code data-tag class="module__item-name">Genartclub</code>
+            </li>
+          </ul>
+        </div>
+        <div class="module__container container module-edit">
+          <div class="module__info">
+            <h3 class="module__title title">Tags (edit mode)</h3>
+            <p class="module__subtitle subtitle">
+              These are user-submitted keywords / tags to denote interests or
+              roles.
+            </p>
+          </div>
+          <ul class="module__basic-list tag-list">
+            <li class="module__basic-item tag-item">
+              <input
+                placeholder="Edit Text Here"
+                type="text"
+                class="module__item-input"
+              />
+              <button data-write class="module__edit-button">
+                <img
+                  src="./svg/write.svg"
+                  alt="Wallet logo"
+                  class="module__edit-icon"
+                /></button
+              ><button data-delete class="module__edit-button">
+                <img
+                  src="./svg/delete.svg"
+                  alt="Wallet logo"
+                  class="module__edit-icon"
+                />
+              </button>
+            </li>
+            <li class="module__basic-item tag-item">
+              <input
+                placeholder="Edit Text Here"
+                type="text"
+                class="module__item-input"
+              />
+              <button data-write class="module__edit-button">
+                <img
+                  src="./svg/write.svg"
+                  alt="Wallet logo"
+                  class="module__edit-icon"
+                /></button
+              ><button data-delete class="module__edit-button">
+                <img
+                  src="./svg/delete.svg"
+                  alt="Wallet logo"
+                  class="module__edit-icon"
+                />
+              </button>
+            </li>
+          </ul>
+          <div class="module__edit-add-container">
+            <button data-add class="module__edit-add-button">
+              <img
+                src="./svg/add.svg"
+                alt="Wallet logo"
+                class="module__edit-add-icon"
+              />
+              Add a new tag
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+  <script src="js/app.js"></script>
 </html>
