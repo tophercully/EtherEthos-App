@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/output.css" />
+    <link rel="stylesheet" href="css/style.css" /> 
+
     <link rel="stylesheet" href="https://use.typekit.net/sre6srl.css" />
     <meta name="description" content="" />
 
@@ -12,10 +14,10 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.png" />
+    
 
     <link rel="manifest" href="site.webmanifest" />
     <meta name="theme-color" content="#fafafa" />
@@ -23,40 +25,32 @@
 
   <body>
     <!-- Add your site or application content here -->
-    <header class="header">
-      <div class="header__container">
-        <div class="header__brand">
-          <div class="header__logo-container">
-            <img class="header__logo" src="img/EtherEthos.png" alt="logo" />
-          </div>
-          <div class="header__title-container">
-            <h1 class="header__title">EtherEthos</h1>
-          </div>
-        </div>
-        <div class="header__navigation">
-          <a href="#" class="header__navigation-link">FAQ</a>
-          <div class="header__wallet-container">
-            <button class="header__wallet-button">
-              <span class="header__wallet-button-text">CONNECT</span
-              ><img
-                src="./svg/wallet.svg"
-                alt="Wallet logo"
-                class="header__wallet-icon"
-              />
-            </button>
-          </div>
+    <header class="header border-b-2 border-main ">
+      <div class="container flex justify-between  h-16 sm:h-16 md:h-16 lg:h-24">
+        <div class="flex items-center">
+          <a class="h-full" href="/">
+            <img class="w-full h-full object-cover" src="img/EtherEthos.png" alt="logo" />
+          </a>
+          <h1 class="ml-4 text-3xl font-bold">EtherEthos</h1>
+        </div> 
+        <div class="flex items-center h-full">
+          <a href="#" class="mr-4 ml-4 underline">FAQ</a>
+          <button class="rounded-none h-full p-3">
+            <span class="h-full absolute lg:relative hidden lg:block">CONNECT</span>
+            <img src="./svg/wallet.svg" alt="Wallet logo"  class="w-full h-full" />
+          </button>
         </div>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero__container container">
-        <div class="hero__info">
-          <h2 class="hero__title">Decentralized Profiles</h2>
-          <p class="hero__subtitle">Embodying Ethereum’s Spirit</p>
+    <section class="hero pb-8 border-b border-main">
+      <div class="hero__container container p-4">
+        <div class="hero__info mt-4">
+          <h2 class="hero__title leading-tight">Decentralized Profiles</h2>
+          <p class="hero__subtitle text-lg font-bold">Embodying Ethereum’s Spirit</p>
         </div>
-        <div class="hero__text-container">
-          <p class="hero__text text">
+        <div class="hero__text-container mt-4">
+          <p class="hero__text text mb-4">
             EtherEthos is a free, decentralized, fully composable profile
             primitive. It allows any Ethereum address to store and manage its
             own data, and it allows both smart-contracts and web apps to
@@ -70,24 +64,24 @@
           </p>
         </div>
       </div>
-      <div class="hero__search-container">
+      <div class="hero__search-container p-4">
         <div class="hero__search">
-          <p class="hero__search-title title-3">Search for an account</p>
-          <div class="hero__search-input-container">
+          <p class="hero__search-title title-3 mb-3">Search for an account</p>
+          <div class="hero__search-input-container flex flex-col">
             <input
               type="text"
-              class="hero__search-input"
+              class="rounded-3xl border border-main border-solid py-2 px-5"
               placeholder="Account address"
             />
-            <button class="hero__search-button button">Search</button>
+            <button class="hero__search-button button mt-4">Search</button>
           </div>
         </div>
       </div>
     </section>
 
     <main data-main class="main view">
-      <section data-module class="tags module">
-        <div class="module__container container module-view">
+      <section data-module class="tags module ">
+        <div class="module__container container module-view p-4">
           <div class="module__info">
             <h3 class="module__title title">Tags</h3>
             <p class="module__subtitle subtitle">
@@ -104,7 +98,7 @@
             </li>
           </ul>
         </div>
-        <div class="module__container container module-edit">
+        <div class="module__container container module-edit p-4">
           <div class="module__info">
             <h3 class="module__title title">Tags (edit mode)</h3>
             <p class="module__subtitle subtitle">
