@@ -47,6 +47,10 @@ dd {
   margin: 0;
 }
 
+h1,h2,h3,h4,h5,h6 {
+  line-height: 1.25;
+}
+
 /* Set core body defaults */
 html {
   scroll-behavior: smooth;
@@ -116,14 +120,14 @@ select {
   cursor: pointer;
 }
 
-button {
+/* button {
   background-color: #364659;
   border: 0px;
   color: #fffcf9;
   border-radius: 50px;
   padding: 0.75em 1.5em;
   font-size: 14px;
-}
+} */
 
 button.add {
   font-size: 14px;
@@ -215,6 +219,7 @@ h3,
 p {
   font-size: 16px;
   font-weight: 400;
+  line-height: 1.25;
 }
 
 code {
@@ -229,6 +234,8 @@ code {
   font-weight: 400;
   color: #364659;
 }
+
+
 
 /* input {
   border-radius: 5px;

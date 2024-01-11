@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html class="no-js" lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link rel="stylesheet" href="css/output.css" />
-    <link rel="stylesheet" href="css/style.css" /> 
+    <link rel="stylesheet" href="css/style.css" />
 
     <link rel="stylesheet" href="https://use.typekit.net/sre6srl.css" />
     <meta name="description" content="" />
@@ -17,80 +17,67 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="icon.png" />
-    
 
     <link rel="manifest" href="site.webmanifest" />
     <meta name="theme-color" content="#fafafa" />
   </head>
 
-  <body>
+  <body class="bg-secondary">
     <!-- Add your site or application content here -->
-    <header class="header border-b-2 border-main ">
-      <div class="container flex justify-between  h-16 sm:h-16 md:h-16 lg:h-24">
+    <header class="header border-b-2 border-main">
+      <div class="flex h-16 justify-between sm:h-16 md:h-16 lg:h-24">
         <div class="flex items-center">
           <a class="h-full" href="/">
-            <img class="w-full h-full object-cover" src="img/EtherEthos.png" alt="logo" />
+            <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
           </a>
           <h1 class="ml-4 text-3xl font-bold">EtherEthos</h1>
-        </div> 
-        <div class="flex items-center h-full">
-          <a href="#" class="mr-4 ml-4 underline">FAQ</a>
-          <button class="rounded-none h-full p-3">
-            <span class="h-full absolute lg:relative hidden lg:block">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo"  class="w-full h-full" />
+        </div>
+        <div class="flex h-full items-center">
+          <a href="#" class="ml-4 mr-4 underline">FAQ</a>
+          <button class="h-full rounded-none bg-main p-3">
+            <span class="absolute hidden h-full lg:relative lg:block">CONNECT</span>
+            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full" />
           </button>
         </div>
       </div>
     </header>
 
-    <section class="hero pb-8 border-b border-main">
-      <div class="hero__container container p-4">
-        <div class="hero__info mt-4">
-          <h2 class="hero__title leading-tight">Decentralized Profiles</h2>
-          <p class="hero__subtitle text-lg font-bold">Embodying Ethereum’s Spirit</p>
+    <section class="relative border-b border-main p-4 pb-8 md:p-8 md:pb-12">
+      <div class="">
+        <div class="mt-4">
+          <h2>Decentralized Profiles</h2>
+          <p class="text-lg font-bold">Embodying Ethereum’s Spirit</p>
         </div>
-        <div class="hero__text-container mt-4">
-          <p class="hero__text text mb-4">
-            EtherEthos is a free, decentralized, fully composable profile
-            primitive. It allows any Ethereum address to store and manage its
-            own data, and it allows both smart-contracts and web apps to
-            incorporate this data into their applications. There is no API and
-            no dependencies besides Ethereum. EtherEthos supports account
-            delegation via delegate.xyz and via smart contract ownership.
-          </p>
-          <p class="hero__notes note">
-            **Note that user submitted data is not verified for accuracy or
-            honesty. Data from on-chain will be formatted like <code>this</code>
+        <div class="mt-4">
+          <p class="text mb-4">EtherEthos is a free, decentralized, fully composable profile primitive. It allows any Ethereum address to store and manage its own data, and it allows both smart-contracts and web apps to incorporate this data into their applications. There is no API and no dependencies besides Ethereum. EtherEthos supports account delegation via delegate.xyz and via smart contract ownership.</p>
+          <p class="note">
+            **Note that user submitted data is not verified for accuracy or honesty. Data from on-chain will be formatted like
+            <code>this</code>
           </p>
         </div>
       </div>
-      <div class="hero__search-container p-4">
-        <div class="hero__search">
-          <p class="hero__search-title title-3 mb-3">Search for an account</p>
-          <div class="hero__search-input-container flex flex-col">
-            <input
-              type="text"
-              class="rounded-3xl border border-main border-solid py-2 px-5"
-              placeholder="Account address"
-            />
-            <button class="hero__search-button button mt-4">Search</button>
-          </div>
+      <div class="mb-10 mt-5">
+        <p class="title-3 mb-3">Search for an account</p>
+        <div class="flex flex-col">
+          <input data-search-input type="text" class="rounded-3xl border border-solid border-main px-5 py-2" placeholder="Account address" />
+          <button data-search-submit class="mt-4 rounded-full bg-main px-5 py-2 text-lg font-bold text-secondary">Search</button>
         </div>
+      </div>
+      <div class="absolute bottom-0">
+        <button data-toggle-view class="rounded-t-md bg-main px-4 py-1 text-secondary">view</button>
+        <button data-toggle-edit class="rounded-t-md bg-orange px-4 py-1 text-main">edit</button>
       </div>
     </section>
 
-    <main data-main class="main view">
-      <section data-module class="tags module ">
-        <div class="module__container container module-view p-4">
+    <main data-main class="main view relative p-4 md:p-8">
+      <section data-module class="tags module">
+        <div data-module-view class="module__container module-view">
           <div class="module__info">
             <h3 class="module__title title">Tags</h3>
-            <p class="module__subtitle subtitle">
-              These are user-submitted keywords / tags to denote interests or
-              roles.
-            </p>
+            <p class="module__subtitle subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
-          <ul class="module__basic-list tag-list">
-            <li class="module__basic-item tag-item">
+          <ul class="module__basic-list tag-list mt-4 flex">
+            <li class="module__basic-item tag-item mr-2">
               <code data-tag class="module__item-name">Station3 Patron</code>
             </li>
             <li class="module__basic-item tag-item">
@@ -98,63 +85,32 @@
             </li>
           </ul>
         </div>
-        <div class="module__container container module-edit p-4">
+        <div data-module-edit class="module__container module-edit hidden">
           <div class="module__info">
             <h3 class="module__title title">Tags (edit mode)</h3>
-            <p class="module__subtitle subtitle">
-              These are user-submitted keywords / tags to denote interests or
-              roles.
-            </p>
+            <p class="module__subtitle subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
-          <ul class="module__basic-list tag-list">
-            <li class="module__basic-item tag-item">
-              <input
-                placeholder="Edit Text Here"
-                type="text"
-                class="module__item-input"
-              />
-              <button data-write class="module__edit-button">
-                <img
-                  src="./svg/write.svg"
-                  alt="Wallet logo"
-                  class="module__edit-icon"
-                /></button
-              ><button data-delete class="module__edit-button">
-                <img
-                  src="./svg/delete.svg"
-                  alt="Wallet logo"
-                  class="module__edit-icon"
-                />
+          <ul class="module__basic-list tag-list mt-4 flex flex-col">
+            <li class="module__basic-item tag-item my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+              <input placeholder="Edit Text Here" type="text" class="module__item-input mr-4 max-h-10 rounded-md border border-main px-6 py-3 text-sm" />
+              <button data-write class="module__edit-button mx-2 h-7 w-7 rounded-full bg-main p-0">
+                <img src="./svg/write.svg" alt="Wallet logo" class="module__edit-icon m-auto h-3/5 w-3/5 object-contain" /></button
+              ><button data-delete class="module__edit-button mx-2 h-7 w-7 rounded-full bg-main p-0">
+                <img src="./svg/delete.svg" alt="Wallet logo" class="module__edit-icon m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
-            <li class="module__basic-item tag-item">
-              <input
-                placeholder="Edit Text Here"
-                type="text"
-                class="module__item-input"
-              />
-              <button data-write class="module__edit-button">
-                <img
-                  src="./svg/write.svg"
-                  alt="Wallet logo"
-                  class="module__edit-icon"
-                /></button
-              ><button data-delete class="module__edit-button">
-                <img
-                  src="./svg/delete.svg"
-                  alt="Wallet logo"
-                  class="module__edit-icon"
-                />
+            <li class="module__basic-item tag-item my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+              <input placeholder="Edit Text Here" type="text" class="module__item-input mr-4 max-h-10 rounded-md border border-main px-6 py-3 text-sm" />
+              <button data-write class="module__edit-button mx-2 h-7 w-7 rounded-full bg-main p-0">
+                <img src="./svg/write.svg" alt="Wallet logo" class="module__edit-icon m-auto h-3/5 w-3/5 object-contain" /></button
+              ><button data-delete class="module__edit-button mx-2 h-7 w-7 rounded-full bg-main p-0">
+                <img src="./svg/delete.svg" alt="Wallet logo" class="module__edit-icon m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
           </ul>
           <div class="module__edit-add-container">
-            <button data-add class="module__edit-add-button add">
-              <img
-                src="./svg/add.svg"
-                alt="Wallet logo"
-                class="module__edit-add-icon"
-              />
+            <button data-add class="module__edit-add-button mt-4 flex w-full items-center bg-secondary p-0 text-sm font-bold text-main">
+              <img src="./svg/add.svg" alt="Wallet logo" class="module__edit-add-icon mr-3 h-6 w-6 object-contain" />
               Add a new tag
             </button>
           </div>
