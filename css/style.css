@@ -264,3 +264,55 @@ input::placeholder {
   opacity: 0.5;
   font-size: 14px;
 } */
+
+/* media queries for desktop */
+
+@media only screen and (min-width: 1024px) {
+  h1,
+  .title-1 {
+    font-size: 40px;
+  }
+
+  h2,
+  .title-2 {
+    font-size: 42px;
+  }
+
+  h3,
+  .title-3 {
+    font-size: 32px;
+  }
+
+  h4,
+  .title-4 {
+    font-size: 28px;
+  }
+
+  h5,
+  .title-5 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  code {
+    font-size: 20px;
+  }
+
+  .note {
+    font-size: 18px;
+  }
+
+  input,
+  text-area,
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 20px;
+  }
+
+  /* input {
+    font-size: 16px;
+  } */
+}

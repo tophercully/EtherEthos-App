@@ -13,8 +13,8 @@ if (window.location.href.includes("edit")) {
   toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
 
   for (let i = 0; i < module_view_arr.length; i++) {
-    toggleClasses(module_view_arr[i], ["hidden"], []);
-    toggleClasses(module_edit_arr[i], [], ["hidden"]);
+    toggleClasses(module_view_arr[i], ["hidden", "lg:hidden"], []);
+    toggleClasses(module_edit_arr[i], [], ["hidden", "lg:hidden"]);
   }
 }
 
@@ -30,8 +30,8 @@ edit_btn.addEventListener("click", () => {
   toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
 
   for (let i = 0; i < module_view_arr.length; i++) {
-    toggleClasses(module_view_arr[i], ["hidden"], []);
-    toggleClasses(module_edit_arr[i], [], ["hidden"]);
+    toggleClasses(module_view_arr[i], ["hidden", "lg:hidden"], []);
+    toggleClasses(module_edit_arr[i], [], ["hidden", "lg:hidden"]);
   }
 });
 
@@ -41,8 +41,8 @@ view_btn.addEventListener("click", () => {
   toggleClasses(view_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
 
   for (let i = 0; i < module_edit_arr.length; i++) {
-    toggleClasses(module_edit_arr[i], ["hidden"], []);
-    toggleClasses(module_view_arr[i], [], ["hidden"]);
+    toggleClasses(module_edit_arr[i], ["hidden", "lg:hidden"], []);
+    toggleClasses(module_view_arr[i], [], ["hidden", "lg:hidden"]);
   }
 });
 
