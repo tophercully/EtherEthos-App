@@ -22,19 +22,18 @@
     <meta name="theme-color" content="#fafafa" />
   </head>
 
-  <body class="bg-secondary text-base lg:text-xl">
+  <body class="m-auto max-w-[1690px] items-center bg-secondary text-base lg:text-xl">
     <!-- Add your site or application content here -->
-    <header class="header border-b-2 border-main">
+    <header class="header w-full border-b-2 border-main">
       <div class="flex h-16 justify-between sm:h-16 md:h-16 lg:h-20">
-        <div class="flex items-center">
-          <a class="h-full" href="/">
-            <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
-          </a>
+        <a class="flex h-full items-center transition-all hover:opacity-80" href="/">
+          <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
+
           <h1 class="ml-4 text-3xl font-bold lg:ml-10 lg:text-4xl">EtherEthos</h1>
-        </div>
+        </a>
         <div class="flex h-full items-center">
-          <a href="#" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          <button class="h-full rounded-none bg-main p-3 lg:px-12 lg:py-1">
+          <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
+          <button class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1">
             <span class="absolute hidden h-full text-[22px] font-bold text-secondary lg:relative lg:flex lg:items-center">CONNECT</span>
             <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full lg:hidden" />
           </button>
@@ -42,7 +41,7 @@
       </div>
     </header>
 
-    <section class="relative border-b border-main p-4 pb-8 md:p-8 md:pb-12 lg:flex lg:h-[75vh] lg:flex-col lg:justify-between lg:p-24 lg:pb-40">
+    <section class="relative border-b border-main p-4 pb-8 md:p-8 md:pb-12 lg:flex lg:h-[75vh] lg:max-h-[650px] lg:flex-col lg:justify-between lg:p-24 lg:pb-40">
       <div>
         <div class="mt-4 lg:flex lg:items-baseline">
           <h2>Decentralized Profiles</h2>
@@ -59,13 +58,13 @@
       <div class="mb-10 mt-5 lg:mb-0">
         <p class="title-3 mb-3">Search for an account</p>
         <div class="flex flex-col lg:flex-row lg:items-center">
-          <input data-search-input type="text" class="rounded-3xl rounded-full border border-solid border-main px-5 py-2 lg:h-12 lg:w-2/3 lg:max-w-[650px]" placeholder="Account address" />
-          <button data-search-submit class="mt-4 rounded-full bg-main px-5 py-2 text-lg font-bold text-secondary lg:ml-5 lg:mt-0 lg:h-12 lg:px-10 lg:text-[24px]">Search</button>
+          <input data-search-input type="text" class="rounded-3xl rounded-full border border-solid border-main px-5 py-2 lg:h-12 lg:w-2/3 lg:max-w-[1050px]" placeholder="Account address" />
+          <button data-search-submit class="mt-4 rounded-full bg-main px-5 py-2 text-lg font-bold text-secondary transition-all hover:opacity-80 lg:ml-5 lg:mt-0 lg:h-12 lg:px-10 lg:text-[24px]">Search</button>
         </div>
       </div>
       <div class="absolute bottom-0">
-        <button data-toggle-view class="rounded-t-md bg-main px-4 py-1 text-secondary lg:mr-3 lg:text-[22px] lg:font-medium">View</button>
-        <button data-toggle-edit class="rounded-t-md bg-orange px-4 py-1 text-main lg:text-[22px] lg:font-medium">Edit</button>
+        <button data-toggle-view class="rounded-t-md bg-main px-4 py-1 text-secondary transition-all hover:opacity-80 lg:mr-3 lg:text-[22px] lg:font-medium">View</button>
+        <button data-toggle-edit class="rounded-t-md bg-orange px-4 py-1 text-main transition-all hover:opacity-80 lg:text-[22px] lg:font-medium">Edit</button>
       </div>
     </section>
 
@@ -144,7 +143,7 @@
       <section data-module="basic">
         <div data-module-view class="module-view">
           <h3 class="mb-4">Basic Data</h3>
-          <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
+          <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
             <div class="grid md:grid-rows-[5fr,4fr]">
               <img class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
 
@@ -183,37 +182,41 @@
         </div>
         <div data-module-edit class="module-edit hidden">
           <h3 class="mb-4">Basic Data</h3>
-          <div class="basic-data module mb-4 grid border border-main md:grid-cols-2">
-            <div class="grid">
+          <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
+            <div class="grid md:grid-rows-[5fr,4fr]">
               <img class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
-                <div class="flex w-full items-center justify-between text-base font-bold">
-                  <p class="text-sm">PFP TokenID :</p>
-                  <input data-pfp-id placeholder="PFP Token ID" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
-                  <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                  ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                  </button>
+                <div class="flex w-full flex-col items-start justify-between text-base font-bold">
+                  <p class="text-base font-bold lg:mb-4 lg:text-xl">PFP TokenID :</p>
+                  <div>
+                    <input data-pfp-id placeholder="PFP Token ID" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
+                    <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
+                    ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
+                    </button>
+                  </div>
                 </div>
-                <div class="flex w-full items-center justify-between text-base font-bold">
-                  <p class="text-sm">PFP contract :</p>
-                  <input data-pfp-address placeholder="PFP contract address" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
-                  <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                  ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                  </button>
+                <div class="flex w-full flex-col items-start justify-between text-base font-bold">
+                  <p class="ml-2 text-sm font-bold lg:ml-0 lg:text-xl">PFP contract :</p>
+                  <div>
+                    <input data-pfp-address placeholder="PFP contract address" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
+                    <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
+                    ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="grid">
-              <div class="border-t p-4 md:border-t-0">
-                <div class="mb-6">
-                  <h5 class="mb-2">Alias:</h5>
+            <div class="grid md:grid-rows-[5fr,4fr]">
+              <div class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
+                <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
+                  <h5 class="mb-2 lg:mb-0">Alias:</h5>
                   <div class="flex items-center">
-                    <input data-alias placeholder="Modify alias" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
+                    <input data-alias placeholder="Modify alias" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
                     <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                     ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -221,7 +224,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2">Detail:</h5>
                   <div class="flex flex-wrap items-center">
                     <textarea data-description placeholder="Add a short detail or description about the account here" class="mr-1 h-32 w-full rounded-md border border-main px-3 py-3 text-sm"></textarea>
@@ -235,33 +238,41 @@
                   </div>
                 </div>
               </div>
-              <div class="border-t p-4">
-                <div class="mb-6">
+              <div class="border-t p-4 lg:p-10">
+                <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Social:</h5>
-                  <input data-social placeholder="Modify Social URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
-                  <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                  ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                  </button>
+                  <div class="lg:flex lg:items-center">
+                    <input data-social placeholder="Modify Social URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+
+                    <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
+                    ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
+                    </button>
+                  </div>
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Website:</h5>
-                  <input data-website placeholder="Modify your website URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
-                  <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                  ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                  </button>
+                  <div class="lg:flex lg:items-center">
+                    <input data-website placeholder="Modify your website URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+
+                    <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
+                    ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
+                    </button>
+                  </div>
                 </div>
-                <div class="mb-6">
+                <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Gallery:</h5>
-                  <input data-gallery placeholder="Modify gallery URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
-                  <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                  ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
-                    <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                  </button>
+                  <div class="lg:flex lg:items-center">
+                    <input data-gallery placeholder="Modify gallery URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+                    <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
+                    ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -294,7 +305,7 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Station3 Patron" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Station3 Patron" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -302,7 +313,7 @@
               </button>
             </li>
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Genartclub" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Genartclub" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -333,8 +344,14 @@
               <a href="#">
                 <code data-granter class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
               </a>
-              <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-              <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+              <div class="ml-4 flex">
+                <a href="#" class="mr-2 lg:mr-4">
+                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                </a>
+                <a href="#">
+                  <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -345,9 +362,9 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Badge name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Badge name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
-              <input placeholder="Receiving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Receiving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -391,9 +408,9 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
-              <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -401,9 +418,9 @@
               </button>
             </li>
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
-              <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -433,8 +450,14 @@
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-link class="mr-2 h-9">Jbarbeau Ledger</code> from
               <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-              <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-              <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+              <div class="ml-4 flex">
+                <a href="#" class="mr-2 lg:mr-4">
+                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                </a>
+                <a href="#">
+                  <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                </a>
+              </div>
             </li>
           </ul>
         </div>
@@ -445,9 +468,9 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Account name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Account name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
-              <input placeholder="Giving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Giving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -472,7 +495,7 @@
             <h3 class="title">Respected accounts</h3>
             <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to an EtherEthos record.</p>
           </div>
-          <div class="my-4 grid grid-cols-1 gap-4">
+          <div class="my-4 grid grid-cols-1 gap-4 lg:my-8 lg:grid-cols-2">
             <!-- Account is respected by...-->
             <div>
               <h4>Jbarbeau.art is respected by these accounts</h4>
@@ -480,14 +503,26 @@
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
                   <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-                  <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-                  <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+                  <div class="ml-4 flex">
+                    <a href="#" class="mr-2 lg:mr-4">
+                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                    </a>
+                    <a href="#">
+                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                    </a>
+                  </div>
                 </li>
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-link class="mr-2 h-9">256ART (Alias)</code> :
                   <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-                  <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-                  <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+                  <div class="ml-4 flex">
+                    <a href="#" class="mr-2 lg:mr-4">
+                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                    </a>
+                    <a href="#">
+                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                    </a>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -498,14 +533,26 @@
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
                   <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-                  <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-                  <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+                  <div class="ml-4 flex">
+                    <a href="#" class="mr-2 lg:mr-4">
+                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                    </a>
+                    <a href="#">
+                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                    </a>
+                  </div>
                 </li>
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-link class="mr-2 h-9">256ART (Alias)</code> :
                   <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-                  <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-                  <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+                  <div class="ml-4 flex">
+                    <a href="#" class="mr-2 lg:mr-4">
+                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                    </a>
+                    <a href="#">
+                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                    </a>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -519,7 +566,9 @@
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
-              <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+              <a href="#" class="underline">
+                <code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
+              </a>
               <button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
               </button>
@@ -532,7 +581,7 @@
               </button>
             </li>
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Respected account adress" type="text" class="max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Respected account adress" type="text" class="max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -559,15 +608,21 @@
             <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account’s prior note..</p>
           </div>
           <ul class="mt-4 flex flex-col">
-            <li class="mb-2 flex flex-col items-start">
+            <li class="mb-2 flex flex-col items-start lg:flex-row">
               <div class="mb-4 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                 <code data-link class="mr-2 h-9">Version 2.0 is looking great!</code>
               </div>
               <div class="flex items-center">
                 from
                 <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
-                <a href="#"><img class="mr-2 h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" /></a>
-                <a href="#"><img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" /></a>
+                <div class="ml-4 flex">
+                  <a href="#" class="mr-2 lg:mr-4">
+                    <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                  </a>
+                  <a href="#">
+                    <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
+                  </a>
+                </div>
               </div>
             </li>
           </ul>
@@ -579,9 +634,9 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Note text here" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Note text here" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
-              <input placeholder="Respected account ETH adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Respected account ETH adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -619,7 +674,7 @@
           </div>
           <ul data-module-fieldset class="mt-4 flex flex-col">
             <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <input placeholder="Custom Field text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm" />
+              <input placeholder="Custom Field text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
               ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
