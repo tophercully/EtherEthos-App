@@ -1,5 +1,5 @@
 {
-  "name": " ",
+  "name": "EtherEthos",
   "version": "0.0.1",
   "description": "",
   "private": true,
@@ -16,9 +16,14 @@
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "html-webpack-plugin": "^5.5.3",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.9.0"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.1"
   }
 }
