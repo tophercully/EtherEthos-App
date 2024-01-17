@@ -4,7 +4,18 @@ To start the project locally you need to install the dev depencies for the proje
 
 ```
 npm install
+```
+
+To start the dev environment
+
+```
 npm run start
+```
+
+For build command
+
+```
+npm run build
 ```
 
 Please ensure that Tailwind CSS is installed as a depency in the package.json file.
