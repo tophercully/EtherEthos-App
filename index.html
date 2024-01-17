@@ -33,7 +33,7 @@
         </a>
         <div class="flex h-full items-center">
           <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          <button class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1">
+          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1">
             <span class="absolute hidden h-full text-[22px] font-bold text-secondary lg:relative lg:flex lg:items-center">CONNECT</span>
             <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full lg:hidden" />
           </button>
@@ -77,15 +77,15 @@
               <div class="flex flex-col lg:flex-row lg:items-baseline">
                 <h2>EtherEthos of <span data-account-name>jbarbeau.eth</span></h2>
                 <div class="my-1 flex lg:ml-6">
-                  <div data-composable class="mr-2 flex h-4 w-4 flex-col lg:mr-4">
-                    <img data-composable-true class="h-full w-full object-contain" src="./svg/composable.svg" alt="composable" />
-                    <img data-composable-false class="hidden h-full w-full object-contain" src="./svg/not-composable.svg" alt="composable" />
+                  <div data-view-section="composable" class="mr-2 flex h-4 w-4 flex-col lg:mr-4">
+                    <img data-composable="true" class="h-full w-full object-contain" src="./svg/composable.svg" alt="composable" />
+                    <img data-composable="false" class="hidden h-full w-full object-contain" src="./svg/not-composable.svg" alt="composable" />
                   </div>
-                  <div data-blocked class="mr-2 flex h-4 w-4 lg:mr-4">
-                    <img data-blocked-true class="h-full w-full object-contain" src="./svg/blocked.svg" alt="blocked" />
+                  <div data-view-section="blocked" data-blocked class="mr-2 flex h-4 w-4 lg:mr-4">
+                    <img data-content="blocked" class="h-full w-full object-contain" src="./svg/blocked.svg" alt="blocked" />
                   </div>
-                  <div data-mod class="mr-2 flex h-4 w-4 lg:mr-4">
-                    <img data-mode-true class="h-full w-full object-contain" src="./svg/moderator.svg" alt="moderator" />
+                  <div data-view-section="moderator" data-mod class="mr-2 flex h-4 w-4 lg:mr-4">
+                    <img data-content="moderator" class="h-full w-full object-contain" src="./svg/moderator.svg" alt="moderator" />
                   </div>
                 </div>
               </div>
@@ -93,9 +93,9 @@
                 <p class="mt-4 lg:max-w-2xl">** If the account is blocked or has set its composable value to false, only empty strings / 0 values are returned for all other queries.</p>
               </div>
             </div>
-            <div class="my-8 flex flex-col items-center lg:my-0 lg:justify-center">
+            <div data-view-section="verification" class="my-8 flex flex-col items-center lg:my-0 lg:justify-center">
               <p class="mb-1 font-bold lg:mb-3 lg:text-2xl">User verification</p>
-              <code>This is jbarbeau.art wallet</code>
+              <code data-content="verification">This is jbarbeau.art wallet</code>
             </div>
           </div>
         </div>
@@ -105,15 +105,15 @@
               <div class="flex flex-col">
                 <h2>EtherEthos of <span data-account-name>jbarbeau.eth</span></h2>
                 <div class="my-1 flex items-center">
-                  <div data-composable class="mr-2 flex h-4 w-4 flex-col">
-                    <img data-composable-true class="h-full w-full object-contain" src="./svg/composable.svg" alt="composable" />
-                    <img data-composable-false class="hidden h-full w-full object-contain" src="./svg/not-composable.svg" alt="composable" />
+                  <div data-edit-fieldset="composable" class="mr-2 flex h-4 w-4 flex-col">
+                    <img data-edit-composable="true" class="h-full w-full object-contain" src="./svg/composable.svg" alt="composable" />
+                    <img data-edit-composable="false" class="hidden h-full w-full object-contain" src="./svg/not-composable.svg" alt="composable" />
                   </div>
-                  <div data-blocked class="mr-2 flex h-4 w-4">
-                    <img data-blocked-true class="h-full w-full object-contain" src="./svg/blocked.svg" alt="blocked" />
+                  <div data-view-section="blocked" data-blocked class="mr-2 flex h-4 w-4 lg:mr-4">
+                    <img data-content="blocked" class="h-full w-full object-contain" src="./svg/blocked.svg" alt="blocked" />
                   </div>
-                  <div data-mod class="mr-2 flex h-4 w-4">
-                    <img data-mode-true class="h-full w-full object-contain" src="./svg/moderator.svg" alt="moderator" />
+                  <div data-view-section="moderator" data-mod class="mr-2 flex h-4 w-4 lg:mr-4">
+                    <img data-content="moderator" class="h-full w-full object-contain" src="./svg/moderator.svg" alt="moderator" />
                   </div>
                   <button data-composable-toggle class="rounded bg-main px-3 py-1 text-secondary">Disable Composability</button>
                 </div>
@@ -124,8 +124,8 @@
             </div>
             <div class="my-8 flex flex-col items-center lg:my-0 lg:justify-center">
               <p class="mb-1 font-bold lg:mb-3 lg:text-2xl">User verification</p>
-              <div data-module-edit-field>
-                <input data-field placeholder="User verification text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-64" />
+              <div class="flex items-center">
+                <input data-edit-field placeholder="User verification text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-64" />
                 <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                   <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                 ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -144,37 +144,37 @@
         <div data-module-view class="module-view">
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
-            <div class="grid md:grid-rows-[5fr,4fr]">
-              <img class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
+            <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
+              <img data-content="image" class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
 
               <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
-                <p class="text-base font-bold lg:text-xl">PFP TokenID : <code class="ml-2 font-normal">#172</code></p>
-                <a target="_blank" href="#" class="flex w-fit items-center text-base font-bold underline lg:text-xl">PFP Contract <img class="ml-2 h-5 w-5 lg:h-7 lg:w-7" src="./svg/external.svg" alt="" /></a>
+                <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">#172</code></p>
+                <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold underline lg:text-xl">PFP Contract <img class="ml-2 h-5 w-5 lg:h-7 lg:w-7" src="./svg/external.svg" alt="" /></a>
               </div>
             </div>
             <div class="grid md:grid-rows-[5fr,4fr]">
-              <div class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
+              <div data-view-section="personal" class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Alias:</h5>
-                  <code class="w-fit">Jbarbeau.art</code>
+                  <code data-content="alias" class="w-fit">Jbarbeau.art</code>
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Detail:</h5>
-                  <code class="w-fit">Jonathan Barbeau (b. 1989, Montreal) is an international artist making generative art since 2017. He develops custom systems and algorithms for creating visually striking art, blending logic and chaos. His work is exhibited and collected globally.</code>
+                  <code data-content="detail" class="w-fit">Jonathan Barbeau (b. 1989, Montreal) is an international artist making generative art since 2017. He develops custom systems and algorithms for creating visually striking art, blending logic and chaos. His work is exhibited and collected globally.</code>
                 </div>
               </div>
-              <div class="border-t p-4 lg:p-10">
+              <div data-view-section="links" class="border-t p-4 lg:p-10">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Social:</h5>
-                  <a target="_blank" href="https://twitter.com/JBarbeau_Art"><code class="underline">https://twitter.com/JBarbeau_Art</code></a>
+                  <a data-content="social" target="_blank" href="https://twitter.com/JBarbeau_Art"><code class="underline">https://twitter.com/JBarbeau_Art</code></a>
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Website:</h5>
-                  <a target="_blank" href="https://jbarbeau.art"><code class="underline">https://jbarbeau.art</code></a>
+                  <a data-content="website" target="_blank" href="https://jbarbeau.art"><code class="underline">https://jbarbeau.art</code></a>
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Gallery:</h5>
-                  <a target="_blank" href="https://deca.art/Jbarbeau-art/jeu-de-ligne"><code class="underline">https://deca.art/Jbarbeau-art/jeu-de-ligne</code></a>
+                  <a data-content="gallery" target="_blank" href="https://deca.art/Jbarbeau-art/jeu-de-ligne"><code class="underline">https://deca.art/Jbarbeau-art/jeu-de-ligne</code></a>
                 </div>
               </div>
             </div>
@@ -183,14 +183,14 @@
         <div data-module-edit class="module-edit hidden">
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
-            <div class="grid md:grid-rows-[5fr,4fr]">
-              <img class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
+            <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
+              <img data-edit-image class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
                   <p class="text-base font-bold lg:mb-4 lg:text-xl">PFP TokenID :</p>
-                  <div>
-                    <input data-pfp-id placeholder="PFP Token ID" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
+                  <div class="flex items-center">
+                    <input data-edit-field="pfp-id" data-pfp-id data-edit-field placeholder="PFP Token ID" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
                     <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                     ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
@@ -201,7 +201,7 @@
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
                   <p class="ml-2 text-sm font-bold lg:ml-0 lg:text-xl">PFP contract :</p>
                   <div>
-                    <input data-pfp-address placeholder="PFP contract address" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
+                    <input data-edit-field="pfp-address" data-pfp-address data-edit-field placeholder="PFP contract address" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm font-normal" />
                     <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                     ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
@@ -212,11 +212,11 @@
               </div>
             </div>
             <div class="grid md:grid-rows-[5fr,4fr]">
-              <div class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
+              <div data-edit-section="personal" class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Alias:</h5>
                   <div class="flex items-center">
-                    <input data-alias placeholder="Modify alias" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+                    <input data-edit-field="alias" data-alias placeholder="Modify alias" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
                     <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                     ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -227,7 +227,7 @@
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2">Detail:</h5>
                   <div class="flex flex-wrap items-center">
-                    <textarea data-description placeholder="Add a short detail or description about the account here" class="mr-1 h-32 w-full rounded-md border border-main px-3 py-3 text-sm"></textarea>
+                    <textarea data-edit-field="detail" placeholder="Add a short detail or description about the account here" class="mr-1 h-32 w-full rounded-md border border-main px-3 py-3 text-sm"></textarea>
                     <div class="mt-4">
                       <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                         <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -238,11 +238,11 @@
                   </div>
                 </div>
               </div>
-              <div class="border-t p-4 lg:p-10">
+              <div data-edit-section="links" class="border-t p-4 lg:p-10">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Social:</h5>
                   <div class="lg:flex lg:items-center">
-                    <input data-social placeholder="Modify Social URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+                    <input data-edit-field="social" data-social placeholder="Modify Social URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
 
                     <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -254,7 +254,7 @@
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Website:</h5>
                   <div class="lg:flex lg:items-center">
-                    <input data-website placeholder="Modify your website URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+                    <input data-edit-field="website" placeholder="Modify your website URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
 
                     <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -266,7 +266,7 @@
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr] lg:items-center">
                   <h5 class="mb-2">Gallery:</h5>
                   <div class="lg:flex lg:items-center">
-                    <input data-gallery placeholder="Modify gallery URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
+                    <input data-edit-field="gallery" placeholder="Modify gallery URL here" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/2" />
                     <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                       <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
                     ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
@@ -289,12 +289,12 @@
             <h3 class="title">Tags</h3>
             <p class="subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
-          <ul class="mt-4 flex">
+          <ul data-content-list class="mt-4 flex">
             <li class="tag-item mr-2">
-              <code data-tag class="h-9">Station3 Patron</code>
+              <code data-content class="h-9">Station3 Patron</code>
             </li>
             <li class="tag-item">
-              <code data-tag class="h-9">Genartclub</code>
+              <code data-content class="h-9">Genartclub</code>
             </li>
           </ul>
         </div>
@@ -303,8 +303,8 @@
             <h3 class="title">Tags (edit mode)</h3>
             <p class="subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Station3 Patron" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -312,7 +312,7 @@
                 <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Genartclub" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -338,17 +338,17 @@
             <h3 class="title">Badges granted to Jbarbeau.art</h3>
             <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
           </div>
-          <ul class="mt-4 flex flex-col">
+          <ul data-content-list class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-badge class="mr-2 h-9">Station3 Patron</code> from
-              <a href="#">
-                <code data-granter class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
+              <code data-content-text class="mr-2 h-9">Station3 Patron</code> from
+              <a data-content-link href="#">
+                <code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
               </a>
               <div class="ml-4 flex">
-                <a href="#" class="mr-2 lg:mr-4">
+                <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                   <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                 </a>
-                <a href="#">
+                <a data-content-etherethos href="#">
                   <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                 </a>
               </div>
@@ -360,8 +360,8 @@
             <h3 class="title">Grant Badge</h3>
             <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Badge name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
               <input placeholder="Receiving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
@@ -390,14 +390,14 @@
             <h3 class="title">Additional Links</h3>
             <p class="subtitle">These are links that will be added to you EtherEthos profile.</p>
           </div>
-          <ul class="mt-4 flex flex-col">
+          <ul data-content-list class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-link class="mr-2 h-9">Genartclub Website</code> :
-              <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">https://www.genartclub.com</code></a>
+              <code data-content-text class="mr-2 h-9">Genartclub Website</code> :
+              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">https://www.genartclub.com</code></a>
             </li>
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-link class="mr-2 h-9">rc.xyz Profile</code> :
-              <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">https://rc.xyz/jbarbeau</code></a>
+              <code data-content-text class="mr-2 h-9">rc.xyz Profile</code> :
+              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">https://rc.xyz/jbarbeau</code></a>
             </li>
           </ul>
         </div>
@@ -406,8 +406,8 @@
             <h3 class="title">Additional Links</h3>
             <p class="subtitle">These are links that will be added to you EtherEthos profile.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
               <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
@@ -417,7 +417,7 @@
                 <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Link name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
               <input placeholder="Link value" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
@@ -446,15 +446,15 @@
             <h3 class="title">Associated Accounts</h3>
             <p class="subtitle">Note that the detail displayed beside each address was submitted by the currently displayed account - it is not the address’ alias.</p>
           </div>
-          <ul class="mt-4 flex flex-col">
+          <ul data-content-list class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-link class="mr-2 h-9">Jbarbeau Ledger</code> from
-              <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+              <code data-content-text class="mr-2 h-9">Jbarbeau Ledger</code> from
+              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
               <div class="ml-4 flex">
-                <a href="#" class="mr-2 lg:mr-4">
+                <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                   <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                 </a>
-                <a href="#">
+                <a data-content-etherethos href="#">
                   <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                 </a>
               </div>
@@ -466,8 +466,8 @@
             <h3 class="title">Associated Accounts</h3>
             <p class="subtitle">Note that the detail displayed beside each address was submitted by the currently displayed account - it is not the address’ alias.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Account name" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
               <input placeholder="Giving ETH Adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
@@ -499,24 +499,24 @@
             <!-- Account is respected by...-->
             <div>
               <h4>Jbarbeau.art is respected by these accounts</h4>
-              <ul class="mt-4 flex flex-col">
+              <ul data-content-list="receiving" class="mt-4 flex flex-col">
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
-                  <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+                  <code data-content-text class="mr-2 h-9">MonkMatto (Alias)</code> :
+                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
                   <div class="ml-4 flex">
-                    <a href="#" class="mr-2 lg:mr-4">
+                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                       <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                     </a>
-                    <a href="#">
+                    <a data-content-etherethos href="#">
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>
                 </li>
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-link class="mr-2 h-9">256ART (Alias)</code> :
-                  <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+                  <code data-content-text class="mr-2 h-9">256ART (Alias)</code> :
+                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
                   <div class="ml-4 flex">
-                    <a href="#" class="mr-2 lg:mr-4">
+                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                       <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                     </a>
                     <a href="#">
@@ -529,27 +529,27 @@
             <!-- Account respect these...-->
             <div>
               <h4>Jbarbeau.art respect these accounts</h4>
-              <ul class="mt-4 flex flex-col">
+              <ul data-content-list="giving" class="mt-4 flex flex-col">
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
-                  <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+                  <code data-content-text class="mr-2 h-9">MonkMatto (Alias)</code> :
+                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
                   <div class="ml-4 flex">
-                    <a href="#" class="mr-2 lg:mr-4">
+                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                       <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                     </a>
-                    <a href="#">
+                    <a data-content-etherethos href="#">
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>
                 </li>
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-link class="mr-2 h-9">256ART (Alias)</code> :
-                  <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+                  <code data-content-text class="mr-2 h-9">256ART (Alias)</code> :
+                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
                   <div class="ml-4 flex">
-                    <a href="#" class="mr-2 lg:mr-4">
+                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                       <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                     </a>
-                    <a href="#">
+                    <a data-content-etherethos href="#">
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>
@@ -563,24 +563,24 @@
             <h3 class="title">Edit respected accounts</h3>
             <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to an EtherEthos record.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-link class="mr-2 h-9">MonkMatto (Alias)</code> :
+              <code data-content-text class="mr-2 h-9">MonkMatto (Alias)</code> :
               <a href="#" class="underline">
-                <code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
+                <code data-content-link class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code>
               </a>
               <button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-link class="mr-2 h-9">256ART (Alias)</code> :
-              <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+              <code data-content-text class="mr-2 h-9">256ART (Alias)</code> :
+              <a href="#" class="underline"><code data-content-link class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
               <button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
               </button>
             </li>
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Respected account adress" type="text" class="max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
@@ -607,19 +607,19 @@
             <h3 class="title">Notes From Respected Accounts</h3>
             <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account’s prior note..</p>
           </div>
-          <ul class="mt-4 flex flex-col">
+          <ul data-content-list class="mt-4 flex flex-col">
             <li class="mb-2 flex flex-col items-start lg:flex-row">
               <div class="mb-4 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                <code data-link class="mr-2 h-9">Version 2.0 is looking great!</code>
+                <code data-content-text class="mr-2 h-9">Version 2.0 is looking great!</code>
               </div>
               <div class="flex items-center">
                 from
-                <a href="#" class="underline"><code data-link-url class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
+                <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">0x1234…123123</code></a>
                 <div class="ml-4 flex">
-                  <a href="#" class="mr-2 lg:mr-4">
+                  <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                     <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                   </a>
-                  <a href="#">
+                  <a data-content-etherethos href="#">
                     <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                   </a>
                 </div>
@@ -632,8 +632,8 @@
             <h3 class="title">Send Notes</h3>
             <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account’s prior note.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Note text here" type="text" class="max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <span class="mx-2">:</span>
               <input placeholder="Respected account ETH adress" type="text" class="mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
@@ -661,9 +661,9 @@
             <h3 class="title">Custom Fields</h3>
             <p class="subtitle">This field is intented for any customized use by a community or developer.</p>
           </div>
-          <ul class="mt-4 flex">
+          <ul data-content-list class="mt-4 flex">
             <li class="tag-item mr-2">
-              <code data-tag class="h-9">Testing custom data</code>
+              <code data-content-text class="h-9">Testing custom data</code>
             </li>
           </ul>
         </div>
@@ -672,8 +672,8 @@
             <h3 class="title">Custom Fields</h3>
             <p class="subtitle">This field is intented for any customized use by a community or developer.</p>
           </div>
-          <ul data-module-fieldset class="mt-4 flex flex-col">
-            <li data-module-edit-field class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-edit-fieldset class="mt-4 flex flex-col">
+            <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
               <input placeholder="Custom Field text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3" />
               <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
                 <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button

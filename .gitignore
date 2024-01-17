@@ -4,11 +4,7 @@
 .idea/*
 
 # Project
-.sass-cache
-assets/dist/
 node_modules/
 dist/
-
-_RESSOURCES/
 
 .git.zip
