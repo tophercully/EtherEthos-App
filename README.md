@@ -87,3 +87,14 @@ const badge_view = badge_elem.querySelector('[data-module-view]');
 ```
 
 That way it will only target the view layout of that particular module.
+
+## Included Javascript Scripts
+
+Right now there is an app.js file that is linked to the project. For now this file only toggles between the view mode and the edit mode.
+
+There is also a basic function that add a field when you click on the add field button
+`data-add-field`.
+
+That's about it and it is mostly to ensure a sandbox approach to how you want to make the bridge between the front-end and EtherScan.
+
+You can modify this if you want.
