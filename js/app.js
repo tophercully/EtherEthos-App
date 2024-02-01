@@ -5,6 +5,39 @@ const view_btn = document.querySelector("[data-toggle-view]");
 
 const module_view_arr = document.querySelectorAll("[data-module-view]");
 const module_edit_arr = document.querySelectorAll("[data-module-edit]");
+
+const searchInput = document.querySelector("[data-search-input]");
+const searchButton = document.querySelector("[data-search-submit]");
+const mainContent = document.querySelector("[data-main]");
+
+// Function to validate Ethereum address
+function isValidEthereumAddress(address) {
+  return /^(0x)?[0-9a-fA-F]{40}$/.test(address);
+}
+
+// Function to toggle visibility based on Ethereum address validity
+function toggleVisibilityBasedOnAddress(isValid) {
+  const method = isValid ? "remove" : "add";
+  mainContent.classList[method]("hidden");
+  edit_btn.classList[method]("hidden");
+  view_btn.classList[method]("hidden");
+}
+
+// Attach event listener to search button for Ethereum address validation and feedback
+if (searchButton) {
+  searchButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the form from submitting
+    const isValid = isValidEthereumAddress(searchInput.value);
+    if (isValid) {
+      toggleVisibilityBasedOnAddress(true);
+    } else {
+      // Notify the user if the Ethereum address is invalid
+      alert("Please enter a valid Ethereum address, 0x...");
+      toggleVisibilityBasedOnAddress(false);
+    }
+  });
+}
+
 if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
   // if edit mode is in the url then toggle edit mode
   if (window.location.href.includes("edit")) {
