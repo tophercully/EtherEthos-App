@@ -54,7 +54,7 @@ function handleAccountsChanged(accounts) {
     } else if (accounts[0] !== currentAccount) {
         currentAccount = accounts[0];
         console.log("Account connected:", currentAccount);
-        connectButtonText.textContent = `${currentAccount.slice(0,6)} Connected`;
+        connectButtonText.textContent = `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}`;
     }
 }
 

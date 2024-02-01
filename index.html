@@ -50,7 +50,7 @@
         <div class="mt-4">
           <p class="text mb-4">EtherEthos is a free, decentralized, fully composable profile primitive. It allows any Ethereum address to store and manage its own data, and it allows both smart-contracts and web apps to incorporate this data into their applications. There is no API and no dependencies besides Ethereum. EtherEthos supports account delegation via delegate.xyz and via smart contract ownership.</p>
           <p class="note">
-            **Note that user submitted data is not verified for accuracy or honesty. Data from on-chain will be formatted like
+            **Note: user submitted data is not verified for accuracy or honesty. Data from on-chain will be formatted like
             <code>this</code>
           </p>
         </div>
@@ -68,7 +68,7 @@
       </div>
     </section>
 
-    <main data-main class="main view relative p-4 md:p-8 lg:px-24 hidden">
+    <main data-main class="main view relative p-4 md:p-8 lg:px-24 hidden">     
       <!-- PUBLIC DATA -->
       <section data-module="public">
         <div data-module-view class="module-view">
@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="mb-5">
-                <p class="mt-4 lg:max-w-2xl">** If the account is blocked or has set its composable value to false, only empty strings / 0 values are returned for all other queries.</p>
+                <p class="mt-4 lg:max-w-2xl" data-content-account-status>** If the account is blocked or has set its composable value to false, only empty strings / 0 values are returned for all queries.</p>
               </div>
             </div>
             <div data-view-section="verification" class="my-8 flex flex-col items-center lg:my-0 lg:justify-center">
@@ -335,7 +335,7 @@
       <section data-module="badges" class="badges module mb-8">
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
-            <h3 class="title">Badges granted to [account]</h3>
+            <h3 class="title">Badges granted to <span data-account-name>[account address]</span></h3>
             <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
           </div>
           <ul data-content-list class="mt-4 flex flex-col">
@@ -449,7 +449,7 @@
           <ul data-content-list class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-content-text class="mr-2 h-9">[account-description]</code> from
-              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[account]</code></a>
+              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[associated-account]</code></a>
               <div class="ml-4 flex">
                 <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
                   <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
@@ -498,7 +498,7 @@
           <div class="my-4 grid grid-cols-1 gap-4 lg:my-8 lg:grid-cols-2">
             <!-- Account is respected by...-->
             <div>
-              <h4>[account] is respected by these accounts</h4>
+              <h4><span data-account-name>[account address]</span> is respected by these accounts</h4>
               <ul data-content-list="receiving" class="mt-4 flex flex-col">
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-content-text class="mr-2 h-9">[respecting-alias]</code> :
@@ -528,7 +528,7 @@
             </div>
             <!-- Account respect these...-->
             <div>
-              <h4>[account] respects these accounts</h4>
+              <h4><span data-account-name>[account address]</span> respects these accounts</h4>
               <ul data-content-list="giving" class="mt-4 flex flex-col">
                 <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-content-text class="mr-2 h-9">[respects-alias]</code> :
