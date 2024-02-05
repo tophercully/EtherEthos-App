@@ -3,6 +3,10 @@ let composable, accountIsBlocked, moderator, verificationResponse, perms, compos
 var url_string = window.location.href;
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
+const currentUrl = new URL(window.location.href);
+const siteBase = currentUrl.origin + currentUrl.pathname;
+
+const nullAddress = "0x0000000000000000000000000000000000000000";
 
 //! Edit & view toggler
 
@@ -23,8 +27,14 @@ const accountComposableElementTrue = document.querySelector("[data-composable=tr
 const accountComposableElementFalse = document.querySelector("[data-composable=false]");
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
 const accountModeratorElement = document.querySelector("[data-view-section=moderator]");
-
 const accountVerificationElement = document.querySelector("[data-content=verification]");
+
+const basicData = document.querySelector("[data-module=basic]");
+const pfpImage = document.querySelector("[data-edit-image]");
+const pfpId = document.querySelector("[data-content=pfp-id]");
+const pfpContract = document.querySelector("[data-content=pfp-contract]");
+const pfpVerified = document.querySelector("[data-content=pfp-verification]");
+
 
 // Function to validate Ethereum address
 function isValidEthereumAddress(address) {
@@ -142,52 +152,142 @@ async function _queryContract(account) {
     console.log("Account Retrieved");
     if (composable) {
         console.log(eeArray);
-  
+        basicData.style.display = "block";
+
+        // PFP DATA
+        if (eeArray[0][6] != nullAddress) {
+          pfpContract.textContent = eeArray[0][6];
+          pfpContract.href = `${siteBase}?account=${eeArray[0][6]}`;
+          let tokenId = parseInt(eeArray[0][7]);
+          if (tokenId > -1 && tokenId == tokenId % 1) {
+            pfpId.textContent = tokenId;
+            const EE_NFTContract_Alchemy = new web3.eth.Contract(NFT_ABI, eeArray[0][6]);
+            let pfpOwner;
+            try {
+              pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            } catch (errorMessage) {
+              error = true;
+            }
+            if (!error && pfpOwner == account) {
+              pfpVerified.textContent = "✔️ PFP Ownership Verified";
+              // document.getElementById("pfp-verified").innerHTML = `(✔️ Ownership Verified)`;
+              console.log("PFP Ownership Verified");
+            } else {
+              pfpVerified.textContent = "✖️ PFP Ownership Not Verified";
+              // document.getElementById("pfp-verified").innerHTML = `(✖️ Ownership Not Verified)`;
+              console.log("PFP Ownership Not Verified");
+            }
+
+            try {
+              tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            } catch (errorMessage) {
+              error = true;
+            }
+            if (!error) {
+              console.log("TokenURI: ", tokenURI);
+
+              // Function to check the string and parse the image value
+              async function parseTokenURI(tokenURI) {
+                let imageData = "";
+
+                // Check if tokenURI is base64 JSON
+                if (tokenURI.startsWith("data:")) {
+                  const base64String = tokenURI.split(",")[1];
+                  const decodedJson = atob(base64String); // Decode base64
+                  const json = JSON.parse(decodedJson); // Parse JSON string
+                  imageData = json.image; // Access the image key
+                } else {
+                  // Assuming it's a web address, fetch the JSON data
+                  const response = await fetch(tokenURI);
+                  const json = await response.json();
+                  imageData = json.image; // Access the image key
+                }
+                return imageData;
+              }
+
+              parseTokenURI(tokenURI)
+                .then((imageData) => {
+                  console.log("Image Data:", imageData);
+                  const pfpcontainer = document.querySelector("#pfpContainer");
+                  if (!pfpcontainer) {
+                    console.error("Container not found");
+                    return;
+                  }
+                  if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
+                    pfpcontainer.innerHTML = imageData;
+                  } else if (imageData.startsWith('data:image')) {
+                    // For base64 images, use an <img> tag
+                    const img = document.createElement('img');
+                    img.src = imageData;
+                    pfpcontainer.innerHTML = ''; // Clear the container
+                    pfpcontainer.appendChild(img);
+                  } else if (imageData.startsWith('http')) {
+                    // For image URLs, use an <img> tag
+                    const img = document.createElement('img');
+                    img.src = imageData;
+                    pfpcontainer.innerHTML = ''; // Clear the container
+                    pfpcontainer.appendChild(img);
+                  } else {
+                    console.error('Unsupported image data format');
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error parsing tokenURI:", error);
+                });
+            } else {
+              // show a BLONKS placeholder
+            }
+          } else {
+            pfpId.textContent = "[nothing set]";
+          }
+        } else {
+          pfpContract.textContent = "[nothing set]";
+          pfpId.textContent = "[nothing set]";
+        }
 
 
 
+        
+        // document.getElementById("alias").innerHTML = `<code>${eeArray[0][0]}</code>`;
+        // document.getElementById("account-detail").innerHTML = `<code>${eeArray[0][1]}</code>`;
+        // document.getElementById("social").innerHTML = `<code><a href="${eeArray[0][2]}" target="_blank">${eeArray[0][2]}</a></code>`;
+        // document.getElementById("website").innerHTML = `<code><a href="${eeArray[0][3]}" target="_blank">${eeArray[0][3]}</a></code>`;
+        // document.getElementById("gallery").innerHTML = `<code><a href="${eeArray[0][4]}" target="_blank">${eeArray[0][4]}</a></code>`;
+        // if (0 <= eeArray[0][5] < 3) {
+        //   document.getElementById("link-priority").innerHTML = `<code>${eeArray[0][5]}</code>`;
+        // }
+        // if (eeArray[0][6] != "0x0000000000000000000000000000000000000000") {
+        //   document.getElementById("pfp-contract").innerHTML = `<code>${_etherEthos(eeArray[0][6])}</code>`;
+        //   document.getElementById("pfp-id").innerHTML = `<code>${eeArray[0][7]}</code>`;
 
-
-
-
-        //     document.getElementById("composable-status").innerHTML = `<code>${composable}</code>`;
-    //     document.getElementById("blocked-status").innerHTML = `<code>${accountIsBlocked}</code>`;
-    //     document.getElementById("moderator-status").innerHTML = `<code>${moderator}</code>`;
-
-    //     document.getElementById("account").innerHTML = `${account}`;
-    //     document.getElementById("verification-data").innerHTML = `<code>${verificationResponse}</code>`;
-    //     document.getElementById("public-data").style.display = "block";
-
-    //     document.getElementById("alias").innerHTML = `<code>${eeArray[0][0]}</code>`;
-    //     document.getElementById("account-detail").innerHTML = `<code>${eeArray[0][1]}</code>`;
-    //     document.getElementById("social").innerHTML = `<code><a href="${eeArray[0][2]}" target="_blank">${eeArray[0][2]}</a></code>`;
-    //     document.getElementById("website").innerHTML = `<code><a href="${eeArray[0][3]}" target="_blank">${eeArray[0][3]}</a></code>`;
-    //     document.getElementById("gallery").innerHTML = `<code><a href="${eeArray[0][4]}" target="_blank">${eeArray[0][4]}</a></code>`;
-    //     if (0 <= eeArray[0][5] < 3) {
-    //       document.getElementById("link-priority").innerHTML = `<code>${eeArray[0][5]}</code>`;
-    //     }
-    //     if (eeArray[0][6] != "0x0000000000000000000000000000000000000000") {
-    //       document.getElementById("pfp-contract").innerHTML = `<code>${_etherEthos(eeArray[0][6])}</code>`;
-    //       document.getElementById("pfp-id").innerHTML = `<code>${eeArray[0][7]}</code>`;
-
-    //       let pfpContract = new web3.eth.Contract(NFT_ABI, eeArray[0][6]);
-    //       let pfpOwner;
-    //       try {
-    //         pfpOwner = await pfpContract.methods.ownerOf(parseInt(eeArray[0][7])).call({}, function (err, res) {
-    //           if (err) {
-    //             console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-    //             return;
-    //           }
-    //         });
-    //       } catch (errorMessage) {
-    //         error = true;
-    //       }
-    //       if (pfpOwner == account) {
-    //         document.getElementById("pfp-verified").innerHTML = `(✔️ Ownership Verified)`;
-    //       } else {
-    //         document.getElementById("pfp-verified").innerHTML = `(✖️ Ownership Not Verified)`;
-    //       }
-    //     }
+        //   let pfpContract = new web3.eth.Contract(NFT_ABI, eeArray[0][6]);
+        //   let pfpOwner;
+        //   try {
+        //     pfpOwner = await pfpContract.methods.ownerOf(parseInt(eeArray[0][7])).call({}, function (err, res) {
+        //       if (err) {
+        //         console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+        //         return;
+        //       }
+        //     });
+        //   } catch (errorMessage) {
+        //     error = true;
+        //   }
+        //   if (!error && pfpOwner == account) {
+        //     document.getElementById("pfp-verified").innerHTML = `(✔️ Ownership Verified)`;
+        //   } else {
+        //     document.getElementById("pfp-verified").innerHTML = `(✖️ Ownership Not Verified)`;
+        //   }
+        // }
 
     //     let pfpImage = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="#222222" /><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-size="50">?</text></svg>`;
 

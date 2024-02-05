@@ -145,11 +145,12 @@
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
             <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-              <img data-content="image" class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
-
+              <div id="pfpContainer" class="md:border-r md:border-main"></div>
+              <!-- <img data-content="pfp-image" class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" /> -->
               <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
-                <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">#172</code></p>
-                <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold underline lg:text-xl">PFP Contract <img class="ml-2 h-5 w-5 lg:h-7 lg:w-7" src="./svg/external.svg" alt="" /></a>
+                <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
+                <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold underline lg:text-xl">[contract] <img class="ml-2 h-5 w-5 lg:h-7 lg:w-7" src="./svg/external.svg" alt="" /></a>
+                <p class="text-base font-bold lg:text-xl"data-content="pfp-verification"></p>
               </div>
             </div>
             <div class="grid md:grid-rows-[5fr,4fr]">
@@ -184,7 +185,8 @@
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-              <img data-edit-image class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" />
+              <!-- <img data-edit-image class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" /> -->
+              <div id="pfpContainer" class="md:border-r md:border-main"></div>
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
@@ -694,6 +696,7 @@
   </body>
   <script src="js/web3.min.js"></script>
   <script src="js/EE_ABI.js"></script>
+  <script src="js/NFT_ABI.js"></script>
   <script src="js/detect-provider.min.js"></script>
   <script src="js/handshake.js"></script>
   <script src="js/app.js"></script>
