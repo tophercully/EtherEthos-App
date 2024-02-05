@@ -19,6 +19,13 @@ const mainContent = document.querySelector("[data-main]");
 const accountNameElements = document.querySelectorAll("[data-account-name]");
 const accountStatusElement = document.querySelector("[data-content-account-status]");
 
+const accountComposableElementTrue = document.querySelector("[data-composable=true]");
+const accountComposableElementFalse = document.querySelector("[data-composable=false]");
+const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
+const accountModeratorElement = document.querySelector("[data-view-section=moderator]");
+
+const accountVerificationElement = document.querySelector("[data-content=verification]");
+
 // Function to validate Ethereum address
 function isValidEthereumAddress(address) {
   return address.match(hexPat);
@@ -26,10 +33,20 @@ function isValidEthereumAddress(address) {
 
 // Function to toggle visibility based on Ethereum address validity
 function toggleVisibilityBasedOnAddress(isValid) {
-  const method = isValid ? "remove" : "add";
-  mainContent.classList[method]("hidden");
-  edit_btn.classList[method]("hidden");
-  view_btn.classList[method]("hidden");
+  console.log("Toggling visibility based on address validity..." + isValid);
+    if (isValid) {
+      mainContent.classList.remove("hidden");
+      view_btn.classList.remove("hidden");
+      if (account == currentAccount) {
+        edit_btn.classList.remove("hidden");
+      } else {
+        if (!edit_btn.classList.contains("hidden")) {
+          edit_btn.classList.add("hidden");
+        }
+      }
+    } else {
+      mainContent.classList.add("hidden");
+    }
 }
 
 function abbreviateAndUpdate(account) {
@@ -78,6 +95,31 @@ async function _queryContract(account) {
     });
     ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
     console.log("Permissions retrieved: ", permissions);
+    let accountStatus = "";
+    if (composable) {
+      accountComposableElementTrue.style.display = "block";
+      accountComposableElementFalse.style.display = "hidden";
+      accountStatus += "Account is composable. ";
+    } else {
+      accountComposableElementTrue.style.display = "hidden";
+      accountComposableElementFalse.style.display = "block";
+      accountStatus += "Account is not composable (may not have set up an EtherEthos profile). ";
+    }
+    if (accountIsBlocked) {
+      accountBlockedElement.style.display = "block";
+      accountStatus += "Account is blocked! ";
+    }
+    if (moderator) {
+      accountModeratorElement.style.display = "block";
+      accountStatus += "Account is not a moderator.";
+    }
+    if (verificationResponse.length > 0) {
+      accountVerificationElement.textContent = verificationResponse;
+    } else {
+      accountVerificationElement.textContent = "[nothing set]";
+    }
+    console.log(accountStatus);
+    accountStatusElement.textContent = accountStatus;
   } catch (errorMessage) {
     error = true;
   }
@@ -100,9 +142,15 @@ async function _queryContract(account) {
     console.log("Account Retrieved");
     if (composable) {
         console.log(eeArray);
+  
 
 
-    //     document.getElementById("composable-status").innerHTML = `<code>${composable}</code>`;
+
+
+
+
+
+        //     document.getElementById("composable-status").innerHTML = `<code>${composable}</code>`;
     //     document.getElementById("blocked-status").innerHTML = `<code>${accountIsBlocked}</code>`;
     //     document.getElementById("moderator-status").innerHTML = `<code>${moderator}</code>`;
 
@@ -277,19 +325,8 @@ async function _queryContract(account) {
     //     document.getElementById("raw-data").innerHTML = raw_data;
     //     document.getElementById("data-legend").innerHTML = data_legend;
     //     document.getElementById("raw-data-display").style.display = "block";
-      } else if (accountIsBlocked) {
-        console.log("Account is blocked.");
-        accountStatusElement.textContent = "Account is blocked."
-        // document.getElementById("main-display").innerHTML = `<h3 style="text-align:center"><em>${account} is blocked.</h3>`;
-        // document.getElementById("main-display").style.display = "block";
-      } else {
-        console.log("Account has not set up an EtherEthos or has disabled composability.");
-        accountStatusElement.textContent = "Account has not set up an EtherEthos or has disabled composability.";
-        // document.getElementById("main-display").innerHTML = `<h3 style="text-align:center"><h3 style="text-align:center"><em>${account} has not set up an EtherEthos or has disabled composability. (${_etherscan(account)})</em></h3>`;
-        // document.getElementById("main-display").style.display = "block";
-      }
+    }
   }
-
   toggleVisibilityBasedOnAddress(true);
 }
 
