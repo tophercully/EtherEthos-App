@@ -167,15 +167,15 @@
               <div data-view-section="links" class="border-t p-4 lg:p-10">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Social:</h5>
-                  <a data-content="social" target="_blank" href="https://twitter.com/JBarbeau_Art"><code class="underline">[social]</code></a>
+                  <code class="underline"><a data-content="social" target="_blank" href=""></a></code>
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Website:</h5>
-                  <a data-content="website" target="_blank" href="https://jbarbeau.art"><code class="underline">[website]</code></a>
+                  <code class="underline"><a data-content="website" target="_blank" href=""></a></code>
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Gallery:</h5>
-                  <a data-content="gallery" target="_blank" href="https://deca.art/Jbarbeau-art/jeu-de-ligne"><code class="underline">[gallery]</code></a>
+                  <code class="underline"><a data-content="gallery" target="_blank" href=""></a></code>
                 </div>
               </div>
             </div>
@@ -280,6 +280,7 @@
             </div>
           </div>
         </div>
+        <br>
         <hr class="mb-4 mt-10" />
       </section>
 
@@ -291,13 +292,10 @@
             <h3 class="title">Tags</h3>
             <p class="subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
-          <ul data-content-list class="mt-4 flex">
-            <li class="tag-item mr-2">
+          <ul data-content-list data-content="tags" class="mt-4 flex">
+            <!-- <li class="tag-item mr-2">
               <code data-content class="h-9">[tag]</code>
-            </li>
-            <li class="tag-item">
-              <code data-content class="h-9">[tag]</code>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -330,6 +328,7 @@
             </button>
           </div>
         </div>
+        <br>
         <hr class="mb-4" />
       </section>
 
@@ -340,21 +339,22 @@
             <h3 class="title">Badges granted to <span data-account-name>[account address]</span></h3>
             <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
           </div>
-          <ul data-content-list class="mt-4 flex flex-col">
-            <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-content-list data-content="badges" class="mt-4 flex flex-col">
+
+            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-content-text class="mr-2 h-9">[badge]</code> from
               <a data-content-link href="#">
                 <code class="ml-2 mr-2 h-9 bg-blue underline">[badge-sender]</code>
               </a>
               <div class="ml-4 flex">
                 <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan logo" />
                 </a>
                 <a data-content-etherethos href="#">
                   <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                 </a>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -392,15 +392,12 @@
             <h3 class="title">Additional Links</h3>
             <!-- <p class="subtitle">These are links stored to the EtherEthos profile.</p> -->
           </div>
-          <ul data-content-list class="mt-4 flex flex-col">
-            <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-content-list data-content="links" class="mt-4 flex flex-col">
+            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-content-text class="mr-2 h-9">[link-detail]</code> :
-              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[link-name]</code></a>
-            </li>
-            <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-content-text class="mr-2 h-9">[link-detail]</code> :
-              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[link-name]</code></a>
-            </li>
+              <a data-content-link href="#" class="underline">
+                <code class="ml-2 mr-2 h-9 bg-blue underline">[link-name]</code></a>
+            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -448,8 +445,8 @@
             <h3 class="title">Associated Accounts</h3>
             <p class="subtitle">Note that the detail displayed beside each address was submitted by the currently displayed account - it is not the address’ alias.</p>
           </div>
-          <ul data-content-list class="mt-4 flex flex-col">
-            <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
+          <ul data-content-list data-content="associated" class="mt-4 flex flex-col">
+            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
               <code data-content-text class="mr-2 h-9">[account-description]</code> from
               <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[associated-account]</code></a>
               <div class="ml-4 flex">
@@ -460,7 +457,7 @@
                   <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                 </a>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -510,18 +507,6 @@
                       <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
                     </a>
                     <a data-content-etherethos href="#">
-                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                    </a>
-                  </div>
-                </li>
-                <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-content-text class="mr-2 h-9">[respecting-alias]</code> :
-                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respecting-account]</code></a>
-                  <div class="ml-4 flex">
-                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
-                    </a>
-                    <a href="#">
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>

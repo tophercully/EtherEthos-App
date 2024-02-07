@@ -35,6 +35,24 @@ const pfpId = document.querySelector("[data-content=pfp-id]");
 const pfpContract = document.querySelector("[data-content=pfp-contract]");
 const pfpVerified = document.querySelector("[data-content=pfp-verification]");
 
+const alias = document.querySelector("[data-content=alias]");
+const detail = document.querySelector("[data-content=detail]");
+
+const social = document.querySelector("[data-content=social]");
+const website = document.querySelector("[data-content=website]");
+const gallery = document.querySelector("[data-content=gallery]");
+
+const tagModule = document.querySelector("[data-module=tags]");
+const tagsContainer = document.querySelector("[data-content=tags]");
+
+const badgesModule = document.querySelector("[data-module=badges]");
+const badgesContainer = document.querySelector("[data-content=badges]");
+
+const linksModule = document.querySelector("[data-module=links]");
+const linksContainer = document.querySelector("[data-content=links]");
+
+const associatedModule = document.querySelector("[data-module=associated]");
+const associatedContainer = document.querySelector("[data-content=associated]");
 
 // Function to validate Ethereum address
 function isValidEthereumAddress(address) {
@@ -255,9 +273,199 @@ async function _queryContract(account) {
           pfpId.textContent = "[nothing set]";
         }
 
-
-
+        // Alias & Detail
+        alias.textContent = eeArray[0][0];
+        detail.textContent = eeArray[0][1];
         
+        // Social, Website, Gallery
+        social.textContent = eeArray[0][2];
+        social.setAttribute("href", eeArray[0][2]);
+        website.textContent = eeArray[0][3];
+        website.setAttribute("href", eeArray[0][3]);
+        gallery.textContent = eeArray[0][4];
+        gallery.setAttribute("href", eeArray[0][4]);
+
+        // Tags
+        let tagsPresent = false;
+        for (let i = 0; i < eeArray[6].length; i++) {
+          if (eeArray[6][i].length > 0) {
+            tagsPresent = true;
+            break;
+          }
+        }
+        if (tagsPresent) {
+          tagModule.style.display = "block";
+          tagsContainer.textContent = "";
+          for (let i = 0; i < eeArray[6].length; i++) {
+            if (eeArray[6][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "tag-item mr-2";
+              const codeElement = document.createElement("code");
+              codeElement.className = "h-9";
+              codeElement.setAttribute("data-content", "tag"); 
+              codeElement.textContent = eeArray[6][i]; 
+              listItem.appendChild(codeElement); 
+              tagsContainer.appendChild(listItem); 
+            }         
+          }
+        } else {
+          tagModule.style.display = "none";
+        }
+
+        // Badges
+        let badgesPresent = false;
+        for (let i = 0; i < eeArray[7].length; i += 2) {
+          if (eeArray[7][i].length > 0) {
+            badgesPresent = true;
+            break;
+          }
+        }
+        if (badgesPresent) {
+          badgesModule.style.display = "block";
+          // badgesContainer.textContent = "";
+          for (let i = 0; i < eeArray[7].length; i += 2) {
+            if (eeArray[7][i].length > 0) {
+              const badgeItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const codeElement = document.createElement("code");
+              codeElement.className = "mr-2 h-9";
+              codeElement.setAttribute("data-content", "badge");
+              codeElement.textContent = eeArray[7][i];
+              listItem.appendChild(codeElement);
+              const badgeSenderAtag = document.createElement("a");
+              badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i + 1]}`);
+              const badgeSender = document.createElement("code");
+              badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
+              badgeSender.textContent = eeArray[7][i + 1];
+              badgeSenderAtag.appendChild(badgeSender);
+              listItem.appendChild(badgeSenderAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              const etherethosAtag = document.createElement("a");
+              etherethosAtag.setAttribute("href", "#");
+              const etherethosImage = document.createElement("img");
+              etherethosImage.className = "h-5 w-5";
+              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              etherethosImage.setAttribute("alt", "etherethos logo");
+              etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              iconDiv.appendChild(etherethosAtag);
+              listItem.appendChild(iconDiv);
+              badgesContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          badgesModule.style.display = "none";
+        }
+
+        // Additional Links
+        let linksPresent = false;
+        for (let i = 0; i < eeArray[1].length; i += 2) {
+          if (eeArray[1][i].length > 0) {
+            linksPresent = true;
+            break;
+          }
+        }
+        if (linksPresent) {
+          linksModule.style.display = "block";
+          linksContainer.textContent = "";
+          for (let i = 0; i < eeArray[1].length; i += 2) {
+            if (eeArray[1][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const linkDetail = document.createElement("code");
+              linkDetail.className = "mr-2 h-9";
+              linkDetail.textContent = eeArray[1][i + 1];
+              listItem.appendChild(linkDetail);
+              const linkAtag = document.createElement("a");
+              linkAtag.setAttribute("href", "#");
+              const linkName = document.createElement("code");
+              linkName.className = "ml-2 mr-2 h-9 bg-blue underline";
+              linkName.textContent = eeArray[1][i];
+              linkAtag.appendChild(linkName);
+              listItem.appendChild(linkAtag);
+              linksContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          linksModule.style.display = "none";
+        }
+
+        // Associated Accounts
+        let associatedPresent = false;
+        for (let i = 0; i < eeArray[2].length; i += 2) {
+          if (eeArray[2][i].length > 0) {
+            associatedPresent = true;
+            break;
+          }
+        }
+        if (associatedPresent) {
+          associatedModule.style.display = "block";
+          associatedContainer.textContent = "";
+          for (let i = 0; i < eeArray[2].length; i += 2) {
+            if (eeArray[2][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const associatedDetail = document.createElement("code");
+              associatedDetail.className = "mr-2 h-9";
+              associatedDetail.textContent = eeArray[2][i + 1];
+              listItem.appendChild(associatedDetail);
+              const associatedAtag = document.createElement("a");
+              associatedAtag.setAttribute("href", `${siteBase}?account=${eeArray[2][i]}`);
+              const associatedName = document.createElement("code");
+              associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
+              associatedName.textContent = eeArray[2][i];
+              associatedAtag.appendChild(associatedName);
+              listItem.appendChild(associatedAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              const etherethosAtag = document.createElement("a");
+              etherethosAtag.setAttribute("href", "#");
+              const etherethosImage = document.createElement("img");
+              etherethosImage.className = "h-5 w-5";
+              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              etherethosImage.setAttribute("alt", "etherethos logo");
+              etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              iconDiv.appendChild(etherethosAtag);
+              listItem.appendChild(iconDiv);
+              associatedContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          associatedModule.style.display = "none";
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // document.getElementById("alias").innerHTML = `<code>${eeArray[0][0]}</code>`;
         // document.getElementById("account-detail").innerHTML = `<code>${eeArray[0][1]}</code>`;
         // document.getElementById("social").innerHTML = `<code><a href="${eeArray[0][2]}" target="_blank">${eeArray[0][2]}</a></code>`;
