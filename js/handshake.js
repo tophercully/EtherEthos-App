@@ -1,4 +1,5 @@
 const web3 = new Web3("https://eth-mainnet.g.alchemy.com/v2/3Ip2Q4U5C0FL8bcCdOk_iZzAc90rIKsQ"); // Production API key locked to domain and contract. :)
+// const web3 = new Web3("https://eth-sepolia.g.alchemy.com/v2/ybQlJw7yHs3ediVFKRFsaKutMg7jzeP6"); // Testnet API key
 const EE_ADDRESS = "0x770af72f943A24316CB3195BA6C22C49f9306C5a";
 const EE_Contract_Alchemy = new web3.eth.Contract(EE_ABI, EE_ADDRESS);
 const connectButton = document.querySelector("[data-connect]");
