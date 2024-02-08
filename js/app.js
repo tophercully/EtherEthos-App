@@ -1,5 +1,7 @@
-let account, abbrvAccount, error, eeArray, eeBasics;
+let account, abbrvAccount, error, permissions, eeArray, eeBasics;
 let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
+let chain = "mainnet";
+let chainOptions = ["mainnet", "sepolia", "optimism", "base"];
 var url_string = window.location.href;
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
@@ -19,6 +21,8 @@ const module_edit_arr = document.querySelectorAll("[data-module-edit]");
 const searchInput = document.querySelector("[data-search-input]");
 const searchButton = document.querySelector("[data-search-submit]");
 const mainContent = document.querySelector("[data-main]");
+
+const chainContent = document.querySelector("[text-content-chain]");
 
 const accountNameElements = document.querySelectorAll("[data-account-name]");
 const accountStatusElement = document.querySelector("[data-content-account-status]");
@@ -99,6 +103,17 @@ function abbreviateAndUpdate(account) {
   });
 }
 
+if (url_string.includes("chain")) {
+  var url = new URL(url_string);
+  const chainInput = url.searchParams.get("chain");
+  if (chainOptions.includes(chainInput)) {
+    console.log("Chain accepted from URL parameter: " + chainInput);
+    chain = chainInput;
+  }
+}
+
+chainContent.textContent = `(${chain})`;
+
 if (url_string.includes("account")) {
   var url = new URL(url_string);
   const isValid = isValidEthereumAddress(url.searchParams.get("account"));
@@ -130,12 +145,24 @@ if (searchButton) {
 async function _queryContract(account) {
   console.log("Checking account permissions...");
   try {
-    let permissions = await EE_Contract_Alchemy.methods.permissions(account).call({}, function (err, res) {
-      if (err) {
-        console.log(err);
-        return;
-      }
-    });
+    if (chain == "mainnet") {
+      permissions = await EE_Contract_Alchemy.methods.permissions(account).call({}, function (err, res) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      });
+    } else if (chain == "sepolia") {
+      permissions = await EE_Contract_Alchemy_Sepolia.methods.permissions(account).call({}, function (err, res) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+      });
+    } 
+    
+    /// add other chains here
+
     ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
     console.log("Permissions retrieved: ", permissions);
     let accountStatus = "";
@@ -169,12 +196,24 @@ async function _queryContract(account) {
   if (composable) {
     console.log("Attempting to retrieve account...");
     try {
-      eeArray = await EE_Contract_Alchemy.methods.assembleAccountData(account).call({}, function (err, res) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
+      if (chain == "mainnet") {
+        eeArray = await EE_Contract_Alchemy.methods.assembleAccountData(account).call({}, function (err, res) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+        });
+      } else if (chain == "sepolia") {
+        eeArray = await EE_Contract_Alchemy_Sepolia.methods.assembleAccountData(account).call({}, function (err, res) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+        });
+      }
+
+      /// add other chains here
+
     } catch (errorMessage) {
       error = true;
     }
