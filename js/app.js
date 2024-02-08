@@ -380,19 +380,19 @@ async function _queryContract(account) {
         for (let i = 0; i < eeArray[7].length; i += 2) {
           if (eeArray[7][i].length > 0) {
             const badgeItem = document.createElement("li");
-            listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+            badgeItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
             const codeElement = document.createElement("code");
             codeElement.className = "mr-2 h-9";
             codeElement.setAttribute("data-content", "badge");
             codeElement.textContent = eeArray[7][i];
-            listItem.appendChild(codeElement);
+            badgeItem.appendChild(codeElement);
             const badgeSenderAtag = document.createElement("a");
             badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i + 1]}`);
             const badgeSender = document.createElement("code");
             badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
             badgeSender.textContent = eeArray[7][i + 1];
             badgeSenderAtag.appendChild(badgeSender);
-            listItem.appendChild(badgeSenderAtag);
+            badgeItem.appendChild(badgeSenderAtag);
             const iconDiv = document.createElement("div");
             iconDiv.className = "ml-4 flex";
             const etherscanAtag = document.createElement("a");
@@ -412,8 +412,8 @@ async function _queryContract(account) {
             etherethosAtag.appendChild(etherethosImage);
             iconDiv.appendChild(etherscanAtag);
             iconDiv.appendChild(etherethosAtag);
-            listItem.appendChild(iconDiv);
-            badgesContainer.appendChild(listItem);
+            badgeItem.appendChild(iconDiv);
+            badgesContainer.appendChild(badgeItem);
           }
         }
       } else {
