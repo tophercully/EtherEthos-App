@@ -66,6 +66,9 @@ const notesContainer = document.querySelector("[data-content=notes]");
 const customModule = document.querySelector("[data-module=custom]");
 const customContainer = document.querySelector("[data-content=custom]");
 
+const pingModule = document.querySelector("[data-module=ping]");
+const pingContainer = document.querySelector("[data-content=ping]");
+
 // Function to validate Ethereum address
 function isValidEthereumAddress(address) {
   return address.match(hexPat);
@@ -255,20 +258,20 @@ async function _queryContract(account) {
                 }
                 if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
                   pfpcontainer.innerHTML = imageData;
-                } else if (imageData.startsWith('data:image')) {
+                } else if (imageData.startsWith("data:image")) {
                   // For base64 images, use an <img> tag
-                  const img = document.createElement('img');
+                  const img = document.createElement("img");
                   img.src = imageData;
-                  pfpcontainer.innerHTML = ''; // Clear the container
+                  pfpcontainer.innerHTML = ""; // Clear the container
                   pfpcontainer.appendChild(img);
-                } else if (imageData.startsWith('http')) {
+                } else if (imageData.startsWith("http")) {
                   // For image URLs, use an <img> tag
-                  const img = document.createElement('img');
+                  const img = document.createElement("img");
                   img.src = imageData;
-                  pfpcontainer.innerHTML = ''; // Clear the container
+                  pfpcontainer.innerHTML = ""; // Clear the container
                   pfpcontainer.appendChild(img);
                 } else {
-                  console.error('Unsupported image data format');
+                  console.error("Unsupported image data format");
                 }
               })
               .catch((error) => {
@@ -288,7 +291,7 @@ async function _queryContract(account) {
       // Alias & Detail
       alias.textContent = eeArray[0][0];
       detail.textContent = eeArray[0][1];
-      
+
       // Social, Website, Gallery
       social.textContent = eeArray[0][2];
       social.setAttribute("href", eeArray[0][2]);
@@ -314,11 +317,11 @@ async function _queryContract(account) {
             listItem.className = "tag-item mr-2";
             const codeElement = document.createElement("code");
             codeElement.className = "h-9";
-            codeElement.setAttribute("data-content", "tag"); 
-            codeElement.textContent = eeArray[6][i]; 
-            listItem.appendChild(codeElement); 
-            tagsContainer.appendChild(listItem); 
-          }         
+            codeElement.setAttribute("data-content", "tag");
+            codeElement.textContent = eeArray[6][i];
+            listItem.appendChild(codeElement);
+            tagsContainer.appendChild(listItem);
+          }
         }
       } else {
         tagModule.style.display = "none";
@@ -518,7 +521,7 @@ async function _queryContract(account) {
             respectReceivingContainer.appendChild(listItem);
           }
         }
-        
+
         respectGivingContainer.textContent = "";
         for (let i = 0; i < eeArray[4].length; i++) {
           if (eeArray[4][i].length > 0) {
@@ -558,7 +561,6 @@ async function _queryContract(account) {
       } else {
         respectModule.style.display = "none";
       }
-    
 
       // NOTES
       let notesPresent = false;
@@ -618,7 +620,7 @@ async function _queryContract(account) {
       } else {
         notesModule.style.display = "none";
       }
-      
+
       // CUSTOM FIELD
       let customPresent = false;
       if (eeArray[8].length > 0) {
@@ -630,6 +632,10 @@ async function _queryContract(account) {
       } else {
         customModule.style.display = "none";
       }
+
+      // PING
+      pingModule.style.display = "block";
+      pingContainer.textContent = eeArray[0][8];
     }
   }
   toggleVisibilityBasedOnAddress(true);
