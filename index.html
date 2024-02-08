@@ -23,7 +23,6 @@
   </head>
 
   <body class="m-auto max-w-[1690px] items-center bg-secondary text-base lg:text-xl">
-    <!-- Add your site or application content here -->
     <header class="header w-full border-b-2 border-main">
       <div class="flex h-16 justify-between sm:h-16 md:h-16 lg:h-20">
         <a class="flex h-full items-center transition-all hover:opacity-80" href="/">
@@ -146,11 +145,12 @@
           <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
             <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
               <div id="pfpContainer" class="md:border-r md:border-main"></div>
-              <!-- <img data-content="pfp-image" class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" /> -->
               <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
-                <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl">[contract] <img class="ml-2 h-5 w-5 lg:h-7 lg:w-7" src="./svg/external.svg" alt="" /></a>
-                <p class="text-base font-bold lg:text-xl"data-content="pfp-verification"></p>
+                <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl">[contract]</a></p>
+                <p class="text-base font-bold lg:text-xl" data-content="pfp-verification"></p>
+                <p class="text-base font-bold lg:text-xl"><a data-content="pfp-actual-owner" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl hidden">[actual-owner]</a></p>
+                <p class="text-base font-bold lg:text-xl hidden" data-content="blonks-info"></p>
               </div>
             </div>
             <div class="grid md:grid-rows-[5fr,4fr]">
@@ -185,7 +185,6 @@
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-              <!-- <img data-edit-image class="md:border-r md:border-main" src="./img/blonks.png" alt="pfp picture" /> -->
               <div id="pfpContainer" class="md:border-r md:border-main"></div>
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
@@ -293,9 +292,6 @@
             <p class="subtitle">These are user-submitted keywords / tags to denote interests or roles.</p>
           </div>
           <ul data-content-list data-content="tags" class="mt-4 flex">
-            <!-- <li class="tag-item mr-2">
-              <code data-content class="h-9">[tag]</code>
-            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -337,30 +333,15 @@
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
             <h3 class="title">Badges granted to <span data-account-name>[account address]</span></h3>
-            <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
+            <p class="subtitle">To prevent SPAM, badges are only saved to accounts if they respect the granter. There is no limit to badges.</p>
           </div>
           <ul data-content-list data-content="badges" class="mt-4 flex flex-col">
-
-            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-content-text class="mr-2 h-9">[badge]</code> from
-              <a data-content-link href="#">
-                <code class="ml-2 mr-2 h-9 bg-blue underline">[badge-sender]</code>
-              </a>
-              <div class="ml-4 flex">
-                <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan logo" />
-                </a>
-                <a data-content-etherethos href="#">
-                  <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                </a>
-              </div>
-            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
           <div>
             <h3 class="title">Grant Badge</h3>
-            <p class="subtitle">To prevent SPAM, badges can only be granted to accounts that already respect the granter. There is no limit to badges.</p>
+            <p class="subtitle">To prevent SPAM, badges are only saved to accounts if they respect the granter. There is no limit to badges.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -381,6 +362,7 @@
             </button>
           </div>
         </div>
+        <br>
         <hr class="mb-4" />
       </section>
 
@@ -390,20 +372,13 @@
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
             <h3 class="title">Additional Links</h3>
-            <!-- <p class="subtitle">These are links stored to the EtherEthos profile.</p> -->
           </div>
           <ul data-content-list data-content="links" class="mt-4 flex flex-col">
-            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-content-text class="mr-2 h-9">[link-detail]</code> :
-              <a data-content-link href="#" class="underline">
-                <code class="ml-2 mr-2 h-9 bg-blue underline">[link-name]</code></a>
-            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
           <div>
             <h3 class="title">Additional Links</h3>
-            <!-- <p class="subtitle">These are links that will be added to you EtherEthos profile.</p> -->
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -434,6 +409,7 @@
             </button>
           </div>
         </div>
+        <br>
         <hr class="mb-4" />
       </section>
 
@@ -446,18 +422,6 @@
             <p class="subtitle">Note that the detail displayed beside each address was submitted by the currently displayed account - it is not the address' alias.</p>
           </div>
           <ul data-content-list data-content="associated" class="mt-4 flex flex-col">
-            <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-              <code data-content-text class="mr-2 h-9">[account-description]</code> from
-              <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[associated-account]</code></a>
-              <div class="ml-4 flex">
-                <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                  <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
-                </a>
-                <a data-content-etherethos href="#">
-                  <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                </a>
-              </div>
-            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -484,6 +448,7 @@
             </button>
           </div>
         </div>
+        <br>
         <hr class="mb-4" />
       </section>
 
@@ -492,42 +457,19 @@
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
             <h3 class="title">Respect</h3>
-            <p class="subtitle">Accounts can 'respect' other accounts, and doing so grants them permission to add a note or badge(s) to the respect giver.</p>
+            <p class="subtitle">Accounts can 'respect' other accounts, and doing so grants them permission to add a note to their EtherEthos profile.</p>
           </div>
           <div class="my-4 grid grid-cols-1 gap-4 lg:my-8 lg:grid-cols-2">
             <!-- Account is respected by...-->
             <div>
               <h4 text-content="respected-heading" class="hidden"><span data-account-name>[account address]</span> is respected by:</h4>
               <ul data-content-list="receiving" class="mt-4 flex flex-col">
-                <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-content-text class="mr-2 h-9">[respecting-alias]</code> :
-                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respecting-account]</code></a>
-                  <div class="ml-4 flex">
-                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan logo" />
-                    </a>
-                    <a data-content-etherethos href="#">
-                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                    </a>
-                  </div>
-                </li> -->
               </ul>
             </div>
             <!-- Account respect these...-->
             <div>
               <h4 text-content="respecting-heading" class="hidden"><span data-account-name>[account address]</span> respects:</h4>
               <ul data-content-list="giving" class="mt-4 flex flex-col">
-                <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respects-account]</code></a>
-                  <div class="ml-4 flex">
-                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
-                    </a>
-                    <a data-content-etherethos href="#">
-                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                    </a>
-                  </div>
-                </li> -->
               </ul>
             </div>
           </div>
@@ -535,8 +477,8 @@
 
         <div data-module-edit class="module-edit hidden">
           <div>
-            <h3 class="title">Edit respected accounts</h3>
-            <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to the respect giver.</p>
+            <h3 class="title">Edit Respect</h3>
+            <p class="subtitle">Accounts can 'respect' other accounts, and doing so grants them permission to add a note to their EtherEthos profile.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -580,32 +522,15 @@
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
             <h3 class="title">Notes From Respected Accounts</h3>
-            <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account's prior note..</p>
+            <p class="subtitle">Notes are only saved to an account it the receiving account respects the writing account. Only the most recent note from a respected account is saved.</p>
           </div>
           <ul data-content-list data-content="notes" class="mt-4 flex flex-col">
-            <!-- <li class="mb-2 flex flex-col items-start lg:flex-row">
-              <div class="mb-4 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                <code data-content-text class="mr-2 h-9">[note]</code>
-              </div>
-              <div class="flex items-center">
-                from
-                <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[note-sender]</code></a>
-                <div class="ml-4 flex">
-                  <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                    <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
-                  </a>
-                  <a data-content-etherethos href="#">
-                    <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                  </a>
-                </div>
-              </div>
-            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
           <div>
             <h3 class="title">Send Notes</h3>
-            <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account's prior note.</p>
+            <p class="subtitle">Notes are only saved to an account it the receiving account respects the writing account. Only the most recent note from a respected account is saved.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -664,6 +589,7 @@
             </button>
           </div>
         </div>
+        <br>
         <hr class="mb-4" />
       </section>
 
@@ -672,7 +598,7 @@
         <div data-module-view class="module-view">
           <div class="">
             <h3 class="title">Timestamp Ping</h3>
-            <p class="subtitle">Method to timestampt profiles, useful for apps to manage user data across layers.</p>
+            <p class="subtitle">Timestamp of last ping, useful for apps to manage user data across layers.</p>
           </div>
           <ul data-content-list class="mt-4 flex">
             <li class="tag-item mr-2">
@@ -682,8 +608,8 @@
         </div>
         <div data-module-edit class="module-edit hidden">
           <div class="w-full md:w-3/4">
-            <h3 class="title">Chain Ping</h3>
-            <p class="subtitle">Method to timestampt profiles, useful for apps to manage user data across layers.</p>
+            <h3 class="title">Timestamp Ping</h3>
+            <p class="subtitle">Timestamp of last ping, useful for apps to manage user data across layers.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -709,6 +635,7 @@
   <script src="js/web3.min.js"></script>
   <script src="js/EE_ABI.js"></script>
   <script src="js/NFT_ABI.js"></script>
+  <script src="js/BLONKS_ABI.js"></script>
   <script src="js/detect-provider.min.js"></script>
   <script src="js/handshake.js"></script>
   <script src="js/app.js"></script>
