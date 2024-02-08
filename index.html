@@ -491,34 +491,33 @@
       <section data-module="respect" class="respect module mb-8 hidden">
         <div data-module-view class="module-view">
           <div class="w-full md:w-3/4">
-            <h3 class="title">Respected accounts</h3>
-            <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to an EtherEthos record.</p>
+            <h3 class="title">Respect</h3>
+            <p class="subtitle">Accounts can 'respect' other accounts, and doing so grants them permission to add a note or badge(s) to the respect giver.</p>
           </div>
           <div class="my-4 grid grid-cols-1 gap-4 lg:my-8 lg:grid-cols-2">
             <!-- Account is respected by...-->
             <div>
-              <h4><span data-account-name>[account address]</span> is respected by these accounts</h4>
+              <h4 text-content="respected-heading" class="hidden"><span data-account-name>[account address]</span> is respected by:</h4>
               <ul data-content-list="receiving" class="mt-4 flex flex-col">
-                <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
+                <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <code data-content-text class="mr-2 h-9">[respecting-alias]</code> :
                   <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respecting-account]</code></a>
                   <div class="ml-4 flex">
                     <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
+                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan logo" />
                     </a>
                     <a data-content-etherethos href="#">
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>
-                </li>
+                </li> -->
               </ul>
             </div>
             <!-- Account respect these...-->
             <div>
-              <h4><span data-account-name>[account address]</span> respects these accounts</h4>
+              <h4 text-content="respecting-heading" class="hidden"><span data-account-name>[account address]</span> respects:</h4>
               <ul data-content-list="giving" class="mt-4 flex flex-col">
-                <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-content-text class="mr-2 h-9">[respects-alias]</code> :
+                <!-- <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                   <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respects-account]</code></a>
                   <div class="ml-4 flex">
                     <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
@@ -528,19 +527,7 @@
                       <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
                     </a>
                   </div>
-                </li>
-                <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
-                  <code data-content-text class="mr-2 h-9">[respects-alias]</code> :
-                  <a data-content-link href="#" class="underline"><code class="ml-2 mr-2 h-9 bg-blue underline">[respects-account]</code></a>
-                  <div class="ml-4 flex">
-                    <a data-content-etherscan href="#" class="mr-2 lg:mr-4">
-                      <img class="h-5 w-5" src="./svg/etherscan.svg" alt="etherscan log0" />
-                    </a>
-                    <a data-content-etherethos href="#">
-                      <img class="h-5 w-5" src="./svg/etherethos.svg" alt="etherethos logo" />
-                    </a>
-                  </div>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -548,7 +535,7 @@
         <div data-module-edit class="module-edit hidden">
           <div>
             <h3 class="title">Edit respected accounts</h3>
-            <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to an EtherEthos record.</p>
+            <p class="subtitle">Respecting an account grants them permission to add a note or badge(s) to the respect giver.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li class="mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
@@ -594,8 +581,8 @@
             <h3 class="title">Notes From Respected Accounts</h3>
             <p class="subtitle">Notes are only returned if the receiving account respects the writing account. New notes from an account overwrite that account’s prior note..</p>
           </div>
-          <ul data-content-list class="mt-4 flex flex-col">
-            <li class="mb-2 flex flex-col items-start lg:flex-row">
+          <ul data-content-list data-content="notes" class="mt-4 flex flex-col">
+            <!-- <li class="mb-2 flex flex-col items-start lg:flex-row">
               <div class="mb-4 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main">
                 <code data-content-text class="mr-2 h-9">[note]</code>
               </div>
@@ -611,7 +598,7 @@
                   </a>
                 </div>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
@@ -645,19 +632,19 @@
       <section data-module="custom" class="custom module mb-8 hidden">
         <div data-module-view class="module-view">
           <div class="">
-            <h3 class="title">Custom Fields</h3>
-            <p class="subtitle">This field is intented for any customized use by a community or developer.</p>
+            <h3 class="title">Custom Data</h3>
+            <p class="subtitle">This data is intented for any customized use by a community or developer.</p>
           </div>
           <ul data-content-list class="mt-4 flex">
             <li class="tag-item mr-2">
-              <code data-content-text class="h-9">[custom-data]</code>
+              <code data-content-text data-content="custom" class="h-9">[custom-data]</code>
             </li>
           </ul>
         </div>
         <div data-module-edit class="module-edit hidden">
           <div class="w-full md:w-3/4">
-            <h3 class="title">Custom Fields</h3>
-            <p class="subtitle">This field is intented for any customized use by a community or developer, eg. a JSON object for preferences.</p>
+            <h3 class="title">Custom Data</h3>
+            <p class="subtitle">This data is intented for any customized use by a community or developer, eg. a JSON object for preferences.</p>
           </div>
           <ul data-edit-fieldset class="mt-4 flex flex-col">
             <li data-edit-item class="my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main">
