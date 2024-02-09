@@ -1,12 +1,12 @@
 let account, abbrvAccount, error, permissions, eeArray, eeBasics;
 let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
-let chain = "mainnet";
 let chainOptions = ["mainnet", "sepolia", "optimism", "base"];
 var url_string = window.location.href;
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
 const currentUrl = new URL(window.location.href);
 const siteBase = currentUrl.origin + currentUrl.pathname;
+const BLONKS_CONTRACT = "0x5bB2333Ee8C9818D4bd898a17f597Ec6F5710Fd6";
 
 const nullAddress = "0x0000000000000000000000000000000000000000";
 
@@ -38,6 +38,8 @@ const pfpImage = document.querySelector("[data-edit-image]");
 const pfpId = document.querySelector("[data-content=pfp-id]");
 const pfpContract = document.querySelector("[data-content=pfp-contract]");
 const pfpVerified = document.querySelector("[data-content=pfp-verification]");
+const pfpActualOwner = document.querySelector("[data-content=pfp-actual-owner]");
+const blonksInfo = document.querySelector("[data-content=blonks-info]");
 
 const alias = document.querySelector("[data-content=alias]");
 const detail = document.querySelector("[data-content=detail]");
@@ -231,37 +233,72 @@ async function _queryContract(account) {
         pfpContract.textContent = eeArray[0][6];
         pfpContract.href = `${siteBase}?account=${eeArray[0][6]}`;
         let tokenId = parseInt(eeArray[0][7]);
-        if (tokenId > -1 && tokenId == tokenId % 1) {
+        if (typeof tokenId === 'number') {
+          console.log("Token ID: ", tokenId);
           pfpId.textContent = tokenId;
+          
           const EE_NFTContract_Alchemy = new web3.eth.Contract(NFT_ABI, eeArray[0][6]);
+          const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
+          // add other chains here?
+
           let pfpOwner;
+
+          // add delegation check at some point to see if the account is "allowed" to use the pfp
           try {
-            pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
-              if (err) {
-                console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                return;
-              }
-            });
+            if (chain == "mainnet") {
+              pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            } else if (chain == "sepolia") {
+              pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods.ownerOf(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            }
+            console.log("PFP Owner: ", pfpOwner);
+
+            /// add other chains here
+
           } catch (errorMessage) {
             error = true;
           }
-          if (!error && pfpOwner == account) {
-            pfpVerified.textContent = "✔️ PFP Ownership Verified";
-            // document.getElementById("pfp-verified").innerHTML = `(✔️ Ownership Verified)`;
-            console.log("PFP Ownership Verified");
+          if (!error) {
+            if (pfpOwner == account) {
+              pfpVerified.textContent = "✔️ PFP Ownership Verified";
+              console.log("PFP Ownership Verified");
+            } else {
+              pfpVerified.textContent = "✖️ PFP Not Owned by Account. The Verified Owner: ";
+              console.log("PFP Ownership Not Verified. Actual Owner: ", pfpOwner);
+              pfpActualOwner.style.display = "block";
+              pfpActualOwner.textContent = pfpOwner;
+            }
           } else {
-            pfpVerified.textContent = "✖️ PFP Ownership Not Verified";
-            // document.getElementById("pfp-verified").innerHTML = `(✖️ Ownership Not Verified)`;
-            console.log("PFP Ownership Not Verified");
+            pfpVerified.textContent = "[Error connecting to contract - using BLONKS as placeholder]";
           }
-
           try {
-            tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
-              if (err) {
-                console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                return;
-              }
-            });
+            if (chain == "mainnet") {
+              tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            } else if (chain == "sepolia") {
+              tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods.tokenURI(tokenId).call({}, function (err, res) {
+                if (err) {
+                  console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                  return;
+                }
+              });
+            }
+
+            /// add other chains here
+
           } catch (errorMessage) {
             error = true;
           }
@@ -317,14 +354,17 @@ async function _queryContract(account) {
                 console.error("Error parsing tokenURI:", error);
               });
           } else {
-            // show a BLONKS placeholder
+            console.log("GENERATING RANDOM BLONKS AS PLACEHOLDER");
+            showBONKSPlaceholder();
           }
         } else {
-          pfpId.textContent = "[nothing set]";
+          pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
+          showBONKSPlaceholder();
         }
       } else {
-        pfpContract.textContent = "[nothing set]";
-        pfpId.textContent = "[nothing set]";
+        pfpContract.textContent = "[nothing set - using BLONKS as placeholder]";
+        pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
+        showBONKSPlaceholder();
       }
 
       // Alias & Detail
@@ -384,13 +424,13 @@ async function _queryContract(account) {
             const codeElement = document.createElement("code");
             codeElement.className = "mr-2 h-9";
             codeElement.setAttribute("data-content", "badge");
-            codeElement.textContent = eeArray[7][i];
+            codeElement.textContent = eeArray[7][i + 1];
             badgeItem.appendChild(codeElement);
             const badgeSenderAtag = document.createElement("a");
-            badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i + 1]}`);
+            badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i]}`);
             const badgeSender = document.createElement("code");
             badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
-            badgeSender.textContent = eeArray[7][i + 1];
+            badgeSender.textContent = eeArray[7][i];
             badgeSenderAtag.appendChild(badgeSender);
             badgeItem.appendChild(badgeSenderAtag);
             const iconDiv = document.createElement("div");
@@ -403,15 +443,7 @@ async function _queryContract(account) {
             etherscanImage.setAttribute("src", "./svg/etherscan.svg");
             etherscanImage.setAttribute("alt", "etherscan logo");
             etherscanAtag.appendChild(etherscanImage);
-            const etherethosAtag = document.createElement("a");
-            etherethosAtag.setAttribute("href", "#");
-            const etherethosImage = document.createElement("img");
-            etherethosImage.className = "h-5 w-5";
-            etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-            etherethosImage.setAttribute("alt", "etherethos logo");
-            etherethosAtag.appendChild(etherethosImage);
             iconDiv.appendChild(etherscanAtag);
-            iconDiv.appendChild(etherethosAtag);
             badgeItem.appendChild(iconDiv);
             badgesContainer.appendChild(badgeItem);
           }
@@ -755,7 +787,36 @@ if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
   }
 }
 
-
+async function showBONKSPlaceholder() {
+  const pfpcontainer = document.querySelector("#pfpContainer");
+  let BLONKSsvg;
+  error = false;
+  if (!pfpcontainer) {
+    console.error("Container not found");
+    return;
+  }
+  const BLONKS_Alchemy = new web3.eth.Contract(BLONKS_ABI, BLONKS_CONTRACT);
+  // let renderer = 0;
+  let renderer = Math.floor(Math.random() * 4);
+  let randTokenId = Math.floor(Math.random() * 4444);
+  let rendererStrings = ["BLONKS", "DarkBLONKS", "PepeBLONKS", "BLOOPS"];
+  try {
+    // BLONKSsvg = await BLONKS_Alchemy.methods.RANDOM_RENDER_SVG(renderer).call({}, function (err, res) {
+    BLONKSsvg = await BLONKS_Alchemy.methods.PREVIEW_SHAPESHIFTER_SVG(randTokenId, account, renderer).call({}, function (err, res) {
+      if (err) {
+        console.log(`BLONKS RENDER Error: ${err} Is the collection on the correct network?`);
+        return;
+      }
+    });
+  } catch (errorMessage) {
+    error = true;
+  }
+  if (!error) {
+    pfpcontainer.innerHTML = BLONKSsvg;
+    blonksInfo.style.display = "block";
+    blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
+  }
+}
   // async function updateSampleSVGs() {
   //   // Wiping any previous previewed SVG
   //   document.getElementById("svgPlaceholder").innerHTML = "";
