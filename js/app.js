@@ -237,7 +237,7 @@ async function _queryContract(account) {
           console.log("Token ID: ", tokenId);
           pfpId.textContent = tokenId;
           
-          const EE_NFTContract_Alchemy = new web3.eth.Contract(NFT_ABI, eeArray[0][6]);
+          const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
           const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
           // add other chains here?
 
@@ -795,7 +795,7 @@ async function showBONKSPlaceholder() {
     console.error("Container not found");
     return;
   }
-  const BLONKS_Alchemy = new web3.eth.Contract(BLONKS_ABI, BLONKS_CONTRACT);
+  const BLONKS_Alchemy = new web3Main.eth.Contract(BLONKS_ABI, BLONKS_CONTRACT);
   // let renderer = 0;
   let renderer = Math.floor(Math.random() * 4);
   let randTokenId = Math.floor(Math.random() * 4444);
