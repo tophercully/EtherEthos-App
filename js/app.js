@@ -1,6 +1,5 @@
 let account, abbrvAccount, error, permissions, eeArray, eeBasics;
 let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
-let chain = "mainnet";
 let chainOptions = ["mainnet", "sepolia", "optimism", "base"];
 var url_string = window.location.href;
 let rawAccount = "";
