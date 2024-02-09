@@ -1,8 +1,8 @@
 let chain = "mainnet";
-const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/`);
-const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/`);
-const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/`);
-const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/`);
+const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAIN}`);
+const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA}`);
+const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_OPTIMISM}`);
+const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_BASE}`);
 
 const EE_ADDRESS = "0x770af72f943A24316CB3195BA6C22C49f9306C5a";
 const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, EE_ADDRESS);
