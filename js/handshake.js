@@ -1,4 +1,4 @@
-let chain = "mainnet";
+let currentChainId = null;
 const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`);
 const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
 const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
@@ -43,11 +43,25 @@ function startApp(provider) {
   ethereum.on("chainChanged", handleChainChanged);
   ethereum.on("accountsChanged", handleAccountsChanged);
 
+  // Fetch and set the current chain ID
+  ethereum
+    .request({ method: "eth_chainId" })
+    .then((chainId) => {
+      // Convert the chain ID from hex to decimal
+      currentChainId = parseInt(chainId, 16);
+      console.log("Current Chain ID:", currentChainId);
+      // You can now use currentChainId in other parts of your app
+    })
+    .catch(handleError);
+
   // Check for existing accounts
   ethereum.request({ method: "eth_accounts" }).then(handleAccountsChanged).catch(handleError);
 }
 
 function handleChainChanged() {
+  // Convert the chain ID from hex to decimal
+  currentChainId = parseInt(_chainId, 16);
+  console.log("Chain ID changed to:", currentChainId);
   window.location.reload();
 }
 
