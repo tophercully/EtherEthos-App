@@ -1,6 +1,8 @@
-let account, abbrvAccount, error, permissions, eeArray, eeBasics;
+let account, abbrvAccount, error, permissions, eeArray, eeBasics, chain;
 let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
-let chainOptions = ["mainnet", "sepolia", "optimism", "base"];
+// arbitrum and polygon not yet supported
+let chainIds = [1, 11155111, 10, 8453, 42161, 137];
+let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
 var url_string = window.location.href;
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
@@ -105,16 +107,6 @@ function abbreviateAndUpdate(account) {
   });
 }
 
-if (url_string.includes("chain")) {
-  var url = new URL(url_string);
-  const chainInput = url.searchParams.get("chain");
-  if (chainOptions.includes(chainInput)) {
-    console.log("Chain accepted from URL parameter: " + chainInput);
-    chain = chainInput;
-  }
-}
-
-chainContent.textContent = `(${chain})`;
 
 if (url_string.includes("account")) {
   var url = new URL(url_string);
@@ -123,7 +115,7 @@ if (url_string.includes("account")) {
     account = url.searchParams.get("account");
     console.log("Account accepted from URL parameter: " + account);
     abbreviateAndUpdate(account);
-    _queryContract(account);
+    // _queryContract(account);
   }
 }
 
@@ -144,572 +136,605 @@ if (searchButton) {
   });
 }
 
-async function _queryContract(account) {
-  console.log("Checking account permissions...");
-  try {
-    if (chain == "mainnet") {
-      permissions = await EE_Contract_Alchemy.methods.permissions(account).call({}, function (err, res) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
-    } else if (chain == "sepolia") {
-      permissions = await EE_Contract_Alchemy_Sepolia.methods.permissions(account).call({}, function (err, res) {
-        if (err) {
-          console.log(err);
-          return;
-        }
-      });
-    } 
-    
-    /// add other chains here
-
-    ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
-    console.log("Permissions retrieved: ", permissions);
-    let accountStatus = "";
-    if (composable) {
-      accountComposableElementTrue.style.display = "block";
-      accountComposableElementFalse.style.display = "hidden";
-      accountStatus += "Account is composable. ";
-    } else {
-      accountComposableElementTrue.style.display = "hidden";
-      accountComposableElementFalse.style.display = "block";
-      accountStatus += "Account is not composable (may not have set up an EtherEthos profile). ";
-    }
-    if (accountIsBlocked) {
-      accountBlockedElement.style.display = "block";
-      accountStatus += "Account is blocked! ";
-    }
-    if (moderator) {
-      accountModeratorElement.style.display = "block";
-      accountStatus += "Account is not a moderator.";
-    }
-    if (verificationResponse.length > 0) {
-      accountVerificationElement.textContent = verificationResponse;
-    } else {
-      accountVerificationElement.textContent = "[nothing set]";
-    }
-    console.log(accountStatus);
-    accountStatusElement.textContent = accountStatus;
-  } catch (errorMessage) {
-    error = true;
+if (url_string.includes("chain")) {
+  var url = new URL(url_string);
+  const chainInput = url.searchParams.get("chain");
+  if (chainNames.includes(chainInput)) {
+    console.log("Chain accepted from URL parameter: " + chainInput);
+    chain = chainInput;
+    _queryContract(account);
   }
-  if (composable) {
-    console.log("Attempting to retrieve account...");
+} else {
+  // currentChainId is aynsc, so we need to wait for it to be set before we can use it
+  setTimeout(() => {
+    chainIndex = chainIds.indexOf(currentChainId);
+    if (chainIndex > -1) {
+      chain = chainNames[chainIndex];
+      console.log("Chain detected: " + chain);
+      chainContent.textContent = `(${chain})`;
+      if (account) {
+        _queryContract(account);
+      }
+    } else {
+      console.log("Chain not detected, defaulting to mainnet");
+      chain = "mainnet";
+      _queryContract(account);
+    }
+  }, 500);
+}
+
+chainContent.textContent = `(${chain})`;
+
+async function _queryContract(account) {
+  console.log("Querying contract for account: " + account);
+  // check if account matches the hex pattern
+  if (account) {
+    console.log("Checking account permissions for " + account + " on " + chain + "...");
     try {
       if (chain == "mainnet") {
-        eeArray = await EE_Contract_Alchemy.methods.assembleAccountData(account).call({}, function (err, res) {
+        permissions = await EE_Contract_Alchemy.methods.permissions(account).call({}, function (err, res) {
           if (err) {
             console.log(err);
             return;
           }
         });
       } else if (chain == "sepolia") {
-        eeArray = await EE_Contract_Alchemy_Sepolia.methods.assembleAccountData(account).call({}, function (err, res) {
+        permissions = await EE_Contract_Alchemy_Sepolia.methods.permissions(account).call({}, function (err, res) {
           if (err) {
             console.log(err);
             return;
           }
         });
-      }
-
+      } 
+      
       /// add other chains here
 
+      ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
+      console.log("Permissions retrieved: ", permissions);
+      let accountStatus = "";
+      if (composable) {
+        accountComposableElementTrue.style.display = "block";
+        accountComposableElementFalse.style.display = "hidden";
+        accountStatus += "Account is composable. ";
+      } else {
+        accountComposableElementTrue.style.display = "hidden";
+        accountComposableElementFalse.style.display = "block";
+        accountStatus += "Account is not composable (may not have set up an EtherEthos profile). ";
+      }
+      if (accountIsBlocked) {
+        accountBlockedElement.style.display = "block";
+        accountStatus += "Account is blocked! ";
+      }
+      if (moderator) {
+        accountModeratorElement.style.display = "block";
+        accountStatus += "Account is not a moderator.";
+      }
+      if (verificationResponse.length > 0) {
+        accountVerificationElement.textContent = verificationResponse;
+      } else {
+        accountVerificationElement.textContent = "[nothing set]";
+      }
+      console.log(accountStatus);
+      accountStatusElement.textContent = accountStatus;
     } catch (errorMessage) {
       error = true;
     }
-  }
-  if (error) {
-    console.log("No Account Was Retrived");
-  } else {
-    console.log("Account Retrieved");
     if (composable) {
-      console.log(eeArray);
-      basicData.style.display = "block";
-
-      // PFP DATA
-      if (eeArray[0][6] != nullAddress) {
-        pfpContract.textContent = eeArray[0][6];
-        pfpContract.href = `${siteBase}?account=${eeArray[0][6]}`;
-        let tokenId = parseInt(eeArray[0][7]);
-        if (typeof tokenId === 'number') {
-          console.log("Token ID: ", tokenId);
-          pfpId.textContent = tokenId;
-          
-          const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
-          const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
-          // add other chains here?
-
-          let pfpOwner;
-
-          // add delegation check at some point to see if the account is "allowed" to use the pfp
-          try {
-            if (chain == "mainnet") {
-              pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
-                if (err) {
-                  console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                  return;
-                }
-              });
-            } else if (chain == "sepolia") {
-              pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods.ownerOf(tokenId).call({}, function (err, res) {
-                if (err) {
-                  console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
-                  return;
-                }
-              });
+      console.log("Attempting to retrieve account...");
+      try {
+        if (chain == "mainnet") {
+          eeArray = await EE_Contract_Alchemy.methods.assembleAccountData(account).call({}, function (err, res) {
+            if (err) {
+              console.log(err);
+              return;
             }
-            console.log("PFP Owner: ", pfpOwner);
-
-            /// add other chains here
-
-          } catch (errorMessage) {
-            error = true;
-          }
-          if (!error) {
-            if (pfpOwner == account) {
-              pfpVerified.textContent = "✔️ PFP Ownership Verified";
-              console.log("PFP Ownership Verified");
-            } else {
-              pfpVerified.textContent = "✖️ PFP Not Owned by Account. The Verified Owner: ";
-              console.log("PFP Ownership Not Verified. Actual Owner: ", pfpOwner);
-              pfpActualOwner.style.display = "block";
-              pfpActualOwner.textContent = pfpOwner;
+          });
+        } else if (chain == "sepolia") {
+          eeArray = await EE_Contract_Alchemy_Sepolia.methods.assembleAccountData(account).call({}, function (err, res) {
+            if (err) {
+              console.log(err);
+              return;
             }
-          } else {
-            pfpVerified.textContent = "[Error connecting to contract - using BLONKS as placeholder]";
-          }
-          try {
-            if (chain == "mainnet") {
-              tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
-                if (err) {
-                  console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                  return;
-                }
-              });
-            } else if (chain == "sepolia") {
-              tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods.tokenURI(tokenId).call({}, function (err, res) {
-                if (err) {
-                  console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
-                  return;
-                }
-              });
-            }
+          });
+        }
 
-            /// add other chains here
+        /// add other chains here
 
-          } catch (errorMessage) {
-            error = true;
-          }
-          if (!error) {
-            console.log("TokenURI: ", tokenURI);
+      } catch (errorMessage) {
+        error = true;
+      }
+    }
+    if (error) {
+      console.log("No Account Was Retrived");
+    } else {
+      console.log("Account Retrieved");
+      if (composable) {
+        console.log(eeArray);
+        basicData.style.display = "block";
 
-            // Function to check the string and parse the image value
-            async function parseTokenURI(tokenURI) {
-              let imageData = "";
+        // PFP DATA
+        if (eeArray[0][6] != nullAddress) {
+          pfpContract.textContent = eeArray[0][6];
+          pfpContract.href = `${siteBase}?account=${eeArray[0][6]}`;
+          let tokenId = parseInt(eeArray[0][7]);
+          if (typeof tokenId === 'number') {
+            console.log("Token ID: ", tokenId);
+            pfpId.textContent = tokenId;
+            
+            const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
+            const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
+            // add other chains here?
 
-              // Check if tokenURI is base64 JSON
-              if (tokenURI.startsWith("data:")) {
-                const base64String = tokenURI.split(",")[1];
-                const decodedJson = atob(base64String); // Decode base64
-                const json = JSON.parse(decodedJson); // Parse JSON string
-                imageData = json.image; // Access the image key
-              } else {
-                // Assuming it's a web address, fetch the JSON data
-                const response = await fetch(tokenURI);
-                const json = await response.json();
-                imageData = json.image; // Access the image key
+            let pfpOwner;
+
+            // add delegation check at some point to see if the account is "allowed" to use the pfp
+            try {
+              if (chain == "mainnet") {
+                pfpOwner = await EE_NFTContract_Alchemy.methods.ownerOf(tokenId).call({}, function (err, res) {
+                  if (err) {
+                    console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                    return;
+                  }
+                });
+              } else if (chain == "sepolia") {
+                pfpOwner = await EE_NFTContract_Alchemy_Sepolia.methods.ownerOf(tokenId).call({}, function (err, res) {
+                  if (err) {
+                    console.log(`PFP Ownership Verification ${err} Is the collection on the correct network?`);
+                    return;
+                  }
+                });
               }
-              return imageData;
-            }
+              console.log("PFP Owner: ", pfpOwner);
 
-            parseTokenURI(tokenURI)
-              .then((imageData) => {
-                console.log("Image Data:", imageData);
-                const pfpcontainer = document.querySelector("#pfpContainer");
-                if (!pfpcontainer) {
-                  console.error("Container not found");
-                  return;
-                }
-                if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
-                  pfpcontainer.innerHTML = imageData;
-                } else if (imageData.startsWith("data:image")) {
-                  // For base64 images, use an <img> tag
-                  const img = document.createElement("img");
-                  img.src = imageData;
-                  pfpcontainer.innerHTML = ""; // Clear the container
-                  pfpcontainer.appendChild(img);
-                } else if (imageData.startsWith("http")) {
-                  // For image URLs, use an <img> tag
-                  const img = document.createElement("img");
-                  img.src = imageData;
-                  pfpcontainer.innerHTML = ""; // Clear the container
-                  pfpcontainer.appendChild(img);
+              /// add other chains here
+
+            } catch (errorMessage) {
+              error = true;
+            }
+            if (!error) {
+              if (pfpOwner == account) {
+                pfpVerified.textContent = "✔️ PFP Ownership Verified";
+                console.log("PFP Ownership Verified");
+              } else {
+                pfpVerified.textContent = "✖️ PFP Not Owned by Account. The Verified Owner: ";
+                console.log("PFP Ownership Not Verified. Actual Owner: ", pfpOwner);
+                pfpActualOwner.style.display = "block";
+                pfpActualOwner.textContent = pfpOwner;
+              }
+            } else {
+              pfpVerified.textContent = "[Error connecting to contract - using BLONKS as placeholder]";
+            }
+            try {
+              if (chain == "mainnet") {
+                tokenURI = await EE_NFTContract_Alchemy.methods.tokenURI(tokenId).call({}, function (err, res) {
+                  if (err) {
+                    console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                    return;
+                  }
+                });
+              } else if (chain == "sepolia") {
+                tokenURI = await EE_NFTContract_Alchemy_Sepolia.methods.tokenURI(tokenId).call({}, function (err, res) {
+                  if (err) {
+                    console.log(`TokenURI Error: ${err} Is the collection on the correct network?`);
+                    return;
+                  }
+                });
+              }
+
+              /// add other chains here
+
+            } catch (errorMessage) {
+              error = true;
+            }
+            if (!error) {
+              console.log("TokenURI: ", tokenURI);
+
+              // Function to check the string and parse the image value
+              async function parseTokenURI(tokenURI) {
+                let imageData = "";
+
+                // Check if tokenURI is base64 JSON
+                if (tokenURI.startsWith("data:")) {
+                  const base64String = tokenURI.split(",")[1];
+                  const decodedJson = atob(base64String); // Decode base64
+                  const json = JSON.parse(decodedJson); // Parse JSON string
+                  imageData = json.image; // Access the image key
                 } else {
-                  console.error("Unsupported image data format");
+                  // Assuming it's a web address, fetch the JSON data
+                  const response = await fetch(tokenURI);
+                  const json = await response.json();
+                  imageData = json.image; // Access the image key
                 }
-              })
-              .catch((error) => {
-                console.error("Error parsing tokenURI:", error);
-              });
+                return imageData;
+              }
+
+              parseTokenURI(tokenURI)
+                .then((imageData) => {
+                  console.log("Image Data:", imageData);
+                  const pfpcontainer = document.querySelector("#pfpContainer");
+                  if (!pfpcontainer) {
+                    console.error("Container not found");
+                    return;
+                  }
+                  if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
+                    pfpcontainer.innerHTML = imageData;
+                  } else if (imageData.startsWith("data:image")) {
+                    // For base64 images, use an <img> tag
+                    const img = document.createElement("img");
+                    img.src = imageData;
+                    pfpcontainer.innerHTML = ""; // Clear the container
+                    pfpcontainer.appendChild(img);
+                  } else if (imageData.startsWith("http")) {
+                    // For image URLs, use an <img> tag
+                    const img = document.createElement("img");
+                    img.src = imageData;
+                    pfpcontainer.innerHTML = ""; // Clear the container
+                    pfpcontainer.appendChild(img);
+                  } else {
+                    console.error("Unsupported image data format");
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error parsing tokenURI:", error);
+                });
+            } else {
+              console.log("GENERATING RANDOM BLONKS AS PLACEHOLDER");
+              showBONKSPlaceholder();
+            }
           } else {
-            console.log("GENERATING RANDOM BLONKS AS PLACEHOLDER");
+            pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
             showBONKSPlaceholder();
           }
         } else {
+          pfpContract.textContent = "[nothing set - using BLONKS as placeholder]";
           pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
           showBONKSPlaceholder();
         }
-      } else {
-        pfpContract.textContent = "[nothing set - using BLONKS as placeholder]";
-        pfpId.textContent = "[nothing set - using random BLONKS as placeholder]";
-        showBONKSPlaceholder();
-      }
 
-      // Alias & Detail
-      alias.textContent = eeArray[0][0];
-      detail.textContent = eeArray[0][1];
+        // Alias & Detail
+        alias.textContent = eeArray[0][0];
+        detail.textContent = eeArray[0][1];
 
-      // Social, Website, Gallery
-      social.textContent = eeArray[0][2];
-      social.setAttribute("href", eeArray[0][2]);
-      website.textContent = eeArray[0][3];
-      website.setAttribute("href", eeArray[0][3]);
-      gallery.textContent = eeArray[0][4];
-      gallery.setAttribute("href", eeArray[0][4]);
+        // Social, Website, Gallery
+        social.textContent = eeArray[0][2];
+        social.setAttribute("href", eeArray[0][2]);
+        website.textContent = eeArray[0][3];
+        website.setAttribute("href", eeArray[0][3]);
+        gallery.textContent = eeArray[0][4];
+        gallery.setAttribute("href", eeArray[0][4]);
 
-      // Tags
-      let tagsPresent = false;
-      for (let i = 0; i < eeArray[6].length; i++) {
-        if (eeArray[6][i].length > 0) {
-          tagsPresent = true;
-          break;
-        }
-      }
-      if (tagsPresent) {
-        tagModule.style.display = "block";
-        tagsContainer.textContent = "";
+        // Tags
+        let tagsPresent = false;
         for (let i = 0; i < eeArray[6].length; i++) {
           if (eeArray[6][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "tag-item mr-2";
-            const codeElement = document.createElement("code");
-            codeElement.className = "h-9";
-            codeElement.setAttribute("data-content", "tag");
-            codeElement.textContent = eeArray[6][i];
-            listItem.appendChild(codeElement);
-            tagsContainer.appendChild(listItem);
+            tagsPresent = true;
+            break;
           }
         }
-      } else {
-        tagModule.style.display = "none";
-      }
-
-      // Badges
-      let badgesPresent = false;
-      for (let i = 0; i < eeArray[7].length; i += 2) {
-        if (eeArray[7][i].length > 0) {
-          badgesPresent = true;
-          break;
+        if (tagsPresent) {
+          tagModule.style.display = "block";
+          tagsContainer.textContent = "";
+          for (let i = 0; i < eeArray[6].length; i++) {
+            if (eeArray[6][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "tag-item mr-2";
+              const codeElement = document.createElement("code");
+              codeElement.className = "h-9";
+              codeElement.setAttribute("data-content", "tag");
+              codeElement.textContent = eeArray[6][i];
+              listItem.appendChild(codeElement);
+              tagsContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          tagModule.style.display = "none";
         }
-      }
-      if (badgesPresent) {
-        badgesModule.style.display = "block";
-        // badgesContainer.textContent = "";
+
+        // Badges
+        let badgesPresent = false;
         for (let i = 0; i < eeArray[7].length; i += 2) {
           if (eeArray[7][i].length > 0) {
-            const badgeItem = document.createElement("li");
-            badgeItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const codeElement = document.createElement("code");
-            codeElement.className = "mr-2 h-9";
-            codeElement.setAttribute("data-content", "badge");
-            codeElement.textContent = eeArray[7][i + 1];
-            badgeItem.appendChild(codeElement);
-            const badgeSenderAtag = document.createElement("a");
-            badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i]}`);
-            const badgeSender = document.createElement("code");
-            badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
-            badgeSender.textContent = eeArray[7][i];
-            badgeSenderAtag.appendChild(badgeSender);
-            badgeItem.appendChild(badgeSenderAtag);
-            const iconDiv = document.createElement("div");
-            iconDiv.className = "ml-4 flex";
-            const etherscanAtag = document.createElement("a");
-            etherscanAtag.className = "mr-2 lg:mr-4";
-            etherscanAtag.setAttribute("href", "#");
-            const etherscanImage = document.createElement("img");
-            etherscanImage.className = "h-5 w-5";
-            etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-            etherscanImage.setAttribute("alt", "etherscan logo");
-            etherscanAtag.appendChild(etherscanImage);
-            iconDiv.appendChild(etherscanAtag);
-            badgeItem.appendChild(iconDiv);
-            badgesContainer.appendChild(badgeItem);
+            badgesPresent = true;
+            break;
           }
         }
-      } else {
-        badgesModule.style.display = "none";
-      }
-
-      // Additional Links
-      let linksPresent = false;
-      for (let i = 0; i < eeArray[1].length; i += 2) {
-        if (eeArray[1][i].length > 0) {
-          linksPresent = true;
-          break;
+        if (badgesPresent) {
+          badgesModule.style.display = "block";
+          // badgesContainer.textContent = "";
+          for (let i = 0; i < eeArray[7].length; i += 2) {
+            if (eeArray[7][i].length > 0) {
+              const badgeItem = document.createElement("li");
+              badgeItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const codeElement = document.createElement("code");
+              codeElement.className = "mr-2 h-9";
+              codeElement.setAttribute("data-content", "badge");
+              codeElement.textContent = eeArray[7][i + 1];
+              badgeItem.appendChild(codeElement);
+              const badgeSenderAtag = document.createElement("a");
+              badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i]}`);
+              const badgeSender = document.createElement("code");
+              badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
+              badgeSender.textContent = eeArray[7][i];
+              badgeSenderAtag.appendChild(badgeSender);
+              badgeItem.appendChild(badgeSenderAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              iconDiv.appendChild(etherscanAtag);
+              badgeItem.appendChild(iconDiv);
+              badgesContainer.appendChild(badgeItem);
+            }
+          }
+        } else {
+          badgesModule.style.display = "none";
         }
-      }
-      if (linksPresent) {
-        linksModule.style.display = "block";
-        linksContainer.textContent = "";
+
+        // Additional Links
+        let linksPresent = false;
         for (let i = 0; i < eeArray[1].length; i += 2) {
           if (eeArray[1][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const linkDetail = document.createElement("code");
-            linkDetail.className = "mr-2 h-9";
-            linkDetail.textContent = eeArray[1][i + 1];
-            listItem.appendChild(linkDetail);
-            const linkAtag = document.createElement("a");
-            linkAtag.setAttribute("href", "#");
-            const linkName = document.createElement("code");
-            linkName.className = "ml-2 mr-2 h-9 bg-blue underline";
-            linkName.textContent = eeArray[1][i];
-            linkAtag.appendChild(linkName);
-            listItem.appendChild(linkAtag);
-            linksContainer.appendChild(listItem);
+            linksPresent = true;
+            break;
           }
         }
-      } else {
-        linksModule.style.display = "none";
-      }
-
-      // Associated Accounts
-      let associatedPresent = false;
-      for (let i = 0; i < eeArray[2].length; i += 2) {
-        if (eeArray[2][i].length > 0) {
-          associatedPresent = true;
-          break;
+        if (linksPresent) {
+          linksModule.style.display = "block";
+          linksContainer.textContent = "";
+          for (let i = 0; i < eeArray[1].length; i += 2) {
+            if (eeArray[1][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const linkDetail = document.createElement("code");
+              linkDetail.className = "mr-2 h-9";
+              linkDetail.textContent = eeArray[1][i + 1];
+              listItem.appendChild(linkDetail);
+              const linkAtag = document.createElement("a");
+              linkAtag.setAttribute("href", "#");
+              const linkName = document.createElement("code");
+              linkName.className = "ml-2 mr-2 h-9 bg-blue underline";
+              linkName.textContent = eeArray[1][i];
+              linkAtag.appendChild(linkName);
+              listItem.appendChild(linkAtag);
+              linksContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          linksModule.style.display = "none";
         }
-      }
-      if (associatedPresent) {
-        associatedModule.style.display = "block";
-        associatedContainer.textContent = "";
+
+        // Associated Accounts
+        let associatedPresent = false;
         for (let i = 0; i < eeArray[2].length; i += 2) {
           if (eeArray[2][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const associatedDetail = document.createElement("code");
-            associatedDetail.className = "mr-2 h-9";
-            associatedDetail.textContent = eeArray[2][i + 1];
-            listItem.appendChild(associatedDetail);
-            const associatedAtag = document.createElement("a");
-            associatedAtag.setAttribute("href", `${siteBase}?account=${eeArray[2][i]}`);
-            const associatedName = document.createElement("code");
-            associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
-            associatedName.textContent = eeArray[2][i];
-            associatedAtag.appendChild(associatedName);
-            listItem.appendChild(associatedAtag);
-            const iconDiv = document.createElement("div");
-            iconDiv.className = "ml-4 flex";
-            const etherscanAtag = document.createElement("a");
-            etherscanAtag.className = "mr-2 lg:mr-4";
-            etherscanAtag.setAttribute("href", "#");
-            const etherscanImage = document.createElement("img");
-            etherscanImage.className = "h-5 w-5";
-            etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-            etherscanImage.setAttribute("alt", "etherscan logo");
-            etherscanAtag.appendChild(etherscanImage);
-            const etherethosAtag = document.createElement("a");
-            etherethosAtag.setAttribute("href", "#");
-            const etherethosImage = document.createElement("img");
-            etherethosImage.className = "h-5 w-5";
-            etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-            etherethosImage.setAttribute("alt", "etherethos logo");
-            etherethosAtag.appendChild(etherethosImage);
-            iconDiv.appendChild(etherscanAtag);
-            iconDiv.appendChild(etherethosAtag);
-            listItem.appendChild(iconDiv);
-            associatedContainer.appendChild(listItem);
+            associatedPresent = true;
+            break;
           }
         }
-      } else {
-        associatedModule.style.display = "none";
-      }
+        if (associatedPresent) {
+          associatedModule.style.display = "block";
+          associatedContainer.textContent = "";
+          for (let i = 0; i < eeArray[2].length; i += 2) {
+            if (eeArray[2][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const associatedDetail = document.createElement("code");
+              associatedDetail.className = "mr-2 h-9";
+              associatedDetail.textContent = eeArray[2][i + 1];
+              listItem.appendChild(associatedDetail);
+              const associatedAtag = document.createElement("a");
+              associatedAtag.setAttribute("href", `${siteBase}?account=${eeArray[2][i]}`);
+              const associatedName = document.createElement("code");
+              associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
+              associatedName.textContent = eeArray[2][i];
+              associatedAtag.appendChild(associatedName);
+              listItem.appendChild(associatedAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              const etherethosAtag = document.createElement("a");
+              etherethosAtag.setAttribute("href", "#");
+              const etherethosImage = document.createElement("img");
+              etherethosImage.className = "h-5 w-5";
+              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              etherethosImage.setAttribute("alt", "etherethos logo");
+              etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              iconDiv.appendChild(etherethosAtag);
+              listItem.appendChild(iconDiv);
+              associatedContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          associatedModule.style.display = "none";
+        }
 
-      // Respect
-      let respectPresent = false;
-      for (let i = 0; i < eeArray[3].length; i++) {
-        if (eeArray[3][i].length > 0) {
-          respectPresent = true;
-          respectedHeading.style.display = "block";
-          break;
-        }
-      }
-      for (let i = 0; i < eeArray[4].length; i++) {
-        if (eeArray[4][i].length > 0) {
-          respectPresent = true;
-          respectingHeading.style.display = "block";
-          break;
-        }
-      }
-      if (respectPresent) {
-        respectModule.style.display = "block";
-        respectReceivingContainer.textContent = "";
+        // Respect
+        let respectPresent = false;
         for (let i = 0; i < eeArray[3].length; i++) {
           if (eeArray[3][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const respectingReceivingAccountAtag = document.createElement("a");
-            respectingReceivingAccountAtag.className = "underline";
-            respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[3][i]}`);
-            const respectReceivingAccount = document.createElement("code");
-            respectReceivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
-            respectReceivingAccount.textContent = eeArray[3][i];
-            respectingReceivingAccountAtag.appendChild(respectReceivingAccount);
-            listItem.appendChild(respectingReceivingAccountAtag);
-            const iconDiv = document.createElement("div");
-            iconDiv.className = "ml-4 flex";
-            const etherscanAtag = document.createElement("a");
-            etherscanAtag.className = "mr-2 lg:mr-4";
-            etherscanAtag.setAttribute("href", "#");
-            const etherscanImage = document.createElement("img");
-            etherscanImage.className = "h-5 w-5";
-            etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-            etherscanImage.setAttribute("alt", "etherscan logo");
-            etherscanAtag.appendChild(etherscanImage);
-            // const etherethosAtag = document.createElement("a");
-            // etherethosAtag.setAttribute("href", "#");
-            // const etherethosImage = document.createElement("img");
-            // etherethosImage.className = "h-5 w-5";
-            // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-            // etherethosImage.setAttribute("alt", "etherethos logo");
-            // etherethosAtag.appendChild(etherethosImage);
-            iconDiv.appendChild(etherscanAtag);
-            // iconDiv.appendChild(etherethosAtag);
-            listItem.appendChild(iconDiv);
-            respectReceivingContainer.appendChild(listItem);
+            respectPresent = true;
+            respectedHeading.style.display = "block";
+            break;
           }
         }
-
-        respectGivingContainer.textContent = "";
         for (let i = 0; i < eeArray[4].length; i++) {
           if (eeArray[4][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const respectGivingAccountAtag = document.createElement("a");
-            respectGivingAccountAtag.className = "underline";
-            respectGivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[4][i]}`);
-            const respectGivingAccount = document.createElement("code");
-            respectGivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
-            respectGivingAccount.textContent = eeArray[4][i];
-            respectGivingAccountAtag.appendChild(respectGivingAccount);
-            listItem.appendChild(respectGivingAccountAtag);
-            const iconDiv = document.createElement("div");
-            iconDiv.className = "ml-4 flex";
-            const etherscanAtag = document.createElement("a");
-            etherscanAtag.className = "mr-2 lg:mr-4";
-            etherscanAtag.setAttribute("href", "#");
-            const etherscanImage = document.createElement("img");
-            etherscanImage.className = "h-5 w-5";
-            etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-            etherscanImage.setAttribute("alt", "etherscan logo");
-            etherscanAtag.appendChild(etherscanImage);
-            const etherethosAtag = document.createElement("a");
-            etherethosAtag.setAttribute("href", "#");
-            const etherethosImage = document.createElement("img");
-            etherethosImage.className = "h-5 w-5";
-            etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-            etherethosImage.setAttribute("alt", "etherethos logo");
-            etherethosAtag.appendChild(etherethosImage);
-            iconDiv.appendChild(etherscanAtag);
-            iconDiv.appendChild(etherethosAtag);
-            listItem.appendChild(iconDiv);
-            respectGivingContainer.appendChild(listItem);
+            respectPresent = true;
+            respectingHeading.style.display = "block";
+            break;
           }
         }
-      } else {
-        respectModule.style.display = "none";
-      }
+        if (respectPresent) {
+          respectModule.style.display = "block";
+          respectReceivingContainer.textContent = "";
+          for (let i = 0; i < eeArray[3].length; i++) {
+            if (eeArray[3][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const respectingReceivingAccountAtag = document.createElement("a");
+              respectingReceivingAccountAtag.className = "underline";
+              respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[3][i]}`);
+              const respectReceivingAccount = document.createElement("code");
+              respectReceivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
+              respectReceivingAccount.textContent = eeArray[3][i];
+              respectingReceivingAccountAtag.appendChild(respectReceivingAccount);
+              listItem.appendChild(respectingReceivingAccountAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              // const etherethosAtag = document.createElement("a");
+              // etherethosAtag.setAttribute("href", "#");
+              // const etherethosImage = document.createElement("img");
+              // etherethosImage.className = "h-5 w-5";
+              // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              // etherethosImage.setAttribute("alt", "etherethos logo");
+              // etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              // iconDiv.appendChild(etherethosAtag);
+              listItem.appendChild(iconDiv);
+              respectReceivingContainer.appendChild(listItem);
+            }
+          }
 
-      // NOTES
-      let notesPresent = false;
-      for (let i = 0; i < eeArray[5].length; i += 2) {
-        if (eeArray[5][i].length > 0) {
-          notesPresent = true;
-          break;
+          respectGivingContainer.textContent = "";
+          for (let i = 0; i < eeArray[4].length; i++) {
+            if (eeArray[4][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const respectGivingAccountAtag = document.createElement("a");
+              respectGivingAccountAtag.className = "underline";
+              respectGivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[4][i]}`);
+              const respectGivingAccount = document.createElement("code");
+              respectGivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
+              respectGivingAccount.textContent = eeArray[4][i];
+              respectGivingAccountAtag.appendChild(respectGivingAccount);
+              listItem.appendChild(respectGivingAccountAtag);
+              const iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              const etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              const etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              const etherethosAtag = document.createElement("a");
+              etherethosAtag.setAttribute("href", "#");
+              const etherethosImage = document.createElement("img");
+              etherethosImage.className = "h-5 w-5";
+              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              etherethosImage.setAttribute("alt", "etherethos logo");
+              etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              iconDiv.appendChild(etherethosAtag);
+              listItem.appendChild(iconDiv);
+              respectGivingContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          respectModule.style.display = "none";
         }
-      }
-      if (notesPresent) {
-        notesModule.style.display = "block";
-        notesContainer.textContent = "";
+
+        // NOTES
+        let notesPresent = false;
         for (let i = 0; i < eeArray[5].length; i += 2) {
           if (eeArray[5][i].length > 0) {
-            const listItem = document.createElement("li");
-            listItem.className = "mb-2 flex flex-col items-start lg:flex-row";
-            const noteDiv = document.createElement("div");
-            noteDiv.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-            const noteDetail = document.createElement("code");
-            noteDetail.className = "mr-2 h-9";
-            noteDetail.textContent = eeArray[5][i + 1];
-            noteDiv.appendChild(noteDetail);
-            listItem.appendChild(noteDiv);
-            centeringDiv = document.createElement("div");
-            centeringDiv.className = "flex items-center";
-            const noteSenderAtag = document.createElement("a");
-            noteSenderAtag.setAttribute("href", "#");
-            const noteSender = document.createElement("code");
-            noteSender.className = "ml-2 mr-2 h-9 bg-blue underline";
-            noteSender.textContent = eeArray[5][i];
-            noteSenderAtag.appendChild(noteSender);
-            iconDiv = document.createElement("div");
-            iconDiv.className = "ml-4 flex";
-            etherscanAtag = document.createElement("a");
-            etherscanAtag.className = "mr-2 lg:mr-4";
-            etherscanAtag.setAttribute("href", "#");
-            etherscanImage = document.createElement("img");
-            etherscanImage.className = "h-5 w-5";
-            etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-            etherscanImage.setAttribute("alt", "etherscan logo");
-            etherscanAtag.appendChild(etherscanImage);
-            etherethosAtag = document.createElement("a");
-            etherethosAtag.setAttribute("href", "#");
-            etherethosImage = document.createElement("img");
-            etherethosImage.className = "h-5 w-5";
-            etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-            etherethosImage.setAttribute("alt", "etherethos logo");
-            etherethosAtag.appendChild(etherethosImage);
-            iconDiv.appendChild(etherscanAtag);
-            iconDiv.appendChild(etherethosAtag);
-            centeringDiv.appendChild(noteSenderAtag);
-            centeringDiv.appendChild(iconDiv);
-            listItem.appendChild(centeringDiv);
-            notesContainer.appendChild(listItem);
+            notesPresent = true;
+            break;
           }
         }
-      } else {
-        notesModule.style.display = "none";
-      }
+        if (notesPresent) {
+          notesModule.style.display = "block";
+          notesContainer.textContent = "";
+          for (let i = 0; i < eeArray[5].length; i += 2) {
+            if (eeArray[5][i].length > 0) {
+              const listItem = document.createElement("li");
+              listItem.className = "mb-2 flex flex-col items-start lg:flex-row";
+              const noteDiv = document.createElement("div");
+              noteDiv.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+              const noteDetail = document.createElement("code");
+              noteDetail.className = "mr-2 h-9";
+              noteDetail.textContent = eeArray[5][i + 1];
+              noteDiv.appendChild(noteDetail);
+              listItem.appendChild(noteDiv);
+              centeringDiv = document.createElement("div");
+              centeringDiv.className = "flex items-center";
+              const noteSenderAtag = document.createElement("a");
+              noteSenderAtag.setAttribute("href", "#");
+              const noteSender = document.createElement("code");
+              noteSender.className = "ml-2 mr-2 h-9 bg-blue underline";
+              noteSender.textContent = eeArray[5][i];
+              noteSenderAtag.appendChild(noteSender);
+              iconDiv = document.createElement("div");
+              iconDiv.className = "ml-4 flex";
+              etherscanAtag = document.createElement("a");
+              etherscanAtag.className = "mr-2 lg:mr-4";
+              etherscanAtag.setAttribute("href", "#");
+              etherscanImage = document.createElement("img");
+              etherscanImage.className = "h-5 w-5";
+              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+              etherscanImage.setAttribute("alt", "etherscan logo");
+              etherscanAtag.appendChild(etherscanImage);
+              etherethosAtag = document.createElement("a");
+              etherethosAtag.setAttribute("href", "#");
+              etherethosImage = document.createElement("img");
+              etherethosImage.className = "h-5 w-5";
+              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              etherethosImage.setAttribute("alt", "etherethos logo");
+              etherethosAtag.appendChild(etherethosImage);
+              iconDiv.appendChild(etherscanAtag);
+              iconDiv.appendChild(etherethosAtag);
+              centeringDiv.appendChild(noteSenderAtag);
+              centeringDiv.appendChild(iconDiv);
+              listItem.appendChild(centeringDiv);
+              notesContainer.appendChild(listItem);
+            }
+          }
+        } else {
+          notesModule.style.display = "none";
+        }
 
-      // CUSTOM FIELD
-      let customPresent = false;
-      if (eeArray[8].length > 0) {
-        customPresent = true;
-      }
-      if (customPresent) {
-        customModule.style.display = "block";
-        customContainer.textContent = eeArray[8];
-      } else {
-        customModule.style.display = "none";
-      }
+        // CUSTOM FIELD
+        let customPresent = false;
+        if (eeArray[8].length > 0) {
+          customPresent = true;
+        }
+        if (customPresent) {
+          customModule.style.display = "block";
+          customContainer.textContent = eeArray[8];
+        } else {
+          customModule.style.display = "none";
+        }
 
-      // PING
-      pingModule.style.display = "block";
-      pingContainer.textContent = eeArray[0][8];
+        // PING
+        pingModule.style.display = "block";
+        pingContainer.textContent = eeArray[0][8];
+      }
     }
+    toggleVisibilityBasedOnAddress(true);
   }
-  toggleVisibilityBasedOnAddress(true);
 }
 
 if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
