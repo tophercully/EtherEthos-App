@@ -12,7 +12,7 @@ const BLONKS_CONTRACT = "0x5bB2333Ee8C9818D4bd898a17f597Ec6F5710Fd6";
 
 const nullAddress = "0x0000000000000000000000000000000000000000";
 
-//! Edit & view toggler
+//! Edit & view toggle
 
 const edit_btn = document.querySelector("[data-toggle-edit]");
 const view_btn = document.querySelector("[data-toggle-view]");
@@ -90,6 +90,9 @@ function toggleVisibilityBasedOnAddress(isValid) {
       view_btn.classList.remove("hidden");
       if (account == currentAccount) {
         edit_btn.classList.remove("hidden");
+        // show all hidden elements
+        // remove 'hidden' from all 'data-module-edit' elements
+
       } else {
         if (!edit_btn.classList.contains("hidden")) {
           edit_btn.classList.add("hidden");
@@ -128,6 +131,7 @@ if (searchButton) {
       account = searchInput.value;
       abbreviateAndUpdate(account);
       _queryContract(account);
+      toggleVisibilityBasedOnAddress(true);
     } else {
       // Notify the user if the Ethereum address is invalid
       alert("Please enter a valid Ethereum address, 0x...");
@@ -158,6 +162,7 @@ if (url_string.includes("chain")) {
     } else {
       console.log("Chain not detected, defaulting to mainnet");
       chain = "mainnet";
+      console.log(account);
       _queryContract(account);
     }
   }, 500);
@@ -733,7 +738,7 @@ async function _queryContract(account) {
         pingContainer.textContent = eeArray[0][8];
       }
     }
-    toggleVisibilityBasedOnAddress(true);
+    // toggleVisibilityBasedOnAddress(true);
   }
 }
 
