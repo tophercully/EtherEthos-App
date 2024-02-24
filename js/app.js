@@ -3,6 +3,8 @@ let composable, accountIsBlocked, moderator, verificationResponse, perms, compos
 // arbitrum and polygon not yet supported
 let chainIds = [1, 11155111, 10, 8453, 42161, 137];
 let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
+let chainExplorerBaseUrls = ["https://etherscan.io/address/", "https://sepolia.etherscan.io/address/", "https://optimistic.etherscan.io/address/", "https://basescan.org/address/", "https://arbiscan.io/address/", "https://polygonscan.com/address/"];
+let chainScan;
 var url_string = window.location.href;
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
@@ -12,7 +14,7 @@ const BLONKS_CONTRACT = "0x5bB2333Ee8C9818D4bd898a17f597Ec6F5710Fd6";
 
 const nullAddress = "0x0000000000000000000000000000000000000000";
 
-//! Edit & view toggler
+//! Edit & view toggle
 
 const edit_btn = document.querySelector("[data-toggle-edit]");
 const view_btn = document.querySelector("[data-toggle-view]");
@@ -24,15 +26,22 @@ const searchInput = document.querySelector("[data-search-input]");
 const searchButton = document.querySelector("[data-search-submit]");
 const mainContent = document.querySelector("[data-main]");
 
-const chainContent = document.querySelector("[text-content-chain]");
+const chainContent = document.querySelectorAll("[text-content-chain]");
+const contractLink = document.querySelector("[contract-link]");
 
 const accountNameElements = document.querySelectorAll("[data-account-name]");
-const accountStatusElement = document.querySelector("[data-content-account-status]");
+const accountStatusElement = document.querySelectorAll("[data-content-account-status]");
+// const accountEditStatusElement = document.querySelector("[data-content-account-edit-status]");
 
 const accountComposableElementTrue = document.querySelector("[data-composable=true]");
 const accountComposableElementFalse = document.querySelector("[data-composable=false]");
+const accountEditComposableElementTrue = document.querySelector("[data-edit-composable=true]");
+const accountEditComposableElementFalse = document.querySelector("[data-edit-composable=false]");
+
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
+const accountEditBlockedElement = document.querySelector("[data-edit-section=blocked]");
 const accountModeratorElement = document.querySelector("[data-view-section=moderator]");
+const accountEditModeratorElement = document.querySelector("[data-edit-section=moderator]");
 const accountVerificationElement = document.querySelector("[data-content=verification]");
 
 const basicData = document.querySelector("[data-module=basic]");
@@ -83,30 +92,22 @@ function isValidEthereumAddress(address) {
 }
 
 // Function to toggle visibility based on Ethereum address validity
-function toggleVisibilityBasedOnAddress(isValid) {
+function mainIsVisible(isValid) {
   console.log("Toggling visibility based on address validity..." + isValid);
     if (isValid) {
       mainContent.classList.remove("hidden");
       view_btn.classList.remove("hidden");
-      if (account == currentAccount) {
-        edit_btn.classList.remove("hidden");
-      } else {
-        if (!edit_btn.classList.contains("hidden")) {
-          edit_btn.classList.add("hidden");
-        }
-      }
     } else {
       mainContent.classList.add("hidden");
     }
 }
 
 function abbreviateAndUpdate(account) {
-  abbrvAccount = `${account.slice(0, 6)}...${account.slice(-4)}`;
+  abbrvAccount = `${account.slice(0, 4)}-${account.slice(-4)}`;
   accountNameElements.forEach((element) => {
     element.textContent = abbrvAccount; 
   });
 }
-
 
 if (url_string.includes("account")) {
   var url = new URL(url_string);
@@ -115,6 +116,7 @@ if (url_string.includes("account")) {
     account = url.searchParams.get("account");
     console.log("Account accepted from URL parameter: " + account);
     abbreviateAndUpdate(account);
+    mainIsVisible(true);
     // _queryContract(account);
   }
 }
@@ -128,10 +130,11 @@ if (searchButton) {
       account = searchInput.value;
       abbreviateAndUpdate(account);
       _queryContract(account);
+      mainIsVisible(true);
     } else {
       // Notify the user if the Ethereum address is invalid
       alert("Please enter a valid Ethereum address, 0x...");
-      toggleVisibilityBasedOnAddress(false);
+      mainIsVisible(false);
     }
   });
 }
@@ -141,8 +144,16 @@ if (url_string.includes("chain")) {
   const chainInput = url.searchParams.get("chain");
   if (chainNames.includes(chainInput)) {
     console.log("Chain accepted from URL parameter: " + chainInput);
-    chain = chainInput;
-    _queryContract(account);
+    chainIndex = chainIds.indexOf(chainInput);
+    if (chainIndex > -1) {
+      chain = chainNames[chainIndex];
+      chainScan = chainExplorerBaseUrls[chainIndex];
+      chainContent.forEach((element) => {
+        element.textContent = `(${chain})`;
+      });
+      contractLink.href = chainScan + EE_ADDRESS + "#code";
+      _queryContract(account);
+    }
   }
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
@@ -150,22 +161,37 @@ if (url_string.includes("chain")) {
     chainIndex = chainIds.indexOf(currentChainId);
     if (chainIndex > -1) {
       chain = chainNames[chainIndex];
+      chainScan = chainExplorerBaseUrls[chainIndex];
       console.log("Chain detected: " + chain);
-      chainContent.textContent = `(${chain})`;
+      chainContent.forEach((element) => {
+        element.textContent = `(${chain})`;
+      });
+      contractLink.href = chainScan + EE_ADDRESS + "#code";
       if (account) {
         _queryContract(account);
       }
     } else {
       console.log("Chain not detected, defaulting to mainnet");
       chain = "mainnet";
+      chainScan = chainExplorerBaseUrls[0];
+      contractLink.href = chainScan + EE_ADDRESS + "#code";
+      console.log(account);
       _queryContract(account);
     }
   }, 500);
 }
 
-chainContent.textContent = `(${chain})`;
-
 async function _queryContract(account) {
+  if (account == currentAccount) {
+    edit_btn.classList.remove("hidden");
+    // module_edit_arr.forEach((element) => {
+    //   element.classList.remove("hidden");
+    // });
+  } else {
+    if (!edit_btn.classList.contains("hidden")) {
+      edit_btn.classList.add("hidden");
+    }
+  }
   console.log("Querying contract for account: " + account);
   // check if account matches the hex pattern
   if (account) {
@@ -195,18 +221,24 @@ async function _queryContract(account) {
       if (composable) {
         accountComposableElementTrue.style.display = "block";
         accountComposableElementFalse.style.display = "hidden";
+        accountEditComposableElementTrue.style.display = "block";
+        accountEditComposableElementFalse.style.display = "hidden";
         accountStatus += "Account is composable. ";
       } else {
         accountComposableElementTrue.style.display = "hidden";
         accountComposableElementFalse.style.display = "block";
+        accountEditComposableElementTrue.style.display = "hidden";
+        accountEditComposableElementFalse.style.display = "block";
         accountStatus += "Account is not composable (may not have set up an EtherEthos profile). ";
       }
       if (accountIsBlocked) {
         accountBlockedElement.style.display = "block";
+        accountEditBlockedElement.style.display = "block";
         accountStatus += "Account is blocked! ";
       }
       if (moderator) {
         accountModeratorElement.style.display = "block";
+        accountEditModeratorElement.style.display = "block";
         accountStatus += "Account is not a moderator.";
       }
       if (verificationResponse.length > 0) {
@@ -215,7 +247,11 @@ async function _queryContract(account) {
         accountVerificationElement.textContent = "[nothing set]";
       }
       console.log(accountStatus);
-      accountStatusElement.textContent = accountStatus;
+      // accountStatusElement.textContent = accountStatus;
+      // accountEditStatusElement.textContent = accountStatus;
+      accountStatusElement.forEach((element) => {
+        element.textContent = accountStatus; 
+      });
     } catch (errorMessage) {
       error = true;
     }
@@ -461,7 +497,8 @@ async function _queryContract(account) {
               iconDiv.className = "ml-4 flex";
               const etherscanAtag = document.createElement("a");
               etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", "#");
+              etherscanAtag.setAttribute("href", chainScan + eeArray[7][i]);
+              etherscanAtag.setAttribute("target", "_blank");
               const etherscanImage = document.createElement("img");
               etherscanImage.className = "h-5 w-5";
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
@@ -496,9 +533,9 @@ async function _queryContract(account) {
               linkDetail.textContent = eeArray[1][i + 1];
               listItem.appendChild(linkDetail);
               const linkAtag = document.createElement("a");
-              linkAtag.setAttribute("href", "#");
+              linkAtag.setAttribute("href", eeArray[1][i]);
               const linkName = document.createElement("code");
-              linkName.className = "ml-2 mr-2 h-9 bg-blue underline";
+              linkName.className = "ml-2 mr-2 h-9 underline";
               linkName.textContent = eeArray[1][i];
               linkAtag.appendChild(linkName);
               listItem.appendChild(linkAtag);
@@ -539,21 +576,22 @@ async function _queryContract(account) {
               iconDiv.className = "ml-4 flex";
               const etherscanAtag = document.createElement("a");
               etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", "#");
+              etherscanAtag.setAttribute("href", chainScan + eeArray[2][i]);
+              etherscanAtag.setAttribute("target", "_blank");
               const etherscanImage = document.createElement("img");
               etherscanImage.className = "h-5 w-5";
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
               etherscanImage.setAttribute("alt", "etherscan logo");
               etherscanAtag.appendChild(etherscanImage);
               const etherethosAtag = document.createElement("a");
-              etherethosAtag.setAttribute("href", "#");
-              const etherethosImage = document.createElement("img");
-              etherethosImage.className = "h-5 w-5";
-              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-              etherethosImage.setAttribute("alt", "etherethos logo");
-              etherethosAtag.appendChild(etherethosImage);
+              // etherethosAtag.setAttribute("href", "#");
+              // const etherethosImage = document.createElement("img");
+              // etherethosImage.className = "h-5 w-5";
+              // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              // etherethosImage.setAttribute("alt", "etherethos logo");
+              // etherethosAtag.appendChild(etherethosImage);
               iconDiv.appendChild(etherscanAtag);
-              iconDiv.appendChild(etherethosAtag);
+              // iconDiv.appendChild(etherethosAtag);
               listItem.appendChild(iconDiv);
               associatedContainer.appendChild(listItem);
             }
@@ -597,12 +635,14 @@ async function _queryContract(account) {
               iconDiv.className = "ml-4 flex";
               const etherscanAtag = document.createElement("a");
               etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", "#");
+              etherscanAtag.setAttribute("href", chainScan + eeArray[3][i]);
+              etherscanAtag.setAttribute("target", "_blank");
               const etherscanImage = document.createElement("img");
               etherscanImage.className = "h-5 w-5";
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
               etherscanImage.setAttribute("alt", "etherscan logo");
               etherscanAtag.appendChild(etherscanImage);
+              iconDiv.appendChild(etherscanAtag);
               // const etherethosAtag = document.createElement("a");
               // etherethosAtag.setAttribute("href", "#");
               // const etherethosImage = document.createElement("img");
@@ -610,7 +650,6 @@ async function _queryContract(account) {
               // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
               // etherethosImage.setAttribute("alt", "etherethos logo");
               // etherethosAtag.appendChild(etherethosImage);
-              iconDiv.appendChild(etherscanAtag);
               // iconDiv.appendChild(etherethosAtag);
               listItem.appendChild(iconDiv);
               respectReceivingContainer.appendChild(listItem);
@@ -634,21 +673,22 @@ async function _queryContract(account) {
               iconDiv.className = "ml-4 flex";
               const etherscanAtag = document.createElement("a");
               etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", "#");
+              etherscanAtag.setAttribute("href", chainScan + eeArray[4][i]);
+              etherscanAtag.setAttribute("target", "_blank");
               const etherscanImage = document.createElement("img");
               etherscanImage.className = "h-5 w-5";
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
               etherscanImage.setAttribute("alt", "etherscan logo");
               etherscanAtag.appendChild(etherscanImage);
-              const etherethosAtag = document.createElement("a");
-              etherethosAtag.setAttribute("href", "#");
-              const etherethosImage = document.createElement("img");
-              etherethosImage.className = "h-5 w-5";
-              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-              etherethosImage.setAttribute("alt", "etherethos logo");
-              etherethosAtag.appendChild(etherethosImage);
+              // const etherethosAtag = document.createElement("a");
+              // etherethosAtag.setAttribute("href", "#");
+              // const etherethosImage = document.createElement("img");
+              // etherethosImage.className = "h-5 w-5";
+              // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              // etherethosImage.setAttribute("alt", "etherethos logo");
+              // etherethosAtag.appendChild(etherethosImage);
               iconDiv.appendChild(etherscanAtag);
-              iconDiv.appendChild(etherethosAtag);
+              // iconDiv.appendChild(etherethosAtag);
               listItem.appendChild(iconDiv);
               respectGivingContainer.appendChild(listItem);
             }
@@ -682,7 +722,7 @@ async function _queryContract(account) {
               centeringDiv = document.createElement("div");
               centeringDiv.className = "flex items-center";
               const noteSenderAtag = document.createElement("a");
-              noteSenderAtag.setAttribute("href", "#");
+              noteSenderAtag.setAttribute("href", chainScan + eeArray[5][i]);
               const noteSender = document.createElement("code");
               noteSender.className = "ml-2 mr-2 h-9 bg-blue underline";
               noteSender.textContent = eeArray[5][i];
@@ -691,21 +731,22 @@ async function _queryContract(account) {
               iconDiv.className = "ml-4 flex";
               etherscanAtag = document.createElement("a");
               etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", "#");
+              etherscanAtag.setAttribute("href", chainScan + eeArray[5][i]);
+              etherscanAtag.setAttribute("target", "_blank");
               etherscanImage = document.createElement("img");
               etherscanImage.className = "h-5 w-5";
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
               etherscanImage.setAttribute("alt", "etherscan logo");
               etherscanAtag.appendChild(etherscanImage);
-              etherethosAtag = document.createElement("a");
-              etherethosAtag.setAttribute("href", "#");
-              etherethosImage = document.createElement("img");
-              etherethosImage.className = "h-5 w-5";
-              etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-              etherethosImage.setAttribute("alt", "etherethos logo");
-              etherethosAtag.appendChild(etherethosImage);
+              // etherethosAtag = document.createElement("a");
+              // etherethosAtag.setAttribute("href", "#");
+              // etherethosImage = document.createElement("img");
+              // etherethosImage.className = "h-5 w-5";
+              // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
+              // etherethosImage.setAttribute("alt", "etherethos logo");
+              // etherethosAtag.appendChild(etherethosImage);
               iconDiv.appendChild(etherscanAtag);
-              iconDiv.appendChild(etherethosAtag);
+              // iconDiv.appendChild(etherethosAtag);
               centeringDiv.appendChild(noteSenderAtag);
               centeringDiv.appendChild(iconDiv);
               listItem.appendChild(centeringDiv);
@@ -733,7 +774,7 @@ async function _queryContract(account) {
         pingContainer.textContent = eeArray[0][8];
       }
     }
-    toggleVisibilityBasedOnAddress(true);
+    // mainIsVisible(true);
   }
 }
 
@@ -744,7 +785,9 @@ if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
     toggleClasses(edit_btn, ["text-secondary", "bg-main"], ["text-main", "bg-orange"]);
     toggleClasses(view_btn, ["text-main", "bg-orange"], ["text-secondary", "bg-main"]);
 
+    console.log(module_view_arr);
     for (let i = 0; i < module_view_arr.length; i++) {
+      console.log(module_view_arr[i]);
       toggleClasses(module_view_arr[i], ["hidden", "lg:hidden"], []);
       toggleClasses(module_edit_arr[i], [], ["hidden", "lg:hidden"]);
     }
