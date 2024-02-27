@@ -33,24 +33,33 @@ const dataLegend =
     [
       link,
       link_detail
+      ...
     ],
     [
       EOA,
       EOA_detail
+      ...
     ], 
     [
-      respecter account], 
-      [respecting account
+      respecter account
+      ...
+    ],
+    [
+      respecting account
+      ...
     ],
     [
       note,
-      note_detail], 
+      note_detail],
+      ...
     [
       tag
+      ...
     ], 
     [
       badge,
       badge_detail
+      ...
     ], 
     [
       custom
