@@ -808,6 +808,20 @@ if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
       toggleClasses(module_view_arr[i], ["hidden", "lg:hidden"], []);
       toggleClasses(module_edit_arr[i], [], ["hidden", "lg:hidden"]);
     }
+
+    if(eeArray) {
+      console.log('eeArray populated, prefilling form')
+      const editAlias = document.querySelectorAll('[data-edit-field="alias"]')
+      const editDetail = document.querySelectorAll('[data-edit-field="detail"]')
+      const editSocial = document.querySelectorAll('[data-edit-field="social"]')
+      const editWebsite = document.querySelectorAll('[data-edit-field="website"]')
+      const editGallery = document.querySelectorAll('[data-edit-field="gallery"]')
+
+      console.log(editAlias.value, editDetail.value)
+      editAlias.value = eeArray[0][0]
+    } else {
+      console.log('no eeArray, failed to prefill form')
+    }
   });
 
   view_btn.addEventListener("click", () => {
