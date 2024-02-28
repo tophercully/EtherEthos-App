@@ -670,6 +670,10 @@ video {
   margin-top: 1.5rem;
 }
 
+.ml-0 {
+  margin-left: 0px;
+}
+
 .flex {
   display: flex;
 }
