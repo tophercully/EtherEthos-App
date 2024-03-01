@@ -182,7 +182,7 @@ if (url_string.includes("chain")) {
 }
 
 async function _queryContract(account) {
-  if (account == currentAccount) {
+  if (account.toLowerCase() == currentAccount ? currentAccount.toLowerCase() : currentAccount) {
     edit_btn.classList.remove("hidden");
     // module_edit_arr.forEach((element) => {
     //   element.classList.remove("hidden");
@@ -292,8 +292,8 @@ async function _queryContract(account) {
             toggleComposableToContract()
         })
       if (composable) {
-        prepop(eeArray, verificationResponse)
         console.log(eeArray);
+        prepopulate(eeArray, verificationResponse)
         basicData.style.display = "block";
 
         // PFP DATA
@@ -472,53 +472,6 @@ async function _queryContract(account) {
           }
         } else {
           tagModule.style.display = "none";
-        }
-
-        // Badges
-        let badgesPresent = false;
-        for (let i = 0; i < eeArray[7].length; i += 2) {
-          if (eeArray[7][i].length > 0) {
-            badgesPresent = true;
-            break;
-          }
-        }
-        if (badgesPresent) {
-          badgesModule.style.display = "block";
-          // badgesContainer.textContent = "";
-          for (let i = 0; i < eeArray[7].length; i += 2) {
-            if (eeArray[7][i].length > 0) {
-              const badgeItem = document.createElement("li");
-              badgeItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
-              const codeElement = document.createElement("code");
-              codeElement.className = "mr-2 h-9";
-              codeElement.setAttribute("data-content", "badge");
-              codeElement.textContent = eeArray[7][i + 1];
-              badgeItem.appendChild(codeElement);
-              const badgeSenderAtag = document.createElement("a");
-              badgeSenderAtag.setAttribute("href", `${siteBase}?account=${eeArray[7][i]}`);
-              const badgeSender = document.createElement("code");
-              badgeSender.className = "ml-2 mr-2 h-9 bg-blue underline";
-              badgeSender.textContent = eeArray[7][i];
-              badgeSenderAtag.appendChild(badgeSender);
-              badgeItem.appendChild(badgeSenderAtag);
-              const iconDiv = document.createElement("div");
-              iconDiv.className = "ml-4 flex";
-              const etherscanAtag = document.createElement("a");
-              etherscanAtag.className = "mr-2 lg:mr-4";
-              etherscanAtag.setAttribute("href", chainScan + eeArray[7][i]);
-              etherscanAtag.setAttribute("target", "_blank");
-              const etherscanImage = document.createElement("img");
-              etherscanImage.className = "h-5 w-5";
-              etherscanImage.setAttribute("src", "./svg/etherscan.svg");
-              etherscanImage.setAttribute("alt", "etherscan logo");
-              etherscanAtag.appendChild(etherscanImage);
-              iconDiv.appendChild(etherscanAtag);
-              badgeItem.appendChild(iconDiv);
-              badgesContainer.appendChild(badgeItem);
-            }
-          }
-        } else {
-          badgesModule.style.display = "none";
         }
 
         // Additional Links

@@ -1,8 +1,29 @@
-const { link } = require("fs")
-
-function prepop(profileArray, verificationData) {
+function prepopulate(profileArray, verificationData) {
+    //depopulate in case of previous account info remaining
+    document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="detail"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="social"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="website"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="gallery"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="pfp-id"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="pfp-address"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="user-verification"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="notes"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="respect"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="links"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="associated"]')[0].innerHTML = ""
+    document.querySelectorAll('[data-edit-field="custom-data"]')[0].innerHTML = ""
     //autopopulate form info when available
-    if(profileArray, verificationData) {
+    console.log(profileArray)
+    if(verificationData != null) {
+        //verification info prepopulate
+        const editVerification = document.querySelectorAll('[data-edit-field="user-verification"]')[0]
+        if(verificationData) {
+          editVerification.value = verificationData
+        }
+    }
+    //populate from eeArray
+    if(profileArray) {
         console.log('profileArray populated, prefilling form')
         //basic info prepopulate
         const editAlias = document.querySelectorAll('[data-edit-field="alias"]')[0]
@@ -21,11 +42,7 @@ function prepop(profileArray, verificationData) {
         editPFPToken.value = profileArray[0][5]
         editPFPAddress.value = profileArray[0][6]
         
-        //verification info prepopulate
-        const editVerification = document.querySelectorAll('[data-edit-field="user-verification"]')[0]
-        if(verificationData) {
-          editVerification.value = verificationData
-        }
+        
         
         //tags info prepopulate
         //handled dynamically
@@ -94,87 +111,7 @@ function prepop(profileArray, verificationData) {
           //create an empty field for additional accounts
           createTagInput(tagsEditParent)
         }
-  
-        //badges info prepopulate
-        //handled dynamically
-        const allBadges = profileArray[7]
-        if(allBadges) {
-          const badgesEditParent = document.querySelectorAll('[data-edit-field="badges"]')[0]
-          function createTagInput(BadgesContainer, index, defaultName, defaultAddress) {
-            indexTuple = index * 2 //should target this address in the 1d doubled array [1a, 1b, 2a, 2b]
-            //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
-
-            //create the li
-            var thisBadge = document.createElement("li")
-            thisBadge.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
-            thisBadge.setAttribute('data-edit-item', '')
-            //create input1
-            var inputName = document.createElement('input')
-            inputName.setAttribute('type', 'text')
-            inputName.setAttribute('placeholder', 'Badge Name')
-            inputName.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            thisBadge.appendChild(inputName)
-            //create span with ':' divider
-            var thisBadgeSpan = document.createElement('span')
-            thisBadgeSpan.setAttribute('class', 'mx-2')
-            thisBadgeSpan.innerHTML = ':'
-            thisBadge.appendChild(thisBadgeSpan)
-            //create input1
-            var inputAddress = document.createElement('input')
-            inputAddress.setAttribute('type', 'text')
-            inputAddress.setAttribute('placeholder', 'Receiving Addresses (comma separated)')
-            inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            thisBadge.appendChild(inputAddress)
-            if(!defaultAddress) {
-                //create write button
-                var thisWrite = document.createElement('button')
-                thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-                var writeImg = document.createElement('img')
-                writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                writeImg.setAttribute('src', './svg/write.svg')
-                writeImg.setAttribute('alt', 'Wallet Logo')
-                thisWrite.appendChild(writeImg)
-                thisBadge.appendChild(thisWrite)
-
-                thisWrite.addEventListener('click', () => {
-                    console.log('Granting badge ' + inputName.value + 'to' + inputAddress.value.split(', '))
-                    var inputAsArray = inputAddress.replace(/ /g, '');
-                    var inputAsArray = inputAddress.value.split(',')
-                    bulkGrantBadgeToContract(index, inputAsArray, inputName.value)
-                })
-            } else {
-                //create delete button
-                var thisDelete = document.createElement('button')
-                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-                var deleteImg = document.createElement('img')
-                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                deleteImg.setAttribute('src', './svg/delete.svg')
-                deleteImg.setAttribute('alt', 'Wallet Logo')
-                thisDelete.appendChild(deleteImg)
-                //attach li to list
-                thisBadge.appendChild(thisDelete)
-
-                thisDelete.addEventListener('click', ()=> {
-                    console.log('deleting badge ' + index)
-                    deleteBadgeToContract(index)
-                })
-            }
-
-            BadgesContainer.appendChild(thisBadge)
-            if(defaultAddress || defaultName) {
-              inputName.value = defaultName
-              inputAddress.value = defaultAddress
-            }
-          }
-          //populate all existing
-          for(let i = 0; i < allBadges.length/2; i++) {
-            var badgeAddress = allBadges[i*2]
-            var badgeDesc = allBadges[(i*2)+1]
-            createTagInput(badgesEditParent, i, badgeDesc, badgeAddress)
-          }
-          //create an empty field for additional accounts
-          createTagInput(badgesEditParent)
-        }
+        
 
         //additional links info prepopulate
         //handled dynamically

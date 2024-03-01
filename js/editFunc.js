@@ -10,16 +10,38 @@ function handleEditField(event) {
         setDetailToContract(inputValue)
     } else if(editField == 'social') {
         setSocialToContract(inputValue)
-    } else if(editField == 'detail') {
+    } else if(editField == 'website') {
         setWebsiteToContract(inputValue)
-    } else if(editField == 'detail') {
+    } else if(editField == 'gallery') {
         setGalleryToContract(inputValue)
     } else if(editField == 'pfp-id' || editField == 'pfp-address') {
         var idInput = document.querySelectorAll('[data-edit-field="pfp-id"]')
         var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
         console.log(idInput[0].value, addressInput[0].value)
-        setPFPToContract(addressInput, Number(idInput))
+        setPFPToContract(addressInput[0].value, idInput[0].value)
     }
+}
+
+function handleDeleteField(event) {
+    const editField = event.target.getAttribute('data-edit-field');
+    console.log(`Delete field: ${editField}`);
+    if(editField == 'alias') {
+        pushAliasToContract(' ')
+    } else if(editField == 'detail') {
+        setDetailToContract(' ')
+    } else if(editField == 'social') {
+        setSocialToContract(' ')
+    } else if(editField == 'website') {
+        setWebsiteToContract(' ')
+    } else if(editField == 'gallery') {
+        setGalleryToContract(' ')
+    } else if(editField == 'pfp-id' || editField == 'pfp-address') {
+        var idInput = document.querySelectorAll('[data-edit-field="pfp-id"]')
+        var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
+        console.log(idInput[0].value, addressInput[0].value)
+        setPFPToContract(0x0000000000000000000000000000000000000000, 0)
+    }
+
 }
 
 
@@ -40,8 +62,10 @@ elementsWithDataWrite.forEach(element => {
 
     });
     //replace field with anything NOT NULL
-    deleteButton.addEventListener('click', (event) => {
-        inputField.value = ' '
+    deleteButton.addEventListener('click', () => {
+        handleDeleteField({
+            target: inputField
+        });
     });
 });
 

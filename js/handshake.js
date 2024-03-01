@@ -74,7 +74,8 @@ function handleAccountsChanged(accounts) {
   } else if (accounts[0] !== currentAccount) {
     currentAccount = accounts[0];
     console.log("Account connected:", currentAccount);
-    connectButtonText.textContent = `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}`;
+    connectButtonText.textContent = currentAccount ? `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}` : currentAccount;
+    
   }
 }
 
@@ -83,8 +84,23 @@ function handleError(error) {
 }
 
 function connectWallet() {
-  ethereum.request({ method: "eth_requestAccounts" }).then(handleAccountsChanged).catch(handleError);
+  if(!currentAccount) {
+    //initial connection
+    ethereum.request({ method: "eth_requestAccounts" }).then(handleAccountsChanged).catch(handleError);
+  } else {
+    //connect new account
+    ethereum.request({
+      method: "wallet_requestPermissions",
+      params: [
+        {
+          eth_accounts: {}
+        }
+      ]
+    }).then(handleAccountsChanged).then(()=>{window.location.reload()}).catch(handleError);
+    console.log('reconnecting')
+  }
 }
+
 
 if (connectButton) {
   connectButton.addEventListener("click", function (event) {
