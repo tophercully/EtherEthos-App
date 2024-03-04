@@ -109,11 +109,11 @@ function abbreviateAndUpdate(account) {
   });
 }
 
-if (url_string.includes("account")) {
+if (url_string.includes("address")) {
   var url = new URL(url_string);
-  const isValid = isValidEthereumAddress(url.searchParams.get("account"));
+  const isValid = isValidEthereumAddress(url.searchParams.get("address"));
   if (isValid) {
-    account = url.searchParams.get("account");
+    account = url.searchParams.get("address");
     console.log("Account accepted from URL parameter: " + account);
     abbreviateAndUpdate(account);
     mainIsVisible(true);
@@ -436,8 +436,6 @@ async function _queryContract(account) {
                     // For base64 images, use an <img> tag
                     const img = document.createElement("img");
                     img.src = imageData;
-                    img.class = 'h-full aspect-square object-contain'
-                    // img.classList.add('object-contain')
                     pfpcontainer.innerHTML = ""; // Clear the container
                     pfpcontainer.appendChild(img);
                     editPfpContainer.innerHTML = ""; // Clear the edit container
@@ -446,10 +444,6 @@ async function _queryContract(account) {
                     // For image URLs, use an <img> tag
                     const img = document.createElement("img");
                     img.src = imageData;
-                    // img.classList.add('h-10')
-                    // img.classList.add('aspect-square')
-                    img.class = 'h-full aspect-square object-contain'
-                    // img.classList.add('object-contain')
                     pfpcontainer.innerHTML = ""; // Clear the container
                     pfpcontainer.appendChild(img);
                     editPfpContainer.innerHTML = ""; // Clear the edit container
@@ -489,7 +483,7 @@ async function _queryContract(account) {
 
         // Tags
         let tagsPresent = false;
-        for (let i = 0; i < eeArray[6].length; i++) {
+        for (let i = 0; i < eeArray[7].length; i++) {
           if (eeArray[6][i].length > 0) {
             tagsPresent = true;
             break;
@@ -626,7 +620,7 @@ async function _queryContract(account) {
               listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
               const respectingReceivingAccountAtag = document.createElement("a");
               respectingReceivingAccountAtag.className = "underline";
-              respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[3][i]}`);
+              respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[3][i]}`);
               const respectReceivingAccount = document.createElement("code");
               respectReceivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
               respectReceivingAccount.textContent = eeArray[3][i];
@@ -698,7 +692,7 @@ async function _queryContract(account) {
           respectModule.style.display = "none";
         }
 
-        // NOTES
+        // NOTES RECEIVED
         let notesPresent = false;
         for (let i = 0; i < eeArray[5].length; i += 2) {
           if (eeArray[5][i].length > 0) {
@@ -739,6 +733,7 @@ async function _queryContract(account) {
               etherscanImage.setAttribute("src", "./svg/etherscan.svg");
               etherscanImage.setAttribute("alt", "etherscan logo");
               etherscanAtag.appendChild(etherscanImage);
+              
               // etherethosAtag = document.createElement("a");
               // etherethosAtag.setAttribute("href", "#");
               // etherethosImage = document.createElement("img");
@@ -750,7 +745,24 @@ async function _queryContract(account) {
               // iconDiv.appendChild(etherethosAtag);
               centeringDiv.appendChild(noteSenderAtag);
               centeringDiv.appendChild(iconDiv);
+              
               listItem.appendChild(centeringDiv);
+              if(account.toLowerCase() == currentAccount.toLowerCase()) {
+                console.log('accounts match, can delete received notes')
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center')
+                thisDelete.setAttribute('data-delete', '')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+                listItem.appendChild(thisDelete)
+
+                thisDelete.addEventListener('click', ()=> {
+                  deleteReceivedNoteToContract(eeArray[5][i])
+                })
+              }
               notesContainer.appendChild(listItem);
             }
           }
@@ -881,6 +893,7 @@ if (edit_btn && view_btn && module_view_arr && module_edit_arr) {
 
 async function showBONKSPlaceholder() {
   const pfpcontainer = document.querySelector("#pfpContainer");
+  const editPfpContainer = document.getElementById("editPfpContainer");
   let BLONKSsvg;
   error = false;
   if (!pfpcontainer) {
@@ -905,6 +918,13 @@ async function showBONKSPlaceholder() {
   }
   if (!error) {
     pfpcontainer.innerHTML = BLONKSsvg;
+    pfpcontainer.classList.add('w-full')
+    pfpcontainer.classList.add('aspect-square')
+    pfpcontainer.classList.add('object-contain')
+    editPfpContainer.innerHTML = BLONKSsvg;
+    editPfpContainer.classList.add('w-full')
+    editPfpContainer.classList.add('aspect-square')
+    editPfpContainer.classList.add('object-contain')
     blonksInfo.style.display = "block";
     blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
   }

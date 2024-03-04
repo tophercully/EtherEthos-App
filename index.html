@@ -112,8 +112,8 @@
           <div data-module-view class="module-view">
             <h3 class="mb-4">Basic Data</h3>
             <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
-              <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-                <div id="pfpContainer" class="md:border-r md:border-main h-full aspect-square object-contain"></div>
+              <div data-view-section="pfp" class="grid md:grid-rows-[3fr,4fr]">
+                <div id="pfpContainer" class="md:border-r md:border-main w-full aspect-square object-contain"></div>
                 <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                   <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
                   <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl">[contract]</a></p>
@@ -126,7 +126,7 @@
                 <div data-view-section="personal" class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
                   <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                     <h5 class="mb-2 lg:mb-0">Alias:</h5>
-                    <code data-content="alias" class="w-fit">[alias]</code>
+                    <code data-content="alias" class="w-fit font-bold">[alias]</code>
                   </div>
                   <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                     <h5 class="mb-2 lg:mb-0">Detail:</h5>
@@ -332,7 +332,7 @@
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-              <div id="editPfpContainer" class="md:border-r md:border-main h-full aspect-square object-contain"></div>
+              <div id="editPfpContainer" class="md:border-r md:border-main w-full aspect-square object-contain"></div>
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
