@@ -46,7 +46,7 @@ function prepopulate(profileArray, verificationData) {
         
         //tags info prepopulate
         //handled dynamically
-        const allTags = profileArray[6]
+        const allTags = profileArray[7]
         if(allTags) {
           const tagsEditParent = document.querySelectorAll('[data-edit-field="tags"]')[0]
           function createTagInput(tagsContainer, index, defaultInput) {
@@ -295,9 +295,9 @@ function prepopulate(profileArray, verificationData) {
     
 
 
-        //Notes info prepopulate
+        //Notes Sent info prepopulate
         //handled dynamically
-        const notes = profileArray[5]
+        const notes = profileArray[6]
         const notesEditParent = document.querySelectorAll('[data-edit-field="notes"]')[0]
         function createNoteInput(notesContainer, index, defaultDesc, defaultAddress) {
             indexTuple = index * 2 //should target this address in the doubled array [1a, 1b, 2a, 2b]
@@ -307,27 +307,69 @@ function prepopulate(profileArray, verificationData) {
             var thisNote = document.createElement("li")
             thisNote.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisNote.setAttribute('data-edit-item', '')
-            //create input1
-            var inputDesc = document.createElement('input')
-            inputDesc.setAttribute('type', 'text')
-            inputDesc.setAttribute('placeholder', 'Note Text')
-            inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            inputDesc.setAttribute('data-field-edit', 'associated-desc')
-            thisNote.appendChild(inputDesc)
-            //create span with ':' divider
-            var thisEOASpan = document.createElement('span')
-            thisEOASpan.setAttribute('class', 'mx-2')
-            thisEOASpan.innerHTML = ':'
-            thisNote.appendChild(thisEOASpan)
-            //create input1
-            var inputAddress = document.createElement('input')
-            inputAddress.setAttribute('type', 'text')
-            inputAddress.setAttribute('placeholder', 'Target Address')
-            inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            inputAddress.setAttribute('data-field-edit', 'associated-address')
-            thisNote.appendChild(inputAddress)
+            if(defaultAddress || defaultDesc) {
+                //create display for desc
+                var thisDesc = document.createElement('code')
+                    thisDesc.setAttribute('class', 'mr-2 h-9')
+                    thisDesc.innerHTML = defaultDesc
+                    thisNote.appendChild(thisDesc)
+                //create span with ':' divider
+                var thisEOASpan = document.createElement('span')
+                thisEOASpan.setAttribute('class', 'mx-2')
+                thisEOASpan.innerHTML = ':'
+                thisNote.appendChild(thisEOASpan)
+                //create anchor for address
+                var thisAnchor = document.createElement('a')
 
-            if(!defaultAddress) {
+                    thisAnchor.setAttribute("href", `${this.location.origin}?address=${defaultAddress}`)
+                    thisAnchor.setAttribute('class', 'mr-2 h-9')
+                    // thisNote.appendChild(thisAnchor)
+                //create display for address
+                var thisDisplay = document.createElement('code')
+                    thisDisplay.setAttribute('class', 'mr-2 h-9 bg-blue underline')
+                    thisDisplay.innerHTML = defaultAddress
+                    thisAnchor.appendChild(thisDisplay)
+                    thisNote.appendChild(thisAnchor)
+
+                //create delete button
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                thisDelete.setAttribute('data-delete', '')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+                thisNote.appendChild(thisDelete)
+
+                thisDelete.addEventListener('click', () => {
+                    console.log('deleting note from 1d index[', indexTuple, 'and', (indexTuple+1) + ']')
+                    // inputAddress.value = ' '
+                    // inputDesc.value = ' '
+                    deleteWrittenNoteToContract(inputAddress.value)
+                    
+                })
+            } else {
+
+                //create input1
+                var inputDesc = document.createElement('input')
+                inputDesc.setAttribute('type', 'text')
+                inputDesc.setAttribute('placeholder', 'Note Text')
+                inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+                inputDesc.setAttribute('data-field-edit', 'associated-desc')
+                thisNote.appendChild(inputDesc)
+                //create span with ':' divider
+                var thisEOASpan = document.createElement('span')
+                thisEOASpan.setAttribute('class', 'mx-2')
+                thisEOASpan.innerHTML = ':'
+                thisNote.appendChild(thisEOASpan)
+                //create input1
+                var inputAddress = document.createElement('input')
+                inputAddress.setAttribute('type', 'text')
+                inputAddress.setAttribute('placeholder', 'Target Address')
+                inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+                inputAddress.setAttribute('data-field-edit', 'associated-address')
+                thisNote.appendChild(inputAddress)
                 //create write button
                 var thisWrite = document.createElement('button')
                 thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
@@ -346,36 +388,21 @@ function prepopulate(profileArray, verificationData) {
                     setNoteToContract(inputAddress.value, inputDesc.value)
         
                 })
-            } else {
-                //create delete button
-                var thisDelete = document.createElement('button')
-                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-                thisDelete.setAttribute('data-delete', '')
-                var deleteImg = document.createElement('img')
-                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                deleteImg.setAttribute('src', './svg/delete.svg')
-                deleteImg.setAttribute('alt', 'Wallet Logo')
-                thisDelete.appendChild(deleteImg)
-                thisNote.appendChild(thisDelete)
-
-                thisDelete.addEventListener('click', () => {
-                    console.log('deleting note from 1d index[', indexTuple, 'and', (indexTuple+1) + ']')
-                    inputAddress.value = ' '
-                    inputDesc.value = ' '
-                    if(defaultAddress || defaultDesc) {
-                        deleteWrittenNoteToContract(inputAddress.value)
-                    }
-                })
+                //populate
+                if(defaultAddress || defaultDesc) {
+                    inputDesc.value = defaultDesc
+                    inputAddress.value = defaultAddress
+                }
             }
+
+            
+                
+            
             
             //attach li to list
             notesContainer.appendChild(thisNote)
 
-            //populate
-            if(defaultAddress || defaultDesc) {
-                inputDesc.value = defaultDesc
-                inputAddress.value = defaultAddress
-            }
+            
         }
         //populate all existing
         for(let i = 0; i < notes.length/2; i++) {

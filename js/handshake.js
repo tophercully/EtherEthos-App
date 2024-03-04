@@ -4,7 +4,7 @@ const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEP
 const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
 const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
 
-const EE_ADDRESS = "0x770af72f943A24316CB3195BA6C22C49f9306C5a";
+const EE_ADDRESS = "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409";
 const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, EE_ADDRESS);
 const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, EE_ADDRESS);
 const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, EE_ADDRESS);
