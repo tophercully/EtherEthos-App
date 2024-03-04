@@ -113,7 +113,7 @@
             <h3 class="mb-4">Basic Data</h3>
             <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
               <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-                <div id="pfpContainer" class="md:border-r md:border-main"></div>
+                <div id="pfpContainer" class="md:border-r md:border-main h-full aspect-square object-contain"></div>
                 <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                   <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
                   <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl">[contract]</a></p>
@@ -332,18 +332,13 @@
           <h3 class="mb-4">Basic Data</h3>
           <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-              <div id="pfpContainer" class="md:border-r md:border-main"></div>
+              <div id="editPfpContainer" class="md:border-r md:border-main h-full aspect-square object-contain"></div>
 
               <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
                   <p class="text-base font-bold lg:mb-4 lg:text-xl">PFP TokenID :</p>
                   <div data-edit-div class="flex items-center">
                     <input data-edit-field="pfp-id" data-pfp-id data-edit-field placeholder="PFP Token ID" type="text" class="mr-1 max-h-10 rounded-md border border-main px-3 py-3 text-md font-normal" />
-                    <!-- <button data-write class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                      <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                    ><button data-delete class="mx-1 h-7 w-7 rounded-full bg-main p-0">
-                      <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
-                    </button> -->
                   </div>
                 </div>
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
@@ -377,9 +372,9 @@
                   <div data-edit-div class="flex flex-wrap items-center">
                     <textarea data-edit-field="detail" data-detail placeholder="Add a short detail or description about the account here" class="mr-1 mb 3 h-32 w-full rounded-md border border-main px-3 py-3 text-md"></textarea>
                     <!-- <div class="mt-4"> -->
-                      <button data-write class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      <button data-write class="mx-2 mt-4 h-7 w-7 rounded-full bg-main p-0">
                         <img src="./svg/write.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" /></button
-                      ><button data-delete class="mx-2 h-7 w-7 rounded-full bg-main p-0">
+                      ><button data-delete class="mx-2 mt-4 h-7 w-7 rounded-full bg-main p-0">
                         <img src="./svg/delete.svg" alt="Wallet logo" class="m-auto h-3/5 w-3/5 object-contain" />
                       </button>
                     <!-- </div> -->

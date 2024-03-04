@@ -205,95 +205,94 @@ function prepopulate(profileArray, verificationData) {
         //Associated accounts info prepopulate
         //handled dynamically
         const EOAs = profileArray[2]
-        if(EOAs.length/2 > 0) {
-          const EOAEditParent = document.querySelectorAll('[data-edit-field="associated"]')[0]
-          function createEAOInput(EOAContainer, index, defaultDesc, defaultAddress) {
-            indexTuple = index * 2 //should target this address in the doubled array [1a, 1b, 2a, 2b]
-            //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
-  
-            //create the li
-            var thisEOA = document.createElement("li")
-            thisEOA.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
-            thisEOA.setAttribute('data-edit-item', '')
-            //create input1
-            var inputDesc = document.createElement('input')
-            inputDesc.setAttribute('type', 'text')
-            inputDesc.setAttribute('placeholder', 'Description')
-            inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            inputDesc.setAttribute('data-field-edit', 'associated-desc')
-            thisEOA.appendChild(inputDesc)
-            //create span with ':' divider
-            var thisEOASpan = document.createElement('span')
-            thisEOASpan.setAttribute('class', 'mx-2')
-            thisEOASpan.innerHTML = ':'
-            thisEOA.appendChild(thisEOASpan)
-            //create input1
-            var inputAddress = document.createElement('input')
-            inputAddress.setAttribute('type', 'text')
-            inputAddress.setAttribute('placeholder', 'Address')
-            inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            inputAddress.setAttribute('data-field-edit', 'associated-address')
-            thisEOA.appendChild(inputAddress)
-            //create write button
-            var thisWrite = document.createElement('button')
-            thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            thisWrite.setAttribute('data-write', '')
-            var writeImg = document.createElement('img')
-            writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            writeImg.setAttribute('src', './svg/write.svg')
-            writeImg.setAttribute('alt', 'Wallet Logo')
-            thisWrite.appendChild(writeImg)
-            thisEOA.appendChild(thisWrite)
-            //create delete button
-            var thisDelete = document.createElement('button')
-            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            thisDelete.setAttribute('data-delete', '')
-            var deleteImg = document.createElement('img')
-            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            deleteImg.setAttribute('src', './svg/delete.svg')
-            deleteImg.setAttribute('alt', 'Wallet Logo')
-            thisDelete.appendChild(deleteImg)
-            thisEOA.appendChild(thisDelete)
-            
-            //attach li to list
-            EOAContainer.appendChild(thisEOA)
+        const EOAEditParent = document.querySelectorAll('[data-edit-field="associated"]')[0]
+        function createEAOInput(EOAContainer, index, defaultDesc, defaultAddress) {
+        indexTuple = index * 2 //should target this address in the doubled array [1a, 1b, 2a, 2b]
+        //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
 
-            //populate
-            if(defaultAddress || defaultDesc) {
-              inputDesc.value = defaultDesc
-              inputAddress.value = defaultAddress
-            }
-  
-            thisWrite.addEventListener('click', () => {
-              console.log(inputDesc.value, ':', inputAddress.value, 'was written to index[', indexTuple, 'and', (indexTuple+1) + ']')
-              if(defaultAddress || defaultDesc) {
-                //exists, needs to update
-                console.log('updating '+ indexTuple)
-                updateAssociatedAccountToContract(index, inputAddress.value, inputDesc.value)
-              } else {
-                //doesn't exist yet, needs a new entry
-                console.log('sent new entry to tuple index', indexTuple)
-                pushAssociatedAccountToContract(inputAddress.value, inputDesc.value)
-              }
-            })
-            thisDelete.addEventListener('click', () => {
-              console.log('deleting index[', indexTuple, 'and', (indexTuple+1) + ']')
-              inputAddress.value = ' '
-              inputDesc.value = ' '
-              if(defaultAddress || defaultDesc) {
-                deleteAssociatedAccountToContract(index)
-              }
-            })
-          }
-          //populate all existing
-          for(let i = 0; i < EOAs.length/2; i++) {
-            var EOA = EOAs[i*2]
-            var EOADesc = EOAs[(i*2)+1]
-            createEAOInput(EOAEditParent, i, EOADesc, EOA)
-          }
-          //create an empty field for additional accounts
-          createEAOInput(EOAEditParent, EOAs.length)
+        //create the li
+        var thisEOA = document.createElement("li")
+        thisEOA.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+        thisEOA.setAttribute('data-edit-item', '')
+        //create input1
+        var inputDesc = document.createElement('input')
+        inputDesc.setAttribute('type', 'text')
+        inputDesc.setAttribute('placeholder', 'Description')
+        inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+        inputDesc.setAttribute('data-field-edit', 'associated-desc')
+        thisEOA.appendChild(inputDesc)
+        //create span with ':' divider
+        var thisEOASpan = document.createElement('span')
+        thisEOASpan.setAttribute('class', 'mx-2')
+        thisEOASpan.innerHTML = ':'
+        thisEOA.appendChild(thisEOASpan)
+        //create input1
+        var inputAddress = document.createElement('input')
+        inputAddress.setAttribute('type', 'text')
+        inputAddress.setAttribute('placeholder', 'Address')
+        inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+        inputAddress.setAttribute('data-field-edit', 'associated-address')
+        thisEOA.appendChild(inputAddress)
+        //create write button
+        var thisWrite = document.createElement('button')
+        thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+        thisWrite.setAttribute('data-write', '')
+        var writeImg = document.createElement('img')
+        writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+        writeImg.setAttribute('src', './svg/write.svg')
+        writeImg.setAttribute('alt', 'Wallet Logo')
+        thisWrite.appendChild(writeImg)
+        thisEOA.appendChild(thisWrite)
+        //create delete button
+        var thisDelete = document.createElement('button')
+        thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+        thisDelete.setAttribute('data-delete', '')
+        var deleteImg = document.createElement('img')
+        deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+        deleteImg.setAttribute('src', './svg/delete.svg')
+        deleteImg.setAttribute('alt', 'Wallet Logo')
+        thisDelete.appendChild(deleteImg)
+        thisEOA.appendChild(thisDelete)
+        
+        //attach li to list
+        EOAContainer.appendChild(thisEOA)
+
+        //populate
+        if(defaultAddress || defaultDesc) {
+            inputDesc.value = defaultDesc
+            inputAddress.value = defaultAddress
         }
+
+        thisWrite.addEventListener('click', () => {
+            console.log(inputDesc.value, ':', inputAddress.value, 'was written to index[', indexTuple, 'and', (indexTuple+1) + ']')
+            if(defaultAddress || defaultDesc) {
+            //exists, needs to update
+            console.log('updating '+ indexTuple)
+            updateAssociatedAccountToContract(index, inputAddress.value, inputDesc.value)
+            } else {
+            //doesn't exist yet, needs a new entry
+            console.log('sent new entry to tuple index', indexTuple)
+            pushAssociatedAccountToContract(inputAddress.value, inputDesc.value)
+            }
+        })
+        thisDelete.addEventListener('click', () => {
+            console.log('deleting index[', indexTuple, 'and', (indexTuple+1) + ']')
+            inputAddress.value = ' '
+            inputDesc.value = ' '
+            if(defaultAddress || defaultDesc) {
+            deleteAssociatedAccountToContract(index)
+            }
+        })
+        }
+        //populate all existing
+        for(let i = 0; i < EOAs.length/2; i++) {
+        var EOA = EOAs[i*2]
+        var EOADesc = EOAs[(i*2)+1]
+        createEAOInput(EOAEditParent, i, EOADesc, EOA)
+        }
+        //create an empty field for additional accounts
+        createEAOInput(EOAEditParent, EOAs.length)
+    
 
 
         //Notes info prepopulate

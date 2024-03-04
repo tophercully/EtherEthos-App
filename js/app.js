@@ -121,27 +121,12 @@ if (url_string.includes("account")) {
   }
 }
 
-// Attach event listener to search button for Ethereum address validation and feedback
-if (searchButton) {
-  searchButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the form from submitting
-    const isValid = isValidEthereumAddress(searchInput.value);
-    if (isValid) {
-      account = searchInput.value;
-      abbreviateAndUpdate(account);
-      _queryContract(account);
-      mainIsVisible(true);
-    } else {
-      // Notify the user if the Ethereum address is invalid
-      alert("Please enter a valid Ethereum address, 0x...");
-      mainIsVisible(false);
-    }
-  });
-}
+//set up url params
+const searchParams = new URLSearchParams(window.location.search)
 
-if (url_string.includes("chain")) {
-  var url = new URL(url_string);
-  const chainInput = url.searchParams.get("chain");
+if (searchParams.get("chain")) {
+  // var url = new URL(url_string);
+  const chainInput = searchParams.get("chain")//url.searchParams.get("chain");
   if (chainNames.includes(chainInput)) {
     console.log("Chain accepted from URL parameter: " + chainInput);
     chainIndex = chainIds.indexOf(chainInput);
@@ -158,38 +143,80 @@ if (url_string.includes("chain")) {
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
   setTimeout(() => {
-    chainIndex = chainIds.indexOf(currentChainId);
-    if (chainIndex > -1) {
-      chain = chainNames[chainIndex];
-      chainScan = chainExplorerBaseUrls[chainIndex];
-      console.log("Chain detected: " + chain);
-      chainContent.forEach((element) => {
-        element.textContent = `(${chain})`;
-      });
-      contractLink.href = chainScan + EE_ADDRESS + "#code";
-      if (account) {
+  // window.addEventListener('storage', (event)=>{
+  //   if(event.newValue && window.sessionStorage.getItem('chainID') == currentChainId) {
+
+      chainIndex = chainIds.indexOf(currentChainId);
+      if (chainIndex > -1) {
+        chain = chainNames[chainIndex];
+        chainScan = chainExplorerBaseUrls[chainIndex];
+        console.log("Chain detected: " + chain);
+        chainContent.forEach((element) => {
+          element.textContent = `(${chain})`;
+        });
+        contractLink.href = chainScan + EE_ADDRESS + "#code";
+        if (account) {
+          _queryContract(account);
+        }
+      } else {
+        console.log("Chain not detected, defaulting to mainnet");
+        chain = "mainnet";
+        chainScan = chainExplorerBaseUrls[0];
+        contractLink.href = chainScan + EE_ADDRESS + "#code";
+        console.log(account);
         _queryContract(account);
       }
-    } else {
-      console.log("Chain not detected, defaulting to mainnet");
-      chain = "mainnet";
-      chainScan = chainExplorerBaseUrls[0];
-      contractLink.href = chainScan + EE_ADDRESS + "#code";
-      console.log(account);
-      _queryContract(account);
-    }
+  //   }
+  // })
   }, 500);
 }
 
+
+console.log('search params are ' + searchParams)
+//search if there is an address in the url params
+account = searchParams.get('address')
+console.log(account)
+setTimeout(()=> {
+  if(account && isValidEthereumAddress(account)) {
+    abbreviateAndUpdate(account);
+    _queryContract(account)
+    mainIsVisible(true);
+  }
+}, 501)
+
+// Attach event listener to search button for Ethereum address validation and feedback
+if (searchButton) {
+  searchButton.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the form from submitting
+    const isValid = isValidEthereumAddress(searchInput.value);
+    if (isValid) {
+      // account = searchInput.value;
+      // console.log(account)
+      searchParams.set('address', searchInput.value)
+      window.location.search = searchParams
+      // abbreviateAndUpdate(account);
+      // _queryContract(account);
+      // mainIsVisible(true);
+      
+    } else {
+      // Notify the user if the Ethereum address is invalid
+      alert("Please enter a valid Ethereum address, 0x...");
+      mainIsVisible(false);
+    }
+  });
+}
+
 async function _queryContract(account) {
-  if (account.toLowerCase() == currentAccount ? currentAccount.toLowerCase() : currentAccount) {
-    edit_btn.classList.remove("hidden");
-    // module_edit_arr.forEach((element) => {
-    //   element.classList.remove("hidden");
-    // });
+  if (account.toLowerCase() == currentAccount.toLowerCase()) {
+    console.log(account.toLowerCase(), currentAccount.toLowerCase())
+    if (edit_btn.classList.contains("hidden")) {
+      edit_btn.classList.remove("hidden");
+
+    }
   } else {
     if (!edit_btn.classList.contains("hidden")) {
       edit_btn.classList.add("hidden");
+      console.log('hiding edit')
     }
   }
   console.log("Querying contract for account: " + account);
@@ -396,24 +423,37 @@ async function _queryContract(account) {
                 .then((imageData) => {
                   console.log("Image Data:", imageData);
                   const pfpcontainer = document.querySelector("#pfpContainer");
-                  if (!pfpcontainer) {
+                  const editPfpContainer = document.getElementById("editPfpContainer");
+                  
+                  if (!pfpcontainer || !editPfpContainer) {
                     console.error("Container not found");
                     return;
                   }
                   if (imageData.startsWith("<?xml") || imageData.startsWith("<svg")) {
                     pfpcontainer.innerHTML = imageData;
+                    editPfpContainer.innerHTML = imageData;
                   } else if (imageData.startsWith("data:image")) {
                     // For base64 images, use an <img> tag
                     const img = document.createElement("img");
                     img.src = imageData;
+                    img.class = 'h-full aspect-square object-contain'
+                    // img.classList.add('object-contain')
                     pfpcontainer.innerHTML = ""; // Clear the container
                     pfpcontainer.appendChild(img);
+                    editPfpContainer.innerHTML = ""; // Clear the edit container
+                    editPfpContainer.appendChild(img.cloneNode(true));
                   } else if (imageData.startsWith("http")) {
                     // For image URLs, use an <img> tag
                     const img = document.createElement("img");
                     img.src = imageData;
+                    // img.classList.add('h-10')
+                    // img.classList.add('aspect-square')
+                    img.class = 'h-full aspect-square object-contain'
+                    // img.classList.add('object-contain')
                     pfpcontainer.innerHTML = ""; // Clear the container
                     pfpcontainer.appendChild(img);
+                    editPfpContainer.innerHTML = ""; // Clear the edit container
+                    editPfpContainer.appendChild(img.cloneNode(true));
                   } else {
                     console.error("Unsupported image data format");
                   }
