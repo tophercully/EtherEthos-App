@@ -3,12 +3,72 @@ const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`
 const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
 const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
 const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
+let currentChain = null;
+let currentAccount = null;
 
-const EE_ADDRESS = "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409";
-const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, EE_ADDRESS);
-const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, EE_ADDRESS);
-const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, EE_ADDRESS);
-const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, EE_ADDRESS);
+let chains = [
+  {
+    name: 'mainnet',
+    id: 1,
+    explorerBaseUrl: "https://etherscan.io/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+  {
+    name: 'sepolia',
+    id: 11155111,
+    explorerBaseUrl: "https://sepolia.etherscan.io/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+  {
+    name: 'optimism',
+    id: 10,
+    explorerBaseUrl: "https://optimistic.etherscan.io/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+  {
+    name: 'base',
+    id: 8453,
+    explorerBaseUrl: "https://basescan.org/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+  {
+    name: 'arbitrum',
+    id: 42161,
+    explorerBaseUrl: "https://arbiscan.io/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+  {
+    name: 'polygon',
+    id: 137,
+    explorerBaseUrl: "https://polygonscan.com/address/",
+    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  },
+]
+
+var chainParams = new URLSearchParams(window.location.search)
+let EE_ADDRESS
+if(chainParams.has("chain")) {
+  //Find contract address based on search query
+  var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
+  chainIndex = chains.indexOf(findChainID);
+  EE_ADDRESS = chains[chainIndex].contractAddress
+} else {
+  if(currentAccount) {
+    //Find contract address based on wallet chainID
+    window.addEventListener('load', ()=>{
+      var findChainID = chains.find(o => o.id === Number(chainParams.get("chain")))
+      chainIndex = chains.indexOf(findChainID);
+      EE_ADDRESS = chains[chainIndex].contractAddress
+      
+    })
+  } else {
+    EE_ADDRESS = "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+  }
+}
+const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contractAddress);
+const EE_Contract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(EE_ABI, chains[1].contractAddress);
+const EE_Contract_Alchemy_Optimism = new web3Optimism.eth.Contract(EE_ABI, chains[2].contractAddress);
+const EE_Contract_Alchemy_Base = new web3Base.eth.Contract(EE_ABI, chains[3].contractAddress);
 
 const connectButton = document.querySelector("[data-connect]");
 const connectButtonText = document.querySelector("[data-connect] span");
@@ -65,7 +125,7 @@ function handleChainChanged() {
   window.location.reload();
 }
 
-let currentAccount = null;
+
 
 function handleAccountsChanged(accounts) {
   if (accounts.length === 0) {
