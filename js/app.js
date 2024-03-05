@@ -126,42 +126,36 @@ if (url_string.includes("address")) {
 const searchParams = new URLSearchParams(window.location.search)
 
 if (searchParams.get("chain")) {
-  const chainInput = searchParams.get("chain")//url.searchParams.get("chain");
-  console.log('chain input: ' + chainInput)
-  if(chainInput == 'mainnet') {
-    currentChainId = 0
-  } else if( chainInput == 'sepolia') {
-    currentChainId = 1
-  }
-  chainIndex = chainIds.indexOf(currentChainId);
-  console.log('chainIndex ' + chainIndex)
-  if (chainIndex > -1) {
-    chain = chainNames[chainIndex];
-    chainScan = chainExplorerBaseUrls[chainIndex];
-    console.log("Chain detected: " + chain);
-    chainContent.forEach((element) => {
-      element.textContent = `(${chain})`;
-    });
-    contractLink.href = chainScan + EE_ADDRESS + "#code";
-    if (account) {
-      _queryContract(account);
+  window.addEventListener('load', ()=>{
+    //overwrite handshake chainID
+    const chainInput = searchParams.get("chain")
+    console.log('chain input: ' + chainInput)
+    chainIndex = chainIds.indexOf(Number(chainInput));
+    console.log('chainIndex ' + chainIndex)
+    if (chainIndex > -1) {
+      chain = chainNames[chainIndex];
+      chainScan = chainExplorerBaseUrls[chainIndex];
+      console.log("Chain detected: " + chain);
+      chainContent.forEach((element) => {
+        element.textContent = `(${chain})`;
+      });
+      contractLink.href = chainScan + EE_ADDRESS + "#code";
+      if (account) {
+        _queryContract(account);
+      }
+      
+      var chainDisplay = document.getElementById('chain-info')
+      var chainText = document.getElementById('chain-name')
+      chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
+      var chainImg = document.getElementById('chain-img')
+      chainDisplay.appendChild(chainImg)
+      chainDisplay.appendChild(chainText)
+    } else {
+      
+      console.log('exception ' + account)
+      applyQuery(account)
     }
-
-    var chainDisplay = document.getElementById('chain-info')
-    var chainText = document.getElementById('chain-name')
-    chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-    var chainImg = document.getElementById('chain-img')
-    // chainImg.src = './svg/connection.svg'
-    // chainImg.setAttribute('class', 'w-10 aspect-square object-contain')
-    chainDisplay.appendChild(chainImg)
-    chainDisplay.appendChild(chainText)
-    // chainDisplay.setAttribute('class', 'h-0.1 w-0.1')
-    
-  } else {
-    
-    console.log('exception ' + account)
-    applyQuery(account)
-  }
+  })
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
   window.addEventListener('load', ()=>{
@@ -183,15 +177,9 @@ if (searchParams.get("chain")) {
         var chainText = document.getElementById('chain-name')
         chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
         var chainImg = document.getElementById('chain-img')
-        // chainImg.src = './svg/connection.svg'
-        // chainImg.setAttribute('class', 'w-10 aspect-square object-contain')
         chainDisplay.appendChild(chainImg)
         chainDisplay.appendChild(chainText)
-        // chainDisplay.setAttribute('class', 'h-0.1 w-0.1')
-        
       } else {
-        
-
         applyQuery(account)
       }
   })
@@ -239,6 +227,7 @@ if (searchButton) {
 }
 
 async function _queryContract(account) {
+  console.log(`account ${account}, currentAccount ${currentAccount}`)
   if (account.toLowerCase() == currentAccount.toLowerCase()) {
     console.log(account.toLowerCase(), currentAccount.toLowerCase())
     if (edit_btn.classList.contains("hidden")) {
