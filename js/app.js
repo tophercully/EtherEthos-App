@@ -125,8 +125,17 @@ if (url_string.includes("address")) {
 //set up url params
 const searchParams = new URLSearchParams(window.location.search)
 
+//set chain dropdown to current chain
+if(searchParams.get("chain")) {
+  searchNetwork.setAttribute('selected', searchParams.get("chain"))
+} else {
+  window.addEventListener('load', ()=> {
+    searchNetwork.setAttribute('selected', searchParams.get("chain"))
+  })
+}
+
 if (searchParams.get("chain")) {
-  window.addEventListener('load', ()=>{
+  window.addEventListener('load', ()=> {
     //overwrite handshake chainID
     const chainInput = searchParams.get("chain")
     console.log('chain input: ' + chainInput)
@@ -210,12 +219,14 @@ if (searchButton) {
     event.preventDefault(); // Prevent the form from submitting
     const isValid = isValidEthereumAddress(searchInput.value);
     if (isValid) {
-      // account = searchInput.value;
-      // console.log(account)
+      //grab address
       searchParams.set('address', searchInput.value)
+      //grab network if one is selected
       if(searchNetwork.value) {
         searchParams.set('chain', searchNetwork.value)
         console.log(searchNetwork.value)
+      } else {
+        searchParams.delete('chain')
       }
       window.location.search = searchParams
     } else {
