@@ -23,6 +23,7 @@ const module_view_arr = document.querySelectorAll("[data-module-view]");
 const module_edit_arr = document.querySelectorAll("[data-module-edit]");
 
 const searchInput = document.querySelector("[data-search-input]");
+const searchNetwork = document.getElementById("chain-selector");
 const searchButton = document.querySelector("[data-search-submit]");
 const mainContent = document.querySelector("[data-main]");
 
@@ -125,25 +126,47 @@ if (url_string.includes("address")) {
 const searchParams = new URLSearchParams(window.location.search)
 
 if (searchParams.get("chain")) {
-  // var url = new URL(url_string);
   const chainInput = searchParams.get("chain")//url.searchParams.get("chain");
-  if (chainNames.includes(chainInput)) {
-    console.log("Chain accepted from URL parameter: " + chainInput);
-    chainIndex = chainIds.indexOf(chainInput);
-    if (chainIndex > -1) {
-      chain = chainNames[chainIndex];
-      chainScan = chainExplorerBaseUrls[chainIndex];
-      chainContent.forEach((element) => {
-        element.textContent = `(${chain})`;
-      });
-      contractLink.href = chainScan + EE_ADDRESS + "#code";
+  console.log('chain input: ' + chainInput)
+  if(chainInput == 'mainnet') {
+    currentChainId = 0
+  } else if( chainInput == 'sepolia') {
+    currentChainId = 1
+  }
+  chainIndex = chainIds.indexOf(currentChainId);
+  console.log('chainIndex ' + chainIndex)
+  if (chainIndex > -1) {
+    chain = chainNames[chainIndex];
+    chainScan = chainExplorerBaseUrls[chainIndex];
+    console.log("Chain detected: " + chain);
+    chainContent.forEach((element) => {
+      element.textContent = `(${chain})`;
+    });
+    contractLink.href = chainScan + EE_ADDRESS + "#code";
+    if (account) {
       _queryContract(account);
     }
+
+    var chainDisplay = document.getElementById('chain-info')
+    var chainText = document.getElementById('chain-name')
+    chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
+    var chainImg = document.getElementById('chain-img')
+    // chainImg.src = './svg/connection.svg'
+    // chainImg.setAttribute('class', 'w-10 aspect-square object-contain')
+    chainDisplay.appendChild(chainImg)
+    chainDisplay.appendChild(chainText)
+    // chainDisplay.setAttribute('class', 'h-0.1 w-0.1')
+    
+  } else {
+    
+    console.log('exception ' + account)
+    applyQuery(account)
   }
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
   window.addEventListener('load', ()=>{
       chainIndex = chainIds.indexOf(currentChainId);
+      console.log('chainIndex ' + chainIndex)
       if (chainIndex > -1) {
         chain = chainNames[chainIndex];
         chainScan = chainExplorerBaseUrls[chainIndex];
@@ -169,7 +192,7 @@ if (searchParams.get("chain")) {
       } else {
         
 
-        applyQuery()
+        applyQuery(account)
       }
   })
 }
@@ -202,11 +225,11 @@ if (searchButton) {
       // account = searchInput.value;
       // console.log(account)
       searchParams.set('address', searchInput.value)
+      if(searchNetwork.value) {
+        searchParams.set('chain', searchNetwork.value)
+        console.log(searchNetwork.value)
+      }
       window.location.search = searchParams
-      // abbreviateAndUpdate(account);
-      // _queryContract(account);
-      // mainIsVisible(true);
-      
     } else {
       // Notify the user if the Ethereum address is invalid
       alert("Please enter a valid Ethereum address, 0x...");
