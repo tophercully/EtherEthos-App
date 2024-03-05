@@ -174,6 +174,11 @@ if (searchParams.get("chain")) {
   })
 }
 
+//refresh page when user changes networks from metamask
+window.ethereum.on("chainChanged", (chainId) => {
+  window.location.reload()
+})
+
 function applyQuery() {
   //only run after query and chain ID are present
   console.log('search params are ' + searchParams)
