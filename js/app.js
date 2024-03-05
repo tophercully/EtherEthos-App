@@ -1,11 +1,14 @@
 let account, abbrvAccount, error, permissions, eeArray, eeBasics, chain;
 let composable, accountIsBlocked, moderator, verificationResponse, perms, composableCheck, accountIsBlockedCheck, moderatorCheck, verificationResponseCheck;
 // arbitrum and polygon not yet supported
-let chainIds = [1, 11155111, 10, 8453, 42161, 137];
-let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
-let chainExplorerBaseUrls = ["https://etherscan.io/address/", "https://sepolia.etherscan.io/address/", "https://optimistic.etherscan.io/address/", "https://basescan.org/address/", "https://arbiscan.io/address/", "https://polygonscan.com/address/"];
+// let chainIds = [1, 11155111, 10, 8453, 42161, 137];
+// let chainNames = ["mainnet", "sepolia", "optimism", "base", "arbitrum", "polygon"];
+// let chainExplorerBaseUrls = ["https://etherscan.io/address/", "https://sepolia.etherscan.io/address/", "https://optimistic.etherscan.io/address/", "https://basescan.org/address/", "https://arbiscan.io/address/", "https://polygonscan.com/address/"];
+
+
 let chainScan;
-var url_string = window.location.href;
+//set up url params
+const searchParams = new URLSearchParams(window.location.search)
 let rawAccount = "";
 const hexPat = /^0[xX]{1}[a-fA-F0-9]{40}$/;
 const currentUrl = new URL(window.location.href);
@@ -32,7 +35,6 @@ const contractLink = document.querySelector("[contract-link]");
 
 const accountNameElements = document.querySelectorAll("[data-account-name]");
 const accountStatusElement = document.querySelectorAll("[data-content-account-status]");
-// const accountEditStatusElement = document.querySelector("[data-content-account-edit-status]");
 
 const accountComposableElementTrue = document.querySelector("[data-composable=true]");
 const accountComposableElementFalse = document.querySelector("[data-composable=false]");
@@ -110,11 +112,10 @@ function abbreviateAndUpdate(account) {
   });
 }
 
-if (url_string.includes("address")) {
-  var url = new URL(url_string);
-  const isValid = isValidEthereumAddress(url.searchParams.get("address"));
+if (searchParams.get("address")) {
+  const isValid = isValidEthereumAddress(searchParams.get("address"));
   if (isValid) {
-    account = url.searchParams.get("address");
+    account = searchParams.get("address");
     console.log("Account accepted from URL parameter: " + account);
     abbreviateAndUpdate(account);
     mainIsVisible(true);
@@ -122,8 +123,7 @@ if (url_string.includes("address")) {
   }
 }
 
-//set up url params
-const searchParams = new URLSearchParams(window.location.search)
+
 
 //set chain dropdown to current chain
 if(searchParams.get("chain")) {
@@ -136,14 +136,18 @@ if(searchParams.get("chain")) {
 
 if (searchParams.get("chain")) {
   window.addEventListener('load', ()=> {
-    //overwrite handshake chainID
+    //use search params chainID
     const chainInput = searchParams.get("chain")
-    console.log('chain input: ' + chainInput)
-    chainIndex = chainIds.indexOf(Number(chainInput));
+    var hasID = chains.find(o => o.id === Number(chainInput))
+    console.log(hasID)
+    chainIndex = chains.indexOf(hasID);
     console.log('chainIndex ' + chainIndex)
+    console.log('chain input: ' + chainInput)
     if (chainIndex > -1) {
-      chain = chainNames[chainIndex];
-      chainScan = chainExplorerBaseUrls[chainIndex];
+      var currentNetwork = chains[chainIndex]
+      //set contract address for chain
+      chain = currentNetwork.name;
+      chainScan = currentNetwork.explorerBaseUrl;
       console.log("Chain detected: " + chain);
       chainContent.forEach((element) => {
         element.textContent = `(${chain})`;
@@ -168,11 +172,14 @@ if (searchParams.get("chain")) {
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
   window.addEventListener('load', ()=>{
-      chainIndex = chainIds.indexOf(currentChainId);
+
+      var hasID = chains.find(o => o.id === Number(currentChainId))
+      chainIndex = chains.indexOf(hasID);
       console.log('chainIndex ' + chainIndex)
       if (chainIndex > -1) {
-        chain = chainNames[chainIndex];
-        chainScan = chainExplorerBaseUrls[chainIndex];
+        var currentNetwork = chains[chainIndex]
+        chain = currentNetwork.name;
+        chainScan = currentNetwork.explorerBaseUrl;
         console.log("Chain detected: " + chain);
         chainContent.forEach((element) => {
           element.textContent = `(${chain})`;
@@ -238,12 +245,19 @@ if (searchButton) {
 }
 
 async function _queryContract(account) {
-  console.log(`account ${account}, currentAccount ${currentAccount}`)
-  if (account.toLowerCase() == currentAccount.toLowerCase()) {
-    console.log(account.toLowerCase(), currentAccount.toLowerCase())
-    if (edit_btn.classList.contains("hidden")) {
-      edit_btn.classList.remove("hidden");
-
+  if(currentAccount) {
+    console.log(`account ${account}, currentAccount ${currentAccount}`)
+    if (account.toLowerCase() == currentAccount.toLowerCase()) {
+      console.log(account.toLowerCase(), currentAccount.toLowerCase())
+      if (edit_btn.classList.contains("hidden")) {
+        edit_btn.classList.remove("hidden");
+        
+      }
+    } else {
+      if (!edit_btn.classList.contains("hidden")) {
+        edit_btn.classList.add("hidden");
+        console.log('hiding edit')
+      }
     }
   } else {
     if (!edit_btn.classList.contains("hidden")) {
@@ -779,21 +793,24 @@ async function _queryContract(account) {
               centeringDiv.appendChild(iconDiv);
               
               listItem.appendChild(centeringDiv);
-              if(account.toLowerCase() == currentAccount.toLowerCase()) {
-                console.log('accounts match, can delete received notes')
-                var thisDelete = document.createElement('button')
-                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center')
-                thisDelete.setAttribute('data-delete', '')
-                var deleteImg = document.createElement('img')
-                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                deleteImg.setAttribute('src', './svg/delete.svg')
-                deleteImg.setAttribute('alt', 'Wallet Logo')
-                thisDelete.appendChild(deleteImg)
-                listItem.appendChild(thisDelete)
+              if(currentAccount) {
 
-                thisDelete.addEventListener('click', ()=> {
-                  deleteReceivedNoteToContract(eeArray[5][i])
-                })
+                if(account.toLowerCase() == currentAccount.toLowerCase()) {
+                  console.log('accounts match, can delete received notes')
+                  var thisDelete = document.createElement('button')
+                  thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center')
+                  thisDelete.setAttribute('data-delete', '')
+                  var deleteImg = document.createElement('img')
+                  deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                  deleteImg.setAttribute('src', './svg/delete.svg')
+                  deleteImg.setAttribute('alt', 'Wallet Logo')
+                  thisDelete.appendChild(deleteImg)
+                  listItem.appendChild(thisDelete)
+                  
+                  thisDelete.addEventListener('click', ()=> {
+                    deleteReceivedNoteToContract(eeArray[5][i])
+                  })
+                }
               }
               notesContainer.appendChild(listItem);
             }
