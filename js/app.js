@@ -142,10 +142,7 @@ if (searchParams.get("chain")) {
   }
 } else {
   // currentChainId is aynsc, so we need to wait for it to be set before we can use it
-  setTimeout(() => {
-  // window.addEventListener('storage', (event)=>{
-  //   if(event.newValue && window.sessionStorage.getItem('chainID') == currentChainId) {
-
+  window.addEventListener('load', ()=>{
       chainIndex = chainIds.indexOf(currentChainId);
       if (chainIndex > -1) {
         chain = chainNames[chainIndex];
@@ -158,31 +155,38 @@ if (searchParams.get("chain")) {
         if (account) {
           _queryContract(account);
         }
+
+        var chainDisplay = document.getElementById('chain-info')
+        var chainText = document.getElementById('chain-name')
+        chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
+        var chainImg = document.getElementById('chain-img')
+        // chainImg.src = './svg/connection.svg'
+        // chainImg.setAttribute('class', 'w-10 aspect-square object-contain')
+        chainDisplay.appendChild(chainImg)
+        chainDisplay.appendChild(chainText)
+        // chainDisplay.setAttribute('class', 'h-0.1 w-0.1')
+        
       } else {
-        console.log("Chain not detected, defaulting to mainnet");
-        chain = "mainnet";
-        chainScan = chainExplorerBaseUrls[0];
-        contractLink.href = chainScan + EE_ADDRESS + "#code";
-        console.log(account);
-        _queryContract(account);
+        
+
+        applyQuery()
       }
-  //   }
-  // })
-  }, 500);
+  })
 }
 
-
-console.log('search params are ' + searchParams)
-//search if there is an address in the url params
-account = searchParams.get('address')
-console.log(account)
-setTimeout(()=> {
+function applyQuery() {
+  //only run after query and chain ID are present
+  console.log('search params are ' + searchParams)
+  //search if there is an address in the url params
+  account = searchParams.get('address')
+  console.log(account)
   if(account && isValidEthereumAddress(account)) {
-    abbreviateAndUpdate(account);
-    _queryContract(account)
-    mainIsVisible(true);
+      abbreviateAndUpdate(account);
+      _queryContract(account)
+      mainIsVisible(true);
   }
-}, 501)
+      
+}
 
 // Attach event listener to search button for Ethereum address validation and feedback
 if (searchButton) {
