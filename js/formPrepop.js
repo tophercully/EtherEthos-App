@@ -1,10 +1,13 @@
+const { setPriority } = require("os")
+
 function prepopulate(profileArray, verificationData) {
     //depopulate in case of previous account info remaining
     document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="detail"]')[0].innerHTML = ""
-    document.querySelectorAll('[data-edit-field="social"]')[0].innerHTML = ""
-    document.querySelectorAll('[data-edit-field="website"]')[0].innerHTML = ""
-    document.querySelectorAll('[data-edit-field="gallery"]')[0].innerHTML = ""
+    // document.querySelectorAll('[data-edit-field="social"]')[0].innerHTML = ""
+    // document.querySelectorAll('[data-edit-field="website"]')[0].innerHTML = ""
+    // document.querySelectorAll('[data-edit-field="gallery"]')[0].innerHTML = ""
+    document.getElementById('edit-profile-links').innerHTML = ''
     document.querySelectorAll('[data-edit-field="pfp-id"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="pfp-address"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="user-verification"]')[0].innerHTML = ""
@@ -28,22 +31,110 @@ function prepopulate(profileArray, verificationData) {
         //basic info prepopulate
         const editAlias = document.querySelectorAll('[data-edit-field="alias"]')[0]
         const editDetail = document.querySelectorAll('[data-edit-field="detail"]')[0]
-        const editSocial = document.querySelectorAll('[data-edit-field="social"]')[0]
-        const editWebsite = document.querySelectorAll('[data-edit-field="website"]')[0]
-        const editGallery = document.querySelectorAll('[data-edit-field="gallery"]')[0]
+        // const editSocial = document.querySelectorAll('[data-edit-field="social"]')[0]
+        // const editWebsite = document.querySelectorAll('[data-edit-field="website"]')[0]
+        // const editGallery = document.querySelectorAll('[data-edit-field="gallery"]')[0]
         const editPFPToken = document.querySelectorAll('[data-edit-field="pfp-id"]')[0]
         const editPFPAddress = document.querySelectorAll('[data-edit-field="pfp-address"]')[0]
         
         editAlias.value = profileArray[0][0]
         editDetail.value = profileArray[0][1]
-        editSocial.value = profileArray[0][2]
-        editWebsite.value = profileArray[0][3]
-        editGallery.value = profileArray[0][4]
         editPFPToken.value = profileArray[0][5]
         editPFPAddress.value = profileArray[0][6]
+
+
+        // editSocial.value = profileArray[0][2]
+        // editWebsite.value = profileArray[0][3]
+        // editGallery.value = profileArray[0][4]
         
         
-        
+        //profile links info prepopulate 
+        const editProfileLinkContainer = document.getElementById('edit-profile-links')
+        const profileLinks = profileArray[0].slice(2, 5)
+        const priorityIndex = profileArray[0][5]
+        //generate fields
+        function createProfileLinkInput(container, index, value) {
+            //create the li
+            var thisLink = document.createElement("div")
+            thisLink.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisLink.setAttribute('data-edit-item', '')
+            //create name
+            var names = ['Social:', 'Website:', 'Gallery:']
+            var thisName = document.createElement('h5')
+            thisName.setAttribute('class', 'mb-2 w-1/2')
+            thisName.innerHTML = names[index]
+            thisLink.appendChild(thisName)
+            
+
+
+            //create input
+            var thisInput = document.createElement('input')
+            thisInput.setAttribute('type', 'text')
+            thisInput.setAttribute('placeholder', 'Link')
+            thisInput.setAttribute('class', 'mr-4 w-1/1 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+            thisInput.setAttribute('data-field-edit', 'tag')
+            thisLink.appendChild(thisInput)
+
+            //create write button
+            var thisWrite = document.createElement('button')
+            thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+            thisWrite.setAttribute('data-write', '')
+            var writeImg = document.createElement('img')
+            writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+            writeImg.setAttribute('src', './svg/write.svg')
+            writeImg.setAttribute('alt', 'Wallet Logo')
+            thisWrite.appendChild(writeImg)
+            thisLink.appendChild(thisWrite)
+            //create delete button
+            var thisDelete = document.createElement('button')
+            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+            var deleteImg = document.createElement('img')
+            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+            deleteImg.setAttribute('src', './svg/delete.svg')
+            deleteImg.setAttribute('alt', 'Wallet Logo')
+            thisDelete.appendChild(deleteImg)
+            thisLink.appendChild(thisDelete)
+            if(index == priorityIndex) {
+                //show is already favorite
+                var thisIsFave = document.createElement('button')
+                thisIsFave.setAttribute('class', 'mx-2 h-7 w-7 rounded-full p-0')
+                var isFaveImg = document.createElement('img')
+                isFaveImg.setAttribute('class', 'm-auto h-full w-full object-contain')
+                isFaveImg.setAttribute('src', './svg/star-full.svg')
+                isFaveImg.setAttribute('alt', 'Wallet Logo')
+                thisIsFave.appendChild(isFaveImg)
+                thisLink.appendChild(thisIsFave)
+            } else {
+                //create favorite button
+                var thisFave = document.createElement('button')
+                thisFave.setAttribute('class', 'mx-2 h-7 w-7 rounded-full p-0')
+                var faveImg = document.createElement('img')
+                faveImg.setAttribute('class', 'm-auto h-full w-full object-contain')
+                faveImg.setAttribute('src', './svg/star-empty.svg')
+                faveImg.setAttribute('alt', 'Wallet Logo')
+                thisFave.appendChild(faveImg)
+                thisLink.appendChild(thisFave)
+                
+                thisFave.addEventListener('click', () => {
+                    setPriorityLinkToContract(index)
+                })
+            }
+            //fill the fields
+            thisInput.value = profileLinks[index]
+
+
+            //attach to container
+            container.appendChild(thisLink)
+            
+        }
+
+        for(let i = 0; i < profileLinks.length; i++) {
+            createProfileLinkInput(editProfileLinkContainer, i)
+        }
+
+
+
+
         //tags info prepopulate
         //handled dynamically
         const allTags = profileArray[7]

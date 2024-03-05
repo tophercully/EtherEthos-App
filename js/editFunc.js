@@ -171,6 +171,23 @@ const setPFPToContract = async (pfpAddress, pfpID) => {
         error = true;
     }
 }
+const setPriorityLinkToContract = async (index) => {
+    try {
+        await EE_Contract_User.methods.setPriorityLink(currentAccount, index).send(
+          {
+            from: currentAccount
+          },
+          function (err, res) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+          }
+        );
+    } catch (errorMessage) {
+        error = true;
+    }
+}
 
 
 

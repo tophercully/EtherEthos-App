@@ -58,10 +58,6 @@ const blonksInfo = document.querySelector("[data-content=blonks-info]");
 const alias = document.querySelector("[data-content=alias]");
 const detail = document.querySelector("[data-content=detail]");
 
-const social = document.querySelector("[data-content=social]");
-const website = document.querySelector("[data-content=website]");
-const gallery = document.querySelector("[data-content=gallery]");
-
 const tagModule = document.querySelector("[data-module=tags]");
 const tagsContainer = document.querySelector("[data-content=tags]");
 
@@ -520,12 +516,67 @@ async function _queryContract(account) {
         detail.textContent = eeArray[0][1];
 
         // Social, Website, Gallery
-        social.textContent = eeArray[0][2];
-        social.setAttribute("href", eeArray[0][2]);
-        website.textContent = eeArray[0][3];
-        website.setAttribute("href", eeArray[0][3]);
-        gallery.textContent = eeArray[0][4];
-        gallery.setAttribute("href", eeArray[0][4]);
+        var profileLinkContainer = document.getElementById('profile-links')
+
+        const socialDiv = document.createElement('div')
+        socialDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
+        const socialName = document.createElement('h5')
+        socialName.setAttribute('class', 'mb-2 lg:mb-0')
+        socialName.textContent = 'Social:'
+        socialDiv.appendChild(socialName)
+        const social = document.createElement('code')
+        const socialAnchor = document.createElement('a')
+        socialAnchor.setAttribute('data-content', 'website')
+        socialAnchor.setAttribute('target', eeArray[0][2])
+        social.appendChild(socialAnchor)
+        social.setAttribute('class', 'underline')
+        socialAnchor.textContent = eeArray[0][2];
+        socialAnchor.setAttribute("href", eeArray[0][2]);
+        socialDiv.appendChild(social)
+
+        const websiteDiv = document.createElement('div')
+        websiteDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
+        const websiteName = document.createElement('h5')
+        websiteName.setAttribute('class', 'mb-2 lg:mb-0')
+        websiteName.textContent = 'Website:'
+        websiteDiv.appendChild(websiteName)
+        const website = document.createElement('code')
+        const websiteAnchor = document.createElement('a')
+        websiteAnchor.setAttribute('data-content', 'website')
+        websiteAnchor.setAttribute('target', eeArray[0][3])
+        website.appendChild(websiteAnchor)
+        website.setAttribute('class', 'underline')
+        websiteAnchor.textContent = eeArray[0][3];
+        websiteAnchor.setAttribute("href", eeArray[0][3]);
+        websiteDiv.appendChild(website)
+
+        const galleryDiv = document.createElement('div')
+        galleryDiv.setAttribute('class', 'mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]')
+        const galleryName = document.createElement('h5')
+        galleryName.setAttribute('class', 'mb-2 lg:mb-0')
+        galleryName.textContent = 'Gallery:'
+        galleryDiv.appendChild(galleryName)
+        const gallery = document.createElement('code')
+        const galleryAnchor = document.createElement('a')
+        galleryAnchor.setAttribute('data-content', 'website')
+        galleryAnchor.setAttribute('target', eeArray[0][4])
+        gallery.appendChild(galleryAnchor)
+        gallery.setAttribute('class', 'underline')
+        galleryAnchor.textContent = eeArray[0][4];
+        galleryAnchor.setAttribute("href", eeArray[0][4]);
+        galleryDiv.appendChild(gallery)
+        
+        //dynamic population based on link priority
+        var links = [socialDiv, websiteDiv, galleryDiv]
+        //populate the priority link
+        var priorityIndex = eeArray[0][5]
+        console.log('priority link ' + priorityIndex)
+        profileLinkContainer.appendChild(links[priorityIndex])
+        for(let i = 0; i < links.length; i++) {
+          if(i != priorityIndex) {
+            profileLinkContainer.appendChild(links[i])
+          }
+        }
 
         // Tags
         let tagsPresent = false;
@@ -752,7 +803,7 @@ async function _queryContract(account) {
           for (let i = 0; i < eeArray[5].length; i += 2) {
             if (eeArray[5][i].length > 0) {
               const listItem = document.createElement("li");
-              listItem.className = "mb-2 flex flex-col items-start lg:flex-row";
+              listItem.className = "mb-2 flex flex-row items-start lg:flex-row";
               const noteDiv = document.createElement("div");
               noteDiv.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
               const noteDetail = document.createElement("code");
@@ -805,7 +856,7 @@ async function _queryContract(account) {
                   deleteImg.setAttribute('src', './svg/delete.svg')
                   deleteImg.setAttribute('alt', 'Wallet Logo')
                   thisDelete.appendChild(deleteImg)
-                  listItem.appendChild(thisDelete)
+                  centeringDiv.appendChild(thisDelete)
                   
                   thisDelete.addEventListener('click', ()=> {
                     deleteReceivedNoteToContract(eeArray[5][i])
