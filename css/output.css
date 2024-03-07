@@ -556,8 +556,15 @@ video {
   position: relative;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .bottom-0 {
   bottom: 0px;
+}
+.left-0 {
+  left: 0px;
 }
 
 .m-auto {
@@ -916,6 +923,11 @@ video {
 .bg-blue {
   --tw-bg-opacity: 1;
   background-color: rgb(218 236 252 / var(--tw-bg-opacity));
+}
+
+.bg-red {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 217 217 / var(--tw-bg-opacity));
 }
 
 .bg-main {
@@ -1445,6 +1457,8 @@ video {
     font-weight: 500;
   }
 }
+
+
 
 @media (min-width: 1536px) {
   .\32xl\:grid-cols-3 {

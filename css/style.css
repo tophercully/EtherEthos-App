@@ -247,3 +247,13 @@ code {
     font-size: 22px;
   }
 }
+
+/* tailwind ignoring fixed position, styling manually */
+#wallet-status-msg{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  height: fit-content;
+  padding-block: 2.5%;
+}
