@@ -8,12 +8,6 @@ function handleEditField(event) {
         pushAliasToContract(inputValue)
     } else if(editField == 'detail') {
         setDetailToContract(inputValue)
-    } else if(editField == 'social') {
-        setSocialToContract(inputValue)
-    } else if(editField == 'website') {
-        setWebsiteToContract(inputValue)
-    } else if(editField == 'gallery') {
-        setGalleryToContract(inputValue)
     } else if(editField == 'pfp-id' || editField == 'pfp-address') {
         var idInput = document.querySelectorAll('[data-edit-field="pfp-id"]')
         var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
@@ -29,12 +23,6 @@ function handleDeleteField(event) {
         pushAliasToContract(' ')
     } else if(editField == 'detail') {
         setDetailToContract(' ')
-    } else if(editField == 'social') {
-        setSocialToContract(' ')
-    } else if(editField == 'website') {
-        setWebsiteToContract(' ')
-    } else if(editField == 'gallery') {
-        setGalleryToContract(' ')
     } else if(editField == 'pfp-id' || editField == 'pfp-address') {
         var idInput = document.querySelectorAll('[data-edit-field="pfp-id"]')
         var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
@@ -71,6 +59,7 @@ elementsWithDataWrite.forEach(element => {
 
 const pushAliasToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setAlias(currentAccount, value).send(
           {
             from: currentAccount
@@ -83,11 +72,13 @@ const pushAliasToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setDetailToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setDetail(currentAccount, value).send(
           {
             from: currentAccount
@@ -100,11 +91,13 @@ const setDetailToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setSocialToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setSocial(currentAccount, value).send(
           {
             from: currentAccount
@@ -117,11 +110,13 @@ const setSocialToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setWebsiteToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setWebsite(currentAccount, value).send(
           {
             from: currentAccount
@@ -134,11 +129,13 @@ const setWebsiteToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setGalleryToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setGallery(currentAccount, value).send(
           {
             from: currentAccount
@@ -151,11 +148,13 @@ const setGalleryToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setPFPToContract = async (pfpAddress, pfpID) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setPFP(currentAccount, pfpAddress, pfpID).send(
           {
             from: currentAccount
@@ -168,11 +167,13 @@ const setPFPToContract = async (pfpAddress, pfpID) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const setPriorityLinkToContract = async (index) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setPriorityLink(currentAccount, index).send(
           {
             from: currentAccount
@@ -185,6 +186,7 @@ const setPriorityLinkToContract = async (index) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -194,6 +196,7 @@ const setPriorityLinkToContract = async (index) => {
 //TAGS
 const pushTagToContract = async (value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.pushTag(currentAccount, value).send(
           {
             from: currentAccount
@@ -206,11 +209,13 @@ const pushTagToContract = async (value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const updateTagToContract = async (index, value) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.pushTag(currentAccount, index, value).send(
           {
             from: currentAccount
@@ -223,11 +228,13 @@ const updateTagToContract = async (index, value) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteTagToContract = async (index) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteTag(currentAccount, index).send(
           {
             from: currentAccount
@@ -240,6 +247,7 @@ const deleteTagToContract = async (index) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -247,6 +255,7 @@ const deleteTagToContract = async (index) => {
 //ASSOCIATED ADDRESSES
 const pushAssociatedAccountToContract = async (address, desc) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.pushAssociatedAccount(currentAccount, address, desc).send(
           {
             from: currentAccount
@@ -259,11 +268,13 @@ const pushAssociatedAccountToContract = async (address, desc) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const updateAssociatedAccountToContract = async (index, address, desc) => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.updateAssociatedAccount(currentAccount, index, address, desc).send(
           {
             from: currentAccount
@@ -276,12 +287,14 @@ const updateAssociatedAccountToContract = async (index, address, desc) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteAssociatedAccountToContract = async (index) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteAssociatedAccount(currentAccount, index).send(
           {
             from: currentAccount
@@ -294,6 +307,7 @@ const deleteAssociatedAccountToContract = async (index) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -302,6 +316,7 @@ const deleteAssociatedAccountToContract = async (index) => {
 const bulkGrantBadgeToContract = async (index, addressesArray, name) => {
     console.log(addressesArray)
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.bulkGrantBadge(currentAccount, addressesArray, name).send(
           {
             from: currentAccount
@@ -314,12 +329,14 @@ const bulkGrantBadgeToContract = async (index, addressesArray, name) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteBadgeToContract = async (index) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteBadge(currentAccount, index).send(
           {
             from: currentAccount
@@ -332,6 +349,7 @@ const deleteBadgeToContract = async (index) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -340,6 +358,7 @@ const deleteBadgeToContract = async (index) => {
 const setCustomDataToContract = async (customData) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setCustomData(currentAccount, customData).send(
           {
             from: currentAccount
@@ -352,6 +371,7 @@ const setCustomDataToContract = async (customData) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -360,6 +380,7 @@ const setCustomDataToContract = async (customData) => {
 const giveRespectToContract = async (otherAccount) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.giveRespect(currentAccount, otherAccount).send(
           {
             from: currentAccount
@@ -372,12 +393,14 @@ const giveRespectToContract = async (otherAccount) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const revokeRespectToContract = async (otherAccount) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.revokeRespect(currentAccount, otherAccount).send(
           {
             from: currentAccount
@@ -390,6 +413,7 @@ const revokeRespectToContract = async (otherAccount) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -398,6 +422,7 @@ const revokeRespectToContract = async (otherAccount) => {
 const setNoteToContract = async (otherAccount, noteContent) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.setNote(currentAccount, otherAccount, noteContent).send(
           {
             from: currentAccount
@@ -410,12 +435,14 @@ const setNoteToContract = async (otherAccount, noteContent) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteWrittenNoteToContract = async (otherAccount) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteWrittenNote(currentAccount, otherAccount).send(
           {
             from: currentAccount
@@ -428,12 +455,14 @@ const deleteWrittenNoteToContract = async (otherAccount) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteReceivedNoteToContract = async (otherAccount) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteReceivedNote(currentAccount, otherAccount).send(
           {
             from: currentAccount
@@ -446,6 +475,7 @@ const deleteReceivedNoteToContract = async (otherAccount) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -454,6 +484,7 @@ const deleteReceivedNoteToContract = async (otherAccount) => {
 const pushAdditionalLinkToContract = async (name, link) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.pushAdditionalLink(currentAccount, link, name).send(
           {
             from: currentAccount
@@ -466,12 +497,14 @@ const pushAdditionalLinkToContract = async (name, link) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const updateAdditionalLinkToContract = async (index, name, link) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.updateAdditionalLink(currentAccount, index, link, name).send(
           {
             from: currentAccount
@@ -484,12 +517,14 @@ const updateAdditionalLinkToContract = async (index, name, link) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
 const deleteAdditionalLinkToContract = async (index) => {
     
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.deleteAdditionalLink(currentAccount, index).send(
           {
             from: currentAccount
@@ -502,6 +537,7 @@ const deleteAdditionalLinkToContract = async (index) => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -509,6 +545,7 @@ const deleteAdditionalLinkToContract = async (index) => {
 //PING
 const pingToContract = async () => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.ping(currentAccount).send(
           {
             from: currentAccount
@@ -521,6 +558,7 @@ const pingToContract = async () => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }
@@ -528,6 +566,7 @@ const pingToContract = async () => {
 //COMPOSABLE
 const toggleComposableToContract = async () => {
     try {
+        createStatusMsg()
         await EE_Contract_User.methods.toggleComposable(currentAccount).send(
           {
             from: currentAccount
@@ -540,6 +579,7 @@ const toggleComposableToContract = async () => {
           }
         );
     } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
         error = true;
     }
 }

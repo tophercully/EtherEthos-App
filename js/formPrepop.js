@@ -1,5 +1,3 @@
-const { setPriority } = require("os")
-
 function prepopulate(profileArray, verificationData) {
     //depopulate in case of previous account info remaining
     document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = ""
@@ -85,6 +83,19 @@ function prepopulate(profileArray, verificationData) {
             writeImg.setAttribute('alt', 'Wallet Logo')
             thisWrite.appendChild(writeImg)
             thisLink.appendChild(thisWrite)
+
+            thisWrite.addEventListener('click', ()=>{
+                if(index == 0) {
+
+                    setSocialToContract(thisInput.value)
+                } else if(index == 1) {
+                    
+                    setWebsiteToContract(thisInput.value)
+                } else if(index == 2) {
+
+                    setGalleryToContract(thisInput.value)
+                }
+            })
             //create delete button
             var thisDelete = document.createElement('button')
             thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
@@ -94,6 +105,17 @@ function prepopulate(profileArray, verificationData) {
             deleteImg.setAttribute('alt', 'Wallet Logo')
             thisDelete.appendChild(deleteImg)
             thisLink.appendChild(thisDelete)
+
+            thisDelete.addEventListener('click', ()=>{
+                if(index == 0) {
+                    setSocialToContract(' ')
+                } else if(index == 1) {
+                    setWebsiteToContract(' ')
+                } else if(index == 2) {
+                    setGalleryToContract(' ')
+                }
+            })
+
             if(index == priorityIndex) {
                 //show is already favorite
                 var thisIsFave = document.createElement('button')
