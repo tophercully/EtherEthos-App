@@ -892,6 +892,13 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           pingContainer.textContent = eeArray[0][8];
         } else {
           prepopulate(eeArray, verificationResponse, composable)
+          var grayedOut = document.querySelectorAll('#basic-data ~ div')
+          for(let i = 0; i < grayedOut.length; i++) {
+            var elem = grayedOut[i]
+            elem.style.filter = "opacity(20%)"
+
+          }
+          
         }
         
       }
@@ -1037,6 +1044,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     }
   }
 } else {
+  //only handle header
   if (searchParams.get("chain")) {
     window.addEventListener('load', ()=> {
       //use search params chainID
@@ -1075,32 +1083,31 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   } else {
     // currentChainId is aynsc, so we need to wait for it to be set before we can use it
     window.addEventListener('load', ()=>{
+      var hasID = chains.find(o => o.id === Number(currentChainId))
+      chainIndex = chains.indexOf(hasID);
+      console.log('chainIndex ' + chainIndex)
+      if (chainIndex > -1) {
+        var currentNetwork = chains[chainIndex]
+        chain = currentNetwork.name;
+        chainScan = currentNetwork.explorerBaseUrl;
+        console.log("Chain detected: " + chain);
+        chainContent.forEach((element) => {
+          element.textContent = `(${chain})`;
+        });
 
-        var hasID = chains.find(o => o.id === Number(currentChainId))
-        chainIndex = chains.indexOf(hasID);
-        console.log('chainIndex ' + chainIndex)
-        if (chainIndex > -1) {
-          var currentNetwork = chains[chainIndex]
-          chain = currentNetwork.name;
-          chainScan = currentNetwork.explorerBaseUrl;
-          console.log("Chain detected: " + chain);
-          chainContent.forEach((element) => {
-            element.textContent = `(${chain})`;
-          });
-
-          if (account) {
-            _queryContract(account);
-          }
-
-          var chainDisplay = document.getElementById('chain-info')
-          var chainText = document.getElementById('chain-name')
-          chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-          var chainImg = document.getElementById('chain-img')
-          chainDisplay.appendChild(chainImg)
-          chainDisplay.appendChild(chainText)
-        } else {
-          applyQuery(account)
+        if (account) {
+          _queryContract(account);
         }
+
+        var chainDisplay = document.getElementById('chain-info')
+        var chainText = document.getElementById('chain-name')
+        chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
+        var chainImg = document.getElementById('chain-img')
+        chainDisplay.appendChild(chainImg)
+        chainDisplay.appendChild(chainText)
+      } else {
+        applyQuery(account)
+      }
     })
   }
 }
