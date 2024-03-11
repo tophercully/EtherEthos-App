@@ -582,7 +582,7 @@ async function _queryContract(account) {
         // Tags
         let tagsPresent = false;
         for (let i = 0; i < eeArray[7].length; i++) {
-          if (eeArray[6][i].length > 0) {
+          if (eeArray[7][i].length > 0) {
             tagsPresent = true;
             break;
           }
@@ -590,14 +590,14 @@ async function _queryContract(account) {
         if (tagsPresent) {
           tagModule.style.display = "block";
           tagsContainer.textContent = "";
-          for (let i = 0; i < eeArray[6].length; i++) {
-            if (eeArray[6][i].length > 0) {
+          for (let i = 0; i < eeArray[7].length; i++) {
+            if (eeArray[7][i].length > 0) {
               const listItem = document.createElement("li");
               listItem.className = "tag-item mr-2";
               const codeElement = document.createElement("code");
               codeElement.className = "h-9";
               codeElement.setAttribute("data-content", "tag");
-              codeElement.textContent = eeArray[6][i];
+              codeElement.textContent = eeArray[7][i];
               listItem.appendChild(codeElement);
               tagsContainer.appendChild(listItem);
             }
