@@ -369,7 +369,7 @@ async function _queryContract(account) {
         // PFP DATA
         if (eeArray[0][6] != nullAddress) {
           pfpContract.textContent = eeArray[0][6];
-          pfpContract.href = `${siteBase}?account=${eeArray[0][6]}`;
+          pfpContract.href = `${siteBase}?address=${eeArray[0][6]}`;
           let tokenId = parseInt(eeArray[0][7]);
           if (typeof tokenId === 'number') {
             console.log("Token ID: ", tokenId);
@@ -659,7 +659,7 @@ async function _queryContract(account) {
               associatedDetail.textContent = eeArray[2][i + 1];
               listItem.appendChild(associatedDetail);
               const associatedAtag = document.createElement("a");
-              associatedAtag.setAttribute("href", `${siteBase}?account=${eeArray[2][i]}`);
+              associatedAtag.setAttribute("href", `${siteBase}?address=${eeArray[2][i]}`);
               const associatedName = document.createElement("code");
               associatedName.className = "ml-2 mr-2 h-9 bg-blue underline";
               associatedName.textContent = eeArray[2][i];
@@ -756,7 +756,7 @@ async function _queryContract(account) {
               listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
               const respectGivingAccountAtag = document.createElement("a");
               respectGivingAccountAtag.className = "underline";
-              respectGivingAccountAtag.setAttribute("href", `${siteBase}?account=${eeArray[4][i]}`);
+              respectGivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[4][i]}`);
               const respectGivingAccount = document.createElement("code");
               respectGivingAccount.className = "ml-2 mr-2 h-9 bg-blue underline";
               respectGivingAccount.textContent = eeArray[4][i];
@@ -815,7 +815,7 @@ async function _queryContract(account) {
               centeringDiv = document.createElement("div");
               centeringDiv.className = "flex items-center";
               const noteSenderAtag = document.createElement("a");
-              noteSenderAtag.setAttribute("href", chainScan + eeArray[5][i]);
+              noteSenderAtag.setAttribute("href", `${siteBase}?address=${eeArray[5][i]}`);
               const noteSender = document.createElement("code");
               noteSender.className = "ml-2 mr-2 h-9 bg-blue underline";
               noteSender.textContent = eeArray[5][i];
