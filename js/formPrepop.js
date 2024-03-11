@@ -546,7 +546,7 @@ function prepopulate(profileArray, verificationData) {
                     //create input
                     var thisInput = document.createElement('input')
                     thisInput.setAttribute('type', 'text')
-                    thisInput.setAttribute('placeholder', 'Respected Account Address')
+                    thisInput.setAttribute('placeholder', 'Address To Respect')
                     thisInput.setAttribute('class', 'mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
                     thisInput.setAttribute('data-field-edit', 'respect')
                     thisRespect.appendChild(thisInput)
