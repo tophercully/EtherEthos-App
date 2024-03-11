@@ -360,10 +360,11 @@ async function _queryContract(account) {
         composableButton.addEventListener('click', () => {
             console.log('toggling composability')
             toggleComposableToContract()
-        })
+      })
+      
       if (composable) {
         console.log(eeArray);
-        prepopulate(eeArray, verificationResponse)
+        prepopulate(eeArray, verificationResponse, composable)
         basicData.style.display = "block";
 
         // PFP DATA
@@ -886,6 +887,8 @@ async function _queryContract(account) {
         // PING
         pingModule.style.display = "block";
         pingContainer.textContent = eeArray[0][8];
+      } else {
+        prepopulate(eeArray, verificationResponse, composable)
       }
       
     }
