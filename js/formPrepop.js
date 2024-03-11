@@ -459,7 +459,7 @@ function prepopulate(profileArray, verificationData) {
                     console.log('deleting note from 1d index[', indexTuple, 'and', (indexTuple+1) + ']')
                     // inputAddress.value = ' '
                     // inputDesc.value = ' '
-                    deleteWrittenNoteToContract(inputAddress.value)
+                    deleteWrittenNoteToContract(defaultAddress)
                     
                 })
             } else {
