@@ -313,6 +313,7 @@ async function _queryContract(account) {
       }
       if (verificationResponse.length > 0) {
         accountVerificationElement.textContent = verificationResponse;
+        console.log(verificationResponse)
       } else {
         accountVerificationElement.textContent = "[nothing set]";
       }
@@ -405,7 +406,7 @@ async function _queryContract(account) {
               error = true;
             }
             if (!error) {
-              if (pfpOwner == account) {
+              if (pfpOwner.toLowerCase() == account ? account.toLowerCase() : account) {
                 pfpVerified.textContent = "✔️ PFP Ownership Verified";
                 console.log("PFP Ownership Verified");
               } else {
