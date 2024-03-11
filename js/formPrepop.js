@@ -1,4 +1,7 @@
 function prepopulate(profileArray, verificationData) {
+
+
+    
     //depopulate in case of previous account info remaining
     document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="detail"]')[0].innerHTML = ""
@@ -459,7 +462,7 @@ function prepopulate(profileArray, verificationData) {
                     console.log('deleting note from 1d index[', indexTuple, 'and', (indexTuple+1) + ']')
                     // inputAddress.value = ' '
                     // inputDesc.value = ' '
-                    deleteWrittenNoteToContract(inputAddress.value)
+                    deleteWrittenNoteToContract(defaultAddress)
                     
                 })
             } else {
@@ -682,5 +685,64 @@ function prepopulate(profileArray, verificationData) {
         
       } else {
         console.log('no profileArray, failed to prefill form')
+
+        //create profile links input
+        const editProfileLinkContainer = document.getElementById('edit-profile-links')
+        //generate fields
+        function createProfileLinkInput(container, index, value) {
+            //create the li
+            var thisLink = document.createElement("div")
+            thisLink.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisLink.setAttribute('data-edit-item', '')
+            //create name
+            var names = ['Social:', 'Website:', 'Gallery:']
+            var thisName = document.createElement('h5')
+            thisName.setAttribute('class', 'mb-2 w-1/2')
+            thisName.innerHTML = names[index]
+            thisLink.appendChild(thisName)
+            
+
+
+            //create input
+            var thisInput = document.createElement('input')
+            thisInput.setAttribute('type', 'text')
+            thisInput.setAttribute('placeholder', 'Link')
+            thisInput.setAttribute('class', 'mr-4 w-1/1 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+            thisInput.setAttribute('data-field-edit', 'tag')
+            thisLink.appendChild(thisInput)
+
+            //create write button
+            var thisWrite = document.createElement('button')
+            thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+            thisWrite.setAttribute('data-write', '')
+            var writeImg = document.createElement('img')
+            writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+            writeImg.setAttribute('src', './svg/write.svg')
+            writeImg.setAttribute('alt', 'Wallet Logo')
+            thisWrite.appendChild(writeImg)
+            thisLink.appendChild(thisWrite)
+
+            thisWrite.addEventListener('click', ()=>{
+                if(index == 0) {
+
+                    setSocialToContract(thisInput.value)
+                } else if(index == 1) {
+                    
+                    setWebsiteToContract(thisInput.value)
+                } else if(index == 2) {
+
+                    setGalleryToContract(thisInput.value)
+                }
+            })
+            
+
+            //attach to container
+            container.appendChild(thisLink)
+            
+        }
+
+        for(let i = 0; i < 3; i++) {
+            createProfileLinkInput(editProfileLinkContainer, i)
+        }
       }
 }
