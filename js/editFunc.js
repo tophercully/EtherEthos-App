@@ -13,6 +13,8 @@ function handleEditField(event) {
         var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
         console.log(idInput[0].value, addressInput[0].value)
         setPFPToContract(addressInput[0].value, idInput[0].value)
+    } else if(editField == 'user-verification') {
+      setDetailToContract(inputValue)
     }
 }
 
@@ -28,6 +30,8 @@ function handleDeleteField(event) {
         var addressInput = document.querySelectorAll('[data-edit-field="pfp-address"]')
         console.log(idInput[0].value, addressInput[0].value)
         setPFPToContract(0x0000000000000000000000000000000000000000, 0)
+    } else if(editField == 'user-verification') {
+      setDetailToContract(' ')
     }
 
 }
