@@ -923,8 +923,8 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       console.log(module_view_arr);
       for (let i = 0; i < module_view_arr.length; i++) {
         console.log(module_view_arr[i]);
-        toggleClasses(module_view_arr[i], ["hidden", "lg:hidden"], []);
-        toggleClasses(module_edit_arr[i], [], ["hidden", "lg:hidden"]);
+        toggleClasses(module_view_arr[i], ["hidden"], []);
+        toggleClasses(module_edit_arr[i], [], ["hidden"]);
       }
     }
 
