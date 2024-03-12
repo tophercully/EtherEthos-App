@@ -97,15 +97,23 @@ function prepopulate(profileArray, verificationData) {
             thisLink.appendChild(thisWrite)
 
             thisWrite.addEventListener('click', ()=>{
+                //transform link to check for http/https
+                var linkValue = thisInput.value
+                var prefix = 'http://'
+                var prefixB = 'https://'
+                if (!thisInput.value.includes(prefix) && !thisInput.value.includes(prefixB)) {
+                    var linkValue = 'https://' + thisInput.value
+                }
+                console.log(linkValue)
                 if(index == 0) {
 
-                    setSocialToContract(thisInput.value)
+                    setSocialToContract(linkValue)
                 } else if(index == 1) {
                     
-                    setWebsiteToContract(thisInput.value)
+                    setWebsiteToContract(linkValue)
                 } else if(index == 2) {
 
-                    setGalleryToContract(thisInput.value)
+                    setGalleryToContract(linkValue)
                 }
             })
             //create delete button
@@ -307,20 +315,30 @@ function prepopulate(profileArray, verificationData) {
             }
 
             thisWrite.addEventListener('click', () => {
+                //check for http/https
+                var linkValue = inputURL.value
+                var prefix = 'http://'
+                var prefixB = 'https://'
+                if (!inputURL.value.includes(prefix) && !inputURL.value.includes(prefixB)) {
+                    var linkValue = 'https://' + inputURL.value
+                }
+                console.log(linkValue)
+                
                 if(defaultURL || defaultName) {
                     //update existing entry
                     console.log('updating link at tuple 2d index ' + index)
-                    updateAdditionalLinkToContract(index, inputName.value, inputURL.value)
+                    updateAdditionalLinkToContract(index, inputName.value, linkValue)
                 } else {
-                    //create existing entry
+                    //create new entry
                     console.log('pushing new link')
-                    pushAdditionalLinkToContract(inputName.value, inputURL.value)
+                    pushAdditionalLinkToContract(inputName.value, linkValue)
                 }
             })
 
             thisDelete.addEventListener('click', () => {
-                //delete this entry
+                //delete existing entry
                 console.log('deleting link at tuple 2d index ' + index)
+                
                 deleteAdditionalLinkToContract(index)
                 
             })
@@ -774,16 +792,26 @@ function prepopulate(profileArray, verificationData) {
             thisWrite.appendChild(writeImg)
             thisLink.appendChild(thisWrite)
 
+            
+            
             thisWrite.addEventListener('click', ()=>{
+                //transform link to check for http/https
+                var linkValue = thisInput.value
+                var prefix = 'http://'
+                var prefixB = 'https://'
+                if (!thisInput.value.includes(prefix) && !thisInput.value.includes(prefixB)) {
+                    var linkValue = 'https://' + thisInput.value
+                }
+                console.log(linkValue)
                 if(index == 0) {
 
-                    setSocialToContract(thisInput.value)
+                    setSocialToContract(linkValue)
                 } else if(index == 1) {
                     
-                    setWebsiteToContract(thisInput.value)
+                    setWebsiteToContract(linkValue)
                 } else if(index == 2) {
 
-                    setGalleryToContract(thisInput.value)
+                    setGalleryToContract(linkValue)
                 }
             })
             
