@@ -286,7 +286,7 @@
       </section>
 
       <!-- EDIT SECTION -->
-      <section id="edit-section" data-module-edit class="module-edit lg:hidden">
+      <section id="edit-section" data-module-edit class="module-edit lg:hidden flex flex-col">
         <!-- Public Data Edit -->
         <div data-module-edit class="">
           <div class="lg:grid lg:grid-cols-2 lg:pb-10 lg:pt-6">
@@ -335,7 +335,7 @@
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
               <div id="editPfpContainer" class="md:border-r md:border-main w-full aspect-square object-contain"></div>
 
-              <div class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
+              <div id="pfp-input-block" class="flex flex-col justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                 <div class="flex w-full flex-col items-start justify-between text-base font-bold">
                   <p class="text-base font-bold lg:mb-4 lg:text-xl">PFP TokenID :</p>
                   <div data-edit-div class="flex items-center">
@@ -387,6 +387,7 @@
             </div>
           </div>
         </div>
+        <button id="submit-all" class="bg-main text-secondary px-4 ml-auto">Submit All</button>
         <br>
         <hr class="mb-4" />
 

@@ -637,6 +637,10 @@ video {
   margin-bottom: 2rem;
 }
 
+.ml-auto {
+  margin-left: auto;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
@@ -853,6 +857,9 @@ video {
 .items-start {
   align-items: flex-start;
 }
+.items-end {
+  align-items: flex-end;
+}
 
 .items-center {
   align-items: center;
@@ -1062,6 +1069,7 @@ video {
   color: rgb(255 252 249 / var(--tw-text-opacity));
 }
 
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1239,6 +1247,7 @@ video {
     margin-left: 0px;
   }
 
+  
   .lg\:ml-10 {
     margin-left: 2.5rem;
   }
