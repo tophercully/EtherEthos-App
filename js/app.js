@@ -893,10 +893,17 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         } else {
           prepopulate(eeArray, verificationResponse, composable)
           var grayedOut = document.querySelectorAll('#basic-data ~ div')
+          console.log(grayedOut)
           for(let i = 0; i < grayedOut.length; i++) {
             var elem = grayedOut[i]
             elem.style.filter = "opacity(20%)"
-
+            elem.disabled = true
+          }
+          var pfpInner = document.getElementById('pfp-input-block').children
+          for(let i = 0; i < pfpInner.length; i++) {
+            var elem = pfpInner[i]
+            elem.style.filter = "opacity(20%)"
+            elem.disabled = true
           }
           
         }

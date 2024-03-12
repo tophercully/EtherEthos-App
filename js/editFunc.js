@@ -156,6 +156,25 @@ const setGalleryToContract = async (value) => {
         error = true;
     }
 }
+const setMainBasicsToContract = async (alias, detail, social, website, gallery) => {
+    try {
+        createStatusMsg()
+        await EE_Contract_User.methods.setMainBasics(currentAccount, alias, detail, social, website, gallery).send(
+          {
+            from: currentAccount
+          },
+          function (err, res) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+          }
+        );
+    } catch (errorMessage) {
+        createErrorMsg(errorMessage.message)
+        error = true;
+    }
+}
 const setPFPToContract = async (pfpAddress, pfpID) => {
     try {
         createStatusMsg()

@@ -32,9 +32,6 @@ function prepopulate(profileArray, verificationData) {
         //basic info prepopulate
         const editAlias = document.querySelectorAll('[data-edit-field="alias"]')[0]
         const editDetail = document.querySelectorAll('[data-edit-field="detail"]')[0]
-        // const editSocial = document.querySelectorAll('[data-edit-field="social"]')[0]
-        // const editWebsite = document.querySelectorAll('[data-edit-field="website"]')[0]
-        // const editGallery = document.querySelectorAll('[data-edit-field="gallery"]')[0]
         const editPFPToken = document.querySelectorAll('[data-edit-field="pfp-id"]')[0]
         const editPFPAddress = document.querySelectorAll('[data-edit-field="pfp-address"]')[0]
         
@@ -43,10 +40,11 @@ function prepopulate(profileArray, verificationData) {
         editPFPToken.value = profileArray[0][5]
         editPFPAddress.value = profileArray[0][6]
 
-
-        // editSocial.value = profileArray[0][2]
-        // editWebsite.value = profileArray[0][3]
-        // editGallery.value = profileArray[0][4]
+        //prep object for basics
+        allBasics = {
+            alias: editAlias,
+            detail: editDetail,
+        }
         
         
         //profile links info prepopulate 
@@ -65,6 +63,8 @@ function prepopulate(profileArray, verificationData) {
             thisName.setAttribute('class', 'mb-2 w-1/2')
             thisName.innerHTML = names[index]
             thisLink.appendChild(thisName)
+
+            
             
 
 
@@ -75,6 +75,15 @@ function prepopulate(profileArray, verificationData) {
             thisInput.setAttribute('class', 'mr-4 w-1/1 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
             thisInput.setAttribute('data-field-edit', 'tag')
             thisLink.appendChild(thisInput)
+
+            //add inputs to main data form
+            if(index == 0) {
+                allBasics.social = thisInput
+            } else if(index == 1) {
+                allBasics.website = thisInput
+            } else if(index == 2) {
+                allBasics.gallery = thisInput
+            }
 
             //create write button
             var thisWrite = document.createElement('button')
@@ -156,6 +165,15 @@ function prepopulate(profileArray, verificationData) {
         for(let i = 0; i < profileLinks.length; i++) {
             createProfileLinkInput(editProfileLinkContainer, i)
         }
+
+
+
+        //button to submit all main data
+        const submitAll = document.getElementById('submit-all')
+        submitAll.addEventListener('click', ()=> {
+            console.log('submitting all basics')
+            setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value)
+        })
 
 
 
@@ -468,8 +486,8 @@ function prepopulate(profileArray, verificationData) {
             } else {
 
                 //create input1
-                var inputDesc = document.createElement('input')
-                inputDesc.setAttribute('type', 'text')
+                var inputDesc = document.createElement('datalist')
+                // inputDesc.setAttribute('type', 'datalist')
                 inputDesc.setAttribute('placeholder', 'Note Text')
                 inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
                 inputDesc.setAttribute('data-field-edit', 'associated-desc')
@@ -683,12 +701,20 @@ function prepopulate(profileArray, verificationData) {
             pingToContract()
         })
         
-      } else {
-        console.log('no profileArray, failed to prefill form')
+    } else {
+        console.log('no profileArray or not composable, failed to prefill form')
+
+        //handle prep for initial account setup
+
+        //prep object
+        let allBasics = {}
+        allBasics.alias = document.querySelectorAll('[data-edit-field="alias"')[0]
+        allBasics.detail = document.querySelectorAll('[data-edit-field="detail"')[0]
+        
 
         //create profile links input
         const editProfileLinkContainer = document.getElementById('edit-profile-links')
-        //generate fields
+        //generate input fields
         function createProfileLinkInput(container, index, value) {
             //create the li
             var thisLink = document.createElement("div")
@@ -696,6 +722,7 @@ function prepopulate(profileArray, verificationData) {
             thisLink.setAttribute('data-edit-item', '')
             //create name
             var names = ['Social:', 'Website:', 'Gallery:']
+            
             var thisName = document.createElement('h5')
             thisName.setAttribute('class', 'mb-2 w-1/2')
             thisName.innerHTML = names[index]
@@ -738,11 +765,26 @@ function prepopulate(profileArray, verificationData) {
 
             //attach to container
             container.appendChild(thisLink)
+
+            if(index == 0) {
+                allBasics.social = thisInput
+            } else if(index == 1) {
+                allBasics.website = thisInput
+            } else if(index == 2) {
+                allBasics.gallery = thisInput
+            }
             
         }
 
         for(let i = 0; i < 3; i++) {
             createProfileLinkInput(editProfileLinkContainer, i)
         }
+
+
+        //button to submit all data
+        const submitAll = document.getElementById('submit-all')
+        submitAll.addEventListener('click', ()=> {
+            setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value)
+        })
       }
 }
