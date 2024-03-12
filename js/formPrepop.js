@@ -489,7 +489,7 @@ function prepopulate(profileArray, verificationData) {
                 })
             } else {
 
-                //create input1
+                //create input for note
                 var inputDesc = document.createElement('input')
                 // inputDesc.setAttribute('type', 'datalist')
                 inputDesc.setAttribute('placeholder', 'Note Text')
@@ -501,11 +501,29 @@ function prepopulate(profileArray, verificationData) {
                 thisEOASpan.setAttribute('class', 'mx-2')
                 thisEOASpan.innerHTML = ':'
                 thisNote.appendChild(thisEOASpan)
-                //create input1
-                var inputAddress = document.createElement('input')
+                //create input for address
+                var inputAddress = document.createElement('select')
+                var respectingAccounts = profileArray[3]
+                respectingAccounts.map((a)=> {
+                    //only add option if no note has already been sent
+                    var alreadySent = false 
+                    var sent = profileArray[6]
+                    sent.map((b)=>{
+                        if(b.toLowerCase() == a.toLowerCase()) {
+                            alreadySent = true
+                        }
+                    })
+                    if(!alreadySent) {
+                        var thisOption = document.createElement('option')
+                        thisOption.value = a
+                        thisOption.innerHTML = a
+                        console.log(a)
+                        inputAddress.appendChild(thisOption)
+                    }
+                })
                 inputAddress.setAttribute('type', 'text')
                 inputAddress.setAttribute('placeholder', 'Target Address')
-                inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+                inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-sm lg:w-1/3')
                 inputAddress.setAttribute('data-field-edit', 'associated-address')
                 thisNote.appendChild(inputAddress)
                 //create write button

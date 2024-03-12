@@ -337,18 +337,18 @@
               <p class="mt-4 lg:max-w-2xl" data-content-account-edit-status></p>
             </div> -->
           </div>
-          <div class="w-full flex flex-row justify-between  lg:pb-10 lg:pt-6">
+          <div class="w-full flex flex-col justify-between  lg:flex-row lg:pb-10 lg:pt-6">
             
             <div data-module-edit class="">
               <div class="w-full md:w-3/4">
                 <h3 class="title">Timestamp Ping</h3>
-                <p class="subtitle">Timestamp of last ping (useful for apps to manage user data across layers).</p>
+                <p class="subtitle hidden lg:block">Timestamp of last ping (useful for apps to manage user data across layers).</p>
                 <ul data-edit-fieldset class="mt-4 flex flex-col ml-auto">
                     <button id="ping-button" data-ping-button class="rounded bg-main px-3 py-1 text-secondary">Ping the Chain</button>
                 </ul>
               </div>
             </div>
-            <div class="my-8 flex flex-col items-center lg:my-0 lg:justify-center  ml-auto">
+            <div class="my-8 flex flex-col items-center lg:my-0 lg:justify-center  lg:ml-auto">
               <p class="mb-1 font-bold lg:mb-3 lg:text-2xl">User verification</p>
               <div data-edit-div class="flex items-center">
                 <input data-edit-field="user-verification" placeholder="User verification text" type="text" class="mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-64" />
