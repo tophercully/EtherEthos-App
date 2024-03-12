@@ -433,10 +433,14 @@ function prepopulate(profileArray, verificationData) {
         //handled dynamically
         const notes = profileArray[6]
         const notesEditParent = document.querySelectorAll('[data-edit-field="notes"]')[0]
+        const notesViewParent = document.querySelectorAll('[data-view-field="notes"]')[0]
+        console.log(notesViewParent.parentElement.parentElement)
+        
         function createNoteInput(notesContainer, index, defaultDesc, defaultAddress) {
             indexTuple = index * 2 //should target this address in the doubled array [1a, 1b, 2a, 2b]
             //'index' is for the array of tuples [[1a, 1b], [2a, 2b]]
-
+            
+            //create a div to collapse
             //create the li
             var thisNote = document.createElement("li")
             thisNote.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
@@ -486,7 +490,7 @@ function prepopulate(profileArray, verificationData) {
             } else {
 
                 //create input1
-                var inputDesc = document.createElement('datalist')
+                var inputDesc = document.createElement('input')
                 // inputDesc.setAttribute('type', 'datalist')
                 inputDesc.setAttribute('placeholder', 'Note Text')
                 inputDesc.setAttribute('class', 'max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
@@ -538,14 +542,17 @@ function prepopulate(profileArray, verificationData) {
 
             
         }
-        //populate all existing
-        for(let i = 0; i < notes.length/2; i++) {
-        var noteAddress = notes[i*2]
-        var noteDesc = notes[(i*2)+1]
-        createNoteInput(notesEditParent, i, noteDesc, noteAddress)
-        }
+
         //create an empty field for additional accounts
         createNoteInput(notesEditParent, notes.length)
+        //populate all existing
+        for(let i = 0; i < notes.length/2; i++) {
+            var noteAddress = notes[i*2]
+            var noteDesc = notes[(i*2)+1]
+            createNoteInput(notesEditParent, i, noteDesc, noteAddress)
+            createNoteInput(notesViewParent, i, noteDesc, noteAddress)
+        }
+        
 
         
     
