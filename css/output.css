@@ -564,6 +564,10 @@ video {
   overflow: hidden;
 }
 
+.double-cell {
+  grid-column: span 2;
+}
+
 .top-0{
   top: 0;
 }

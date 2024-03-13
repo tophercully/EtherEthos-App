@@ -47,30 +47,69 @@
     <main class="relative p-4 pb-8 md:p-8 md:pb-12 lg:p-24 lg:pb-40">
       <section>
         <h2 class="mb-6 mt-6 lg:mb-20 lg:mt-0">Frequently Asked Questions</h2>
-        <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 2xl:grid-cols-3">
+        <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 2xl:grid-cols-2">
           <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Why is it important that I *own* my profile data?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">Before EtherEthos, you give your data away for free, all the time. To every app that 
+              asks you to create a profile, from marketplaces to social networks. You give up 
+              control over that data and entrust its security to a centralized entity. Do you think 
+              their security practices as good as an Ethereum private key??? In addition, owning 
+              your profile data means that, with EtherEthos adoption, you only need to update it, 
+              delete it, turn it off, etc. in one place - the contract. If you build your EtherEthos, the
+              apps will come to you.</p>
           </li>
           <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is composability and why should I care?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">Composability allows for simple use of data across various apps and 
+              implementations. It creates opportunities for a more streamlined app development, 
+              and it creates opportunities for better user experience - your experience. I means 
+              that smart contracts can actually use the data and incorporate it into their 
+              functions. It creates a more 'open' world to share your data - if you want to.</p>
           </li>
           <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How can I remove my data?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">When you write your data to the EtherEthos contract, you create a permanent 
+              record of that data on-chain. Even if you disable composability (turns off live access 
+              through the contract) or overwrite the data entirely, the initially stored data will still 
+              exist and still be publicly accessible through blockchain explorers. You should not 
+              'dox' yourself on EtherEthos unless you're already public about your identity. You 
+              should never write any personally identifiable information to the contract.</p>
           </li>
           <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How does this work with multiple chains?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">Data on each chain is by default separate - updating data on mainnet does not 
+              update data on an L2. We are entering a multi-layer world though, and on every 
+              layer, a user can update a timestamp (this is the timestamp ping). Apps that use 
+              EtherEthos data could search profiles on each supported layer and only pull the 
+              data from the newest timestamp. In such a scenario, one could write data on an L2, 
+              and if the timestamp is farther along than mainnet, the app would serve the L2's 
+              data.</p>
           </li>
-          <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+          <li class="bg-blue double-cell">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is respecting, respect, and notes?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">EtherEthos evolved from a sort of 'on-chain resume' system, and viewing these 
+              features in that framework might help. Respecting an account shows that a user is 
+              publicly showing their respect for another. This could simply be used as a social 
+              signal, and this data is shown on both accounts - the respect giver and receiver. In 
+              addition, respecting an account gives the respect-receiving account permission to 
+              write the respect-giving account a note. These notes are public and visible on both 
+              account's profiles, and these can be thought of as professional 
+              endorsements/recommendations, or just simple notes 'Congrats on the launch!'. 
+              Given two accounts, A and B, if each account respects the other, each account can 
+              only write one note for the other. This note can be overwritten by the writer, and it 
+              can be deleted by either party.</p>
           </li>
-          <li class="bg-blue">
-            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Question</h3>
-            <p class="px-4 py-4 lg:px-8 lg:py-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt risus ut augue condimentum luctus. Quisque vitae sem ante. Praesent volutpat nisi quam, ac luctus est eleifend ut. Vivamus imperdiet sit amet enim ut pulvinar. Nunc at lacinia purus. Aenean aliquam tincidunt placerat. Quisque accumsan convallis massa vel mollis. Maecenas mattis turpis nunc, sed consequat lorem iaculis at. Nunc diam ligula, venenatis et nisi porta, viverra luctus nulla. Vivamus volutpat fermentum ante, sed rhoncus arcu rhoncus eget.</p>
+          <li class="bg-blue double-cell">
+            <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">I'm an app/contract dev, and I want to use this data! Where do I start?</h3>
+            <p class="px-4 py-4 lg:px-8 lg:py-8">Awesome! First and foremost, understand that it is EtherEthos's hope that apps only
+              use live contract data, thereby adhering to the composability wishes of every 
+              account. If you don't agree to that, ask yourself if users will want to use your app 
+              when you don't respect their wishes. Right? Ok, here's some dev documentation on 
+              the returned data structures. Also note that this site does not store any profile data, 
+              it only retrieves data live from chain, and it is a public repo.
+              Additionally, there are a growing number of NFT contracts that use EtherEthos data, 
+              starting with BLONKS. The relevant functions are included in this project’s 
+              documentation.</p>
           </li>
         </ul>
       </section>
