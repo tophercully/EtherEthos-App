@@ -257,4 +257,16 @@ code {
   height: fit-content;
   padding-block: 2.5%;
 }
+#profile-dropdown{
+  width: 15rem;
+  /* height: 15rem; */
+  /* position: fixed;
+  top: 0px;
+  right: 0px; */
+  /* background-color: red; */
+  border: 1px solid black;
 
+  padding: 0;
+
+  transition: 250ms ease-out;
+}

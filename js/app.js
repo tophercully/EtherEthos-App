@@ -122,6 +122,9 @@ if (searchParams.get("address")) {
   }
 }
 
+
+
+
 //only run when home page or on profile page, else only handle account
 if(window.location.pathname == '/' || window.location.pathname.includes('address')) {
   //set chain dropdown to current chain
@@ -188,12 +191,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             _queryContract(account);
           }
 
-          var chainDisplay = document.getElementById('chain-info')
+          // var chainDisplay = document.getElementById('chain-info')
           var chainText = document.getElementById('chain-name')
           chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-          var chainImg = document.getElementById('chain-img')
-          chainDisplay.appendChild(chainImg)
-          chainDisplay.appendChild(chainText)
+          // var chainImg = document.getElementById('chain-img')
+          // chainDisplay.appendChild(chainImg)
+          // chainDisplay.appendChild(chainText)
         } else {
           applyQuery(account)
         }

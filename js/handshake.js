@@ -134,7 +134,7 @@ function handleAccountsChanged(accounts) {
   } else if (accounts[0] !== currentAccount) {
     currentAccount = accounts[0];
     console.log("Account connected:", currentAccount);
-    console.log(currentAccount)
+    console.log(currentAccount);
     connectButtonText.textContent = typeof currentAccount == 'string' ? `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}` : currentAccount;
     
   }
@@ -162,10 +162,78 @@ function connectWallet() {
   }
 }
 
+window.addEventListener('load', ()=> {
+  if (connectButton) {
+    if(!currentAccount) {
+      console.log('account oesnt exist')
+      connectButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        connectWallet();
+      });
+    } else {
+      let profileDropped = false
+      const profileDropdown = document.createElement('div')
+      profileDropdown.setAttribute('id', 'profile-dropdown')
+      profileDropdown.style.height = '0px'
+      profileDropdown.className = "absolute flex flex-col items-center w-20 border-main bg-secondary top-20 right-0 overflow-hidden"
+      
+      const networkDisplay = document.createElement('div')
+      networkDisplay.id = 'chain-name'
+      networkDisplay.className = 'w-full h-5 bg-secondary text-main text-center'
+      networkDisplay.style.height = '5rem'
+      const checkParams = new URLSearchParams(window.location)
+      if(checkParams.get('chain')) {
+        networkDisplay.innerHTML = checkParams.get('chain')
+      } else {
+        console.log(currentChain)
+        networkDisplay.innerHTML = currentChainId
+      }
+      
+      
 
-if (connectButton) {
-  connectButton.addEventListener("click", function (event) {
-    event.preventDefault();
-    connectWallet();
-  });
-}
+      const myProfileButton = document.createElement('a')
+      myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
+      myProfileButton.style.height = '5rem'
+      
+      // myProfileButton.href = profileLink
+      myProfileButton.innerHTML = "My Profile"
+      
+      const reconnectButton = document.createElement('button')
+      reconnectButton.className = "w-full h-5 bg-main text-secondary hover-invert"
+      reconnectButton.style.height = '5rem'
+      reconnectButton.innerHTML = "Connect Other Account"
+
+      profileDropdown.appendChild(myProfileButton)
+      profileDropdown.appendChild(reconnectButton)
+      profileDropdown.appendChild(networkDisplay)
+      document.body.appendChild(profileDropdown)
+
+      function toggleProfileDropdown() {
+        if(profileDropped) {
+          profileDropdown.style.height = '0px'
+          profileDropped = false
+          
+        } else {
+          profileDropdown.style.height = '15rem'
+          profileDropped = true
+        }
+      }
+      
+      connectButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        toggleProfileDropdown();
+      });
+      reconnectButton.addEventListener('click', ()=>{
+        connectWallet();
+      })
+      myProfileButton.addEventListener('click', ()=>{
+        var profileParams = new URLSearchParams
+        profileParams.set('address', currentAccount)
+        var profileLink = window.location
+        profileLink.search = profileParams
+        console.log(profileLink)
+      })
+    }
+  }
+}) 
+  
