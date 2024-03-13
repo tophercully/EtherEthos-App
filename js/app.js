@@ -729,7 +729,19 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 respectingReceivingAccountAtag.appendChild(respectReceivingAccount);
                 listItem.appendChild(respectingReceivingAccountAtag);
                 const iconDiv = document.createElement("div");
-                iconDiv.className = "ml-4 flex";
+                iconDiv.className = "ml-4 flex align-center";
+                const copyButton = document.createElement('button')
+                copyButton.className = "mr-2 lg:mr-4";
+                copyButton.addEventListener('click', ()=>{
+                  var toCopy = eeArray[3][i]
+                  navigator.clipboard.writeText(toCopy);
+                })
+                const copyImage = document.createElement("img");
+                copyImage.className = "h-5 w-5";
+                copyImage.setAttribute("src", "./svg/copy.svg");
+                copyImage.setAttribute("alt", "copy icon");
+                copyButton.appendChild(copyImage);
+                iconDiv.appendChild(copyButton);
                 const etherscanAtag = document.createElement("a");
                 etherscanAtag.className = "mr-2 lg:mr-4";
                 etherscanAtag.setAttribute("href", chainScan + eeArray[3][i]);
@@ -740,6 +752,9 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 etherscanImage.setAttribute("alt", "etherscan logo");
                 etherscanAtag.appendChild(etherscanImage);
                 iconDiv.appendChild(etherscanAtag);
+                
+
+
                 // const etherethosAtag = document.createElement("a");
                 // etherethosAtag.setAttribute("href", "#");
                 // const etherethosImage = document.createElement("img");
@@ -768,6 +783,18 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 listItem.appendChild(respectGivingAccountAtag);
                 const iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex";
+                const copyButton = document.createElement('button')
+                copyButton.className = "mr-2 lg:mr-4";
+                copyButton.addEventListener('click', ()=>{
+                  var toCopy = eeArray[4][i]
+                  navigator.clipboard.writeText(toCopy);
+                })
+                const copyImage = document.createElement("img");
+                copyImage.className = "h-5 w-5";
+                copyImage.setAttribute("src", "./svg/copy.svg");
+                copyImage.setAttribute("alt", "copy icon");
+                copyButton.appendChild(copyImage);
+                iconDiv.appendChild(copyButton);
                 const etherscanAtag = document.createElement("a");
                 etherscanAtag.className = "mr-2 lg:mr-4";
                 etherscanAtag.setAttribute("href", chainScan + eeArray[4][i]);
@@ -826,6 +853,18 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 noteSenderAtag.appendChild(noteSender);
                 iconDiv = document.createElement("div");
                 iconDiv.className = "ml-4 flex";
+                const copyButton = document.createElement('button')
+                copyButton.className = "mr-2 lg:mr-4";
+                copyButton.addEventListener('click', ()=>{
+                  var toCopy = eeArray[5][i]
+                  navigator.clipboard.writeText(toCopy);
+                })
+                const copyImage = document.createElement("img");
+                copyImage.className = "h-5 w-5";
+                copyImage.setAttribute("src", "./svg/copy.svg");
+                copyImage.setAttribute("alt", "copy icon");
+                copyButton.appendChild(copyImage);
+                iconDiv.appendChild(copyButton);
                 etherscanAtag = document.createElement("a");
                 etherscanAtag.className = "mr-2 lg:mr-4";
                 etherscanAtag.setAttribute("href", chainScan + eeArray[5][i]);

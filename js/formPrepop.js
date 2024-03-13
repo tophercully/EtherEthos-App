@@ -487,6 +487,19 @@ function prepopulate(profileArray, verificationData) {
                     thisAnchor.appendChild(thisDisplay)
                     thisNote.appendChild(thisAnchor)
 
+                const copyButton = document.createElement('button')
+                copyButton.className = "mr-2 lg:mr-4";
+                copyButton.addEventListener('click', ()=>{
+                    var toCopy = defaultAddress
+                    navigator.clipboard.writeText(toCopy);
+                })
+                const copyImage = document.createElement("img");
+                copyImage.className = "h-5 w-5";
+                copyImage.setAttribute("src", "./svg/copy.svg");
+                copyImage.setAttribute("alt", "copy icon");
+                copyButton.appendChild(copyImage);
+                thisNote.appendChild(copyButton);
+
                 //create delete button
                 var thisDelete = document.createElement('button')
                 thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
@@ -640,6 +653,19 @@ function prepopulate(profileArray, verificationData) {
                     thisDisplay.setAttribute('class', 'mr-2 h-9')
                     thisDisplay.innerHTML = defaultInput
                     thisRespect.appendChild(thisDisplay)
+                    //copy button
+                    const copyButton = document.createElement('button')
+                    copyButton.className = "mr-2 lg:mr-4";
+                    copyButton.addEventListener('click', ()=>{
+                    var toCopy = defaultInput
+                    navigator.clipboard.writeText(toCopy);
+                    })
+                    const copyImage = document.createElement("img");
+                    copyImage.className = "h-5 w-5";
+                    copyImage.setAttribute("src", "./svg/copy.svg");
+                    copyImage.setAttribute("alt", "copy icon");
+                    copyButton.appendChild(copyImage);
+                    thisRespect.appendChild(copyButton);
                     //create delete/revoke button
                     var thisDelete = document.createElement('button')
                     thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
