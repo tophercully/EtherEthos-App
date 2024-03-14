@@ -7,6 +7,8 @@ let composable, accountIsBlocked, moderator, verificationResponse, perms, compos
 
 
 let chainScan;
+let BLONKSsvg;
+let blonksPlaceholder
 //set up url params
 const searchParams = new URLSearchParams(window.location.search)
 let rawAccount = "";
@@ -54,6 +56,9 @@ const pfpContract = document.querySelector("[data-content=pfp-contract]");
 const pfpVerified = document.querySelector("[data-content=pfp-verification]");
 const pfpActualOwner = document.querySelector("[data-content=pfp-actual-owner]");
 const blonksInfo = document.querySelector("[data-content=blonks-info]");
+
+const pfpcontainer = document.querySelector("#pfpContainer");
+const editPfpContainer = document.getElementById("editPfpContainer");
 
 const alias = document.querySelector("[data-content=alias]");
 const detail = document.querySelector("[data-content=detail]");
@@ -472,8 +477,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 parseTokenURI(tokenURI)
                   .then((imageData) => {
                     console.log("Image Data:", imageData);
-                    const pfpcontainer = document.querySelector("#pfpContainer");
-                    const editPfpContainer = document.getElementById("editPfpContainer");
+                    
                     
                     if (!pfpcontainer || !editPfpContainer) {
                       console.error("Container not found");
@@ -993,6 +997,8 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         viewSection.classList.add('hidden')
         viewSection.classList.add('lg:hidden')
       }
+
+      
       // element.forEach((el)=>console.log(Array.from(el.classList).includes('hidden')))
     }
 
@@ -1007,6 +1013,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         toggleView('edit')
       }
 
+      pfpcontainer.innerHTML = ''
+      editPfpContainer.innerHTML = BLONKSsvg;
+      editPfpContainer.classList.add('w-full')
+      editPfpContainer.classList.add('aspect-square')
+      editPfpContainer.classList.add('object-contain')
+
       // prepop(eeArray, verificationResponse)
     });
 
@@ -1018,6 +1030,12 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       for (let i = 0; i < module_edit_arr.length; i++) {
         toggleView('view')
       }
+
+      editPfpContainer.innerHTML = ''
+      pfpcontainer.innerHTML = BLONKSsvg;
+      pfpcontainer.classList.add('w-full')
+      pfpcontainer.classList.add('aspect-square')
+      pfpcontainer.classList.add('object-contain')
     });
 
     //! Add new field to a module
@@ -1057,7 +1075,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   async function showBONKSPlaceholder() {
     const pfpcontainer = document.querySelector("#pfpContainer");
     const editPfpContainer = document.getElementById("editPfpContainer");
-    let BLONKSsvg;
+    
     error = false;
     if (!pfpcontainer) {
       console.error("Container not found");
@@ -1080,14 +1098,15 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       error = true;
     }
     if (!error) {
+      blonksPlaceholder = true
       pfpcontainer.innerHTML = BLONKSsvg;
       pfpcontainer.classList.add('w-full')
       pfpcontainer.classList.add('aspect-square')
       pfpcontainer.classList.add('object-contain')
-      editPfpContainer.innerHTML = BLONKSsvg;
-      editPfpContainer.classList.add('w-full')
-      editPfpContainer.classList.add('aspect-square')
-      editPfpContainer.classList.add('object-contain')
+      // editPfpContainer.innerHTML = BLONKSsvg;
+      // editPfpContainer.classList.add('w-full')
+      // editPfpContainer.classList.add('aspect-square')
+      // editPfpContainer.classList.add('object-contain')
       blonksInfo.style.display = "block";
       blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
     }
