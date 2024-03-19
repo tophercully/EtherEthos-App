@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
+    <title>EtherEthos</title>
     <link rel="stylesheet" href="css/output.css" />
     <link rel="stylesheet" href="css/style.css" />
 
@@ -25,30 +25,30 @@
   <body class="bg-secondary text-base lg:text-xl">
     <!-- Add your site or application content here -->
     <header class="header w-full border-b-2 border-main">
-      <div class="flex h-16 justify-between sm:h-16 md:h-16 lg:h-20">
-        <a class="flex h-full items-center transition-all hover:opacity-80" href="/">
+      <div class="flex h-16 justify-between sm:h-16 md:h-20 lg:h-20 transition-all-250">
+        <a id="header-logo" class="flex h-full items-center transition-all-250 hover:opacity-80" href="/">
           <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
-          <h1 class="ml-4 text-3xl font-bold lg:ml-10 lg:text-4xl">EtherEthos</h1>
+          <span class="flex flex-col justify-end items-start text-left md:flex-row md:items-end gap-2 transition-all-250">
+            <h1 class="ml-4 h-2/3 text-3xl font-bold md:ml-10 md:text-4xl transition-all-250">EtherEthos</h1>
+            <p id="chain-display" class="self-start mb-1 ml-4 text-center align-bottom md:self-center md:ml-0"></p>
+          </span>
         </a>
         <div class="flex w-100 h-full items-center">
           <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          <div id="chain-info" class="hidden sm:flex justify-between w-full ml-5 mr-5 h-full items-center transition-all hover:opacity-80">
-            <span id="chain-name"></span>
-            <img id="chain-img" src="./svg/connection.svg" class='h-3 aspect-square object-contain'/>
-          </div>
-          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1">
-            <span class="absolute hidden h-full text-[22px] font-bold text-secondary lg:relative lg:flex lg:items-center">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full lg:hidden" />
+          
+          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1 z-10">
+            <span class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center">CONNECT</span>
+            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden" />
           </button>
         </div>
       </div>
     </header>
 
-    <main class="relative p-4 pb-8 md:p-8 md:pb-12 lg:p-24 lg:pb-40">
+    <main class="relative p-8 pb-8 md:pb-12 lg:p-24 lg:pb-40">
       <section>
         <h2 class="mb-6 mt-6 lg:mb-20 lg:mt-0">Frequently Asked Questions</h2>
-        <ul class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 2xl:grid-cols-2">
-          <li class="bg-blue">
+        <ul class="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-8">
+          <li class="bg-blue single-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">Why is it important that I *own* my profile data?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">Before EtherEthos, you give your data away for free, all the time. To every app that 
               asks you to create a profile, from marketplaces to social networks. You give up 
@@ -58,7 +58,7 @@
               delete it, turn it off, etc. in one place - the contract. If you build your EtherEthos, the
               apps will come to you.</p>
           </li>
-          <li class="bg-blue">
+          <li class="bg-blue single-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is composability and why should I care?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">Composability allows for simple use of data across various apps and 
               implementations. It creates opportunities for a more streamlined app development, 
@@ -66,7 +66,7 @@
               that smart contracts can actually use the data and incorporate it into their 
               functions. It creates a more 'open' world to share your data - if you want to.</p>
           </li>
-          <li class="bg-blue">
+          <li class="bg-blue single-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How can I remove my data?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">When you write your data to the EtherEthos contract, you create a permanent 
               record of that data on-chain. Even if you disable composability (turns off live access 
@@ -75,7 +75,7 @@
               'dox' yourself on EtherEthos unless you're already public about your identity. You 
               should never write any personally identifiable information to the contract.</p>
           </li>
-          <li class="bg-blue">
+          <li class="bg-blue single-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">How does this work with multiple chains?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">Data on each chain is by default separate - updating data on mainnet does not 
               update data on an L2. We are entering a multi-layer world though, and on every 
@@ -85,7 +85,7 @@
               and if the timestamp is farther along than mainnet, the app would serve the L2's 
               data.</p>
           </li>
-          <li class="bg-blue double-cell">
+          <li class="bg-blue all-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">What is respecting, respect, and notes?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">EtherEthos evolved from a sort of 'on-chain resume' system, and viewing these 
               features in that framework might help. Respecting an account shows that a user is 
@@ -99,7 +99,7 @@
               only write one note for the other. This note can be overwritten by the writer, and it 
               can be deleted by either party.</p>
           </li>
-          <li class="bg-blue double-cell">
+          <li class="bg-blue all-cell">
             <h3 class="bg-main px-4 py-2 text-secondary lg:px-8 lg:py-4">I'm an app/contract dev, and I want to use this data! Where do I start?</h3>
             <p class="px-4 py-4 lg:px-8 lg:py-8">Awesome! First and foremost, understand that it is EtherEthos's hope that apps only
               use live contract data, thereby adhering to the composability wishes of every 

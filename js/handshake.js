@@ -171,31 +171,19 @@ window.addEventListener('load', ()=> {
         connectWallet();
       });
     } else {
+      
+
       let profileDropped = false
       const profileDropdown = document.createElement('div')
       profileDropdown.setAttribute('id', 'profile-dropdown')
       profileDropdown.style.height = '0px'
-      profileDropdown.className = "absolute flex flex-col items-center w-20 border-main bg-secondary top-20 right-0 overflow-hidden"
-      
-      const networkDisplay = document.createElement('div')
-      networkDisplay.id = 'chain-name'
-      networkDisplay.className = 'w-full h-5 bg-secondary text-main text-center'
-      networkDisplay.style.height = '5rem'
-      const checkParams = new URLSearchParams(window.location)
-      if(checkParams.get('chain')) {
-        networkDisplay.innerHTML = checkParams.get('chain')
-      } else {
-        console.log(currentChain)
-        networkDisplay.innerHTML = currentChainId
-      }
-      
-      
+      profileDropdown.style.border = 'none'
+      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary top-full right-0 overflow-hidden hover:opacity-100"      
 
       const myProfileButton = document.createElement('a')
       myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
       myProfileButton.style.height = '5rem'
       
-      // myProfileButton.href = profileLink
       myProfileButton.innerHTML = "My Profile"
       
       const reconnectButton = document.createElement('button')
@@ -205,16 +193,17 @@ window.addEventListener('load', ()=> {
 
       profileDropdown.appendChild(myProfileButton)
       profileDropdown.appendChild(reconnectButton)
-      profileDropdown.appendChild(networkDisplay)
-      document.body.appendChild(profileDropdown)
+      connectButton.appendChild(profileDropdown)
 
       function toggleProfileDropdown() {
         if(profileDropped) {
           profileDropdown.style.height = '0px'
+          profileDropdown.style.border = 'none'
           profileDropped = false
           
         } else {
-          profileDropdown.style.height = '15rem'
+          profileDropdown.style.height = '10rem'
+          profileDropdown.style.border = '1px solid black'
           profileDropped = true
         }
       }
@@ -229,9 +218,10 @@ window.addEventListener('load', ()=> {
       myProfileButton.addEventListener('click', ()=>{
         var profileParams = new URLSearchParams
         profileParams.set('address', currentAccount)
+
         var profileLink = window.location
         profileLink.search = profileParams
-        console.log(profileLink)
+        console.log('my profile link ' + profileLink)
       })
     }
   }

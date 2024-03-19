@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
+    <title>EtherEthos</title>
     <link rel="stylesheet" href="css/output.css" />
     <link rel="stylesheet" href="css/style.css" />
 
@@ -22,28 +22,28 @@
     <meta name="theme-color" content="#fafafa" />
   </head>
 
-  <body class="m-auto max-w-[1690px] items-center bg-secondary text-base lg:text-xl">
+  <body class="m-auto items-center bg-secondary text-base lg:text-xl">
     <header class="header w-full border-b-2 border-main">
-      <div class="flex h-16 justify-between sm:h-16 md:h-16 lg:h-20">
-        <a class="flex h-full items-center transition-all hover:opacity-80" href="/">
+      <div class="flex h-16 justify-between sm:h-16 md:h-20 lg:h-20 transition-all-250">
+        <a id="header-logo" class="flex h-full items-center transition-all-250 hover:opacity-80" href="/">
           <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
-          <h1 class="ml-4 text-3xl font-bold lg:ml-10 lg:text-4xl">EtherEthos</h1>
+          <span class="flex flex-col justify-end items-start text-left md:flex-row md:items-end gap-2 transition-all-250">
+            <h1 class="ml-4 h-2/3 text-3xl font-bold md:ml-10 md:text-4xl transition-all-250">EtherEthos</h1>
+            <p id="chain-display" class="self-start mb-1 ml-4 text-center align-bottom md:self-center md:ml-0"></p>
+          </span>
         </a>
         <div class="flex w-100 h-full items-center">
           <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          <!-- <div id="chain-info" class="hidden sm:flex justify-between w-full ml-5 mr-5 h-full items-center transition-all hover:opacity-80">
-            <span id="chain-name"></span>
-            <img id="chain-img" src="./svg/connection.svg" class='h-3 aspect-square object-contain'/>
-          </div> -->
-          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1">
-            <span class="absolute hidden h-full text-[22px] font-bold text-secondary lg:relative lg:flex lg:items-center">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full lg:hidden" />
+          
+          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1 z-10">
+            <span class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center">CONNECT</span>
+            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden" />
           </button>
         </div>
       </div>
     </header>
 
-    <section  class="relative border-b border-main p-4 pb-8 md:p-8 md:pb-12 lg:flex lg:h-[75vh] lg:max-h-[650px] lg:flex-col lg:justify-between lg:p-24 lg:pb-40">
+    <section  class="relative border-b border-main p-4 pb-8 md:p-8 md:pb-12 lg:flex lg:h-[80vh] lg:max-h-[750px] lg:flex-col lg:justify-between lg:p-24 lg:pb-40">
       <div>
         <div class="mt-4 lg:flex lg:items-baseline">
           <h2>Decentralized Profiles</h2>
@@ -57,7 +57,7 @@
           <p class="note">Automatically generated links to other EtherEthos profiles are formatted <code class="bg-blue underline">like this.</code></p>
         </div>
       </div>
-      <div class="mb-10 mt-5 lg:mb-0">
+      <div class="mb-5 mt-5">
         <p class="title-3 mb-3">Search for an account</p>
         <form class="flex flex-col lg:flex-row lg:items-center">
           <input data-search-input type="text" class="rounded-full border border-solid border-main px-5 py-2 lg:h-12 lg:w-2/3 lg:max-w-[1050px]" placeholder="Account address" />
@@ -142,9 +142,9 @@
           <div data-module-view class="module-view">
             <h3 class="mb-4">Basic Data</h3>
             <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
-              <div data-view-section="pfp" class="grid md:grid-rows-[3fr,4fr]">
-                <div id="pfpContainer" class="md:border-r md:border-main w-full aspect-square object-contain"></div>
-                <div class="flex justify-between gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
+              <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
+                <div id="pfpContainer" class="flex items-center justify-center object-contain md:border-r md:border-main w-full aspect-square"></div>
+                <div class="flex flex-col justify-between items-start gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
                   <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
                   <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl">[contract]</a></p>
                   <p class="text-base font-bold lg:text-xl" data-content="pfp-verification"></p>
@@ -365,7 +365,7 @@
         <!-- Basic Data Edit -->
         <div id="basic-data" data-module-edit class="">
           <h3 class="mb-4">Basic Data</h3>
-          <div class="basic-data module mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
+          <div class="basic-data module w-full mb-4 grid border border-main md:grid-cols-[1fr,3fr]">
             <div data-edit-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
               <div id="editPfpContainer" class="md:border-r md:border-main w-full aspect-square object-contain"></div>
 
@@ -389,8 +389,8 @@
                 </div>
               </div>
             </div>
-            <div class="grid md:grid-rows-[5fr,4fr]">
-              <div data-edit-section="personal" class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
+            <div class="grid md:grid-rows-[5fr,3fr]">
+              <div data-edit-section="personal" class="w-full  border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2 lg:mb-0">Alias:</h5>
                   <div data-edit-div class="flex items-center">
@@ -404,7 +404,7 @@
                 </div>
                 <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                   <h5 class="mb-2">Detail:</h5>
-                  <div data-edit-div class="flex flex-wrap items-center">
+                  <div data-edit-div class="w-full flex flex-wrap items-center">
                     <textarea data-edit-field="detail" data-detail placeholder="Add a short detail or description about the account here" class="mr-1 mb 3 h-32 w-full rounded-md border border-main px-3 py-3 text-md"></textarea>
                     <!-- <div class="mt-4"> -->
                       <button data-write class="mx-2 mt-4 h-7 w-7 rounded-full bg-main p-0">

@@ -11,7 +11,7 @@ const createErrorMsg = (msg) => {
     var closeButton = document.createElement('button')
     
     //style
-    errorBody.className = 'fixed top-0 left-0 w-full h-16 z-100 px-5 flex items-center justify-between bg-red'
+    errorBody.className = 'fixed bottom-0 left-0 w-full h-12 z-100 px-5 flex items-center justify-between bg-red'
     errorMsg.setAttribute('class', 'text-base')
 
     // statusMsg.setAttribute('class', '')
@@ -50,7 +50,7 @@ const createStatusMsg = (msg) => {
     var closeButton = document.createElement('button')
     
     //style
-    statusBody.className = 'fixed top-0 left-0 w-full h-16 z-100 px-5 flex items-center justify-between bg-blue'
+    statusBody.className = 'fixed bottom-0 left-0 w-full h-12 z-100 px-5 flex items-center justify-between bg-blue'
 
     // statusMsg.setAttribute('class', '')
     closeButton.setAttribute('class', 'w-1/10 aspect-square bg-red-400')
