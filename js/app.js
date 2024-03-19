@@ -9,6 +9,7 @@ let composable, accountIsBlocked, moderator, verificationResponse, perms, compos
 let chainScan;
 let BLONKSsvg;
 let blonksPlaceholder
+let accountPermitted = null
 //set up url params
 const searchParams = new URLSearchParams(window.location.search)
 let rawAccount = "";
@@ -98,6 +99,9 @@ function isValidEthereumAddress(address) {
   return address.match(hexPat);
 }
 
+
+//only run when home page or on profile page, else only handle account
+if(window.location.pathname == '/' || window.location.pathname.includes('address')) {
 // Function to toggle visibility based on Ethereum address validity
 function mainIsVisible(isValid) {
   console.log("Toggling visibility based on address validity..." + isValid);
@@ -130,8 +134,6 @@ if (searchParams.get("address")) {
 
 
 
-//only run when home page or on profile page, else only handle account
-if(window.location.pathname == '/' || window.location.pathname.includes('address')) {
   //set chain dropdown to current chain
   if(searchParams.get("chain")) {
     searchNetwork.setAttribute('selected', searchParams.get("chain"))
@@ -164,12 +166,10 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           _queryContract(account);
         }
         
-        var chainDisplay = document.getElementById('chain-info')
-        var chainText = document.getElementById('chain-name')
-        chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-        var chainImg = document.getElementById('chain-img')
-        chainDisplay.appendChild(chainImg)
-        chainDisplay.appendChild(chainText)
+        var chainText = document.getElementById('chain-display')
+        chainText.innerHTML = '(' + chain + ')';
+        chainText.className = ''
+
       } else {
         
         console.log('exception ' + account)
@@ -196,12 +196,9 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             _queryContract(account);
           }
 
-          // var chainDisplay = document.getElementById('chain-info')
-          var chainText = document.getElementById('chain-name')
-          chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-          // var chainImg = document.getElementById('chain-img')
-          // chainDisplay.appendChild(chainImg)
-          // chainDisplay.appendChild(chainText)
+          var chainText = document.getElementById('chain-display')
+          chainText.innerHTML = '(' + chain + ')';
+
         } else {
           applyQuery(account)
         }
@@ -255,6 +252,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     if(currentAccount) {
       console.log(`account ${account}, currentAccount ${currentAccount}`)
       if (account.toLowerCase() == currentAccount.toLowerCase()) {
+        accountPermitted = true
         console.log(account.toLowerCase(), currentAccount.toLowerCase())
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");
@@ -375,7 +373,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         
         if (composable) {
           console.log(eeArray);
-          prepopulate(eeArray, verificationResponse, composable)
+          prepopulate(eeArray, verificationResponse, accountPermitted)
           basicData.style.display = "block";
 
           // PFP DATA
@@ -490,6 +488,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                       // For base64 images, use an <img> tag
                       const img = document.createElement("img");
                       img.src = imageData;
+                      
                       pfpcontainer.innerHTML = ""; // Clear the container
                       pfpcontainer.appendChild(img);
                       editPfpContainer.innerHTML = ""; // Clear the edit container
@@ -664,7 +663,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             for (let i = 0; i < eeArray[2].length; i += 2) {
               if (eeArray[2][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const associatedDetail = document.createElement("code");
                 associatedDetail.className = "mr-2 h-9";
                 associatedDetail.textContent = eeArray[2][i + 1];
@@ -687,15 +686,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 etherscanImage.setAttribute("src", "./svg/etherscan.svg");
                 etherscanImage.setAttribute("alt", "etherscan logo");
                 etherscanAtag.appendChild(etherscanImage);
-                const etherethosAtag = document.createElement("a");
-                // etherethosAtag.setAttribute("href", "#");
-                // const etherethosImage = document.createElement("img");
-                // etherethosImage.className = "h-5 w-5";
-                // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-                // etherethosImage.setAttribute("alt", "etherethos logo");
-                // etherethosAtag.appendChild(etherethosImage);
                 iconDiv.appendChild(etherscanAtag);
-                // iconDiv.appendChild(etherethosAtag);
                 listItem.appendChild(iconDiv);
                 associatedContainer.appendChild(listItem);
               }
@@ -726,7 +717,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             for (let i = 0; i < eeArray[3].length; i++) {
               if (eeArray[3][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const respectingReceivingAccountAtag = document.createElement("a");
                 respectingReceivingAccountAtag.className = "underline";
                 respectingReceivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[3][i]}`);
@@ -760,16 +751,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 etherscanAtag.appendChild(etherscanImage);
                 iconDiv.appendChild(etherscanAtag);
                 
-
-
-                // const etherethosAtag = document.createElement("a");
-                // etherethosAtag.setAttribute("href", "#");
-                // const etherethosImage = document.createElement("img");
-                // etherethosImage.className = "h-5 w-5";
-                // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-                // etherethosImage.setAttribute("alt", "etherethos logo");
-                // etherethosAtag.appendChild(etherethosImage);
-                // iconDiv.appendChild(etherethosAtag);
                 listItem.appendChild(iconDiv);
                 respectReceivingContainer.appendChild(listItem);
               }
@@ -779,7 +760,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             for (let i = 0; i < eeArray[4].length; i++) {
               if (eeArray[4][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                listItem.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const respectGivingAccountAtag = document.createElement("a");
                 respectGivingAccountAtag.className = "underline";
                 respectGivingAccountAtag.setAttribute("href", `${siteBase}?address=${eeArray[4][i]}`);
@@ -842,16 +823,16 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
                 const listItem = document.createElement("li");
-                listItem.className = "mb-2 flex flex-row items-start lg:flex-row";
+                listItem.className = "mb-2 flex flex-wrap flex-row items-start lg:flex-row";
                 const noteDiv = document.createElement("div");
-                noteDiv.className = "mb-2 flex items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
+                noteDiv.className = "mb-2 flex flex-wrap items-center before:mr-4 before:h-2 before:w-2 before:rounded-full before:bg-main";
                 const noteDetail = document.createElement("code");
                 noteDetail.className = "mr-2 h-9";
                 noteDetail.textContent = eeArray[5][i + 1];
                 noteDiv.appendChild(noteDetail);
                 listItem.appendChild(noteDiv);
                 centeringDiv = document.createElement("div");
-                centeringDiv.className = "flex items-center";
+                centeringDiv.className = "flex flex-wrap min-w-10 items-center";
                 const noteSenderAtag = document.createElement("a");
                 noteSenderAtag.setAttribute("href", `${siteBase}?address=${eeArray[5][i]}`);
                 const noteSender = document.createElement("code");
@@ -1013,13 +994,15 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         toggleView('edit')
       }
 
-      pfpcontainer.innerHTML = ''
-      editPfpContainer.innerHTML = BLONKSsvg;
-      editPfpContainer.classList.add('w-full')
-      editPfpContainer.classList.add('aspect-square')
-      editPfpContainer.classList.add('object-contain')
+      if(blonksPlaceholder) {
 
-      // prepop(eeArray, verificationResponse)
+        pfpcontainer.innerHTML = ''
+        editPfpContainer.innerHTML = BLONKSsvg;
+        editPfpContainer.classList.add('w-full')
+        editPfpContainer.classList.add('aspect-square')
+        editPfpContainer.classList.add('object-contain')
+      }
+
     });
 
     view_btn.addEventListener("click", () => {
@@ -1030,12 +1013,14 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       for (let i = 0; i < module_edit_arr.length; i++) {
         toggleView('view')
       }
+      if(blonksPlaceholder) {
 
-      editPfpContainer.innerHTML = ''
-      pfpcontainer.innerHTML = BLONKSsvg;
-      pfpcontainer.classList.add('w-full')
-      pfpcontainer.classList.add('aspect-square')
-      pfpcontainer.classList.add('object-contain')
+        editPfpContainer.innerHTML = ''
+        pfpcontainer.innerHTML = BLONKSsvg;
+        pfpcontainer.classList.add('w-full')
+        pfpcontainer.classList.add('aspect-square')
+        pfpcontainer.classList.add('object-contain')
+      }
     });
 
     //! Add new field to a module
@@ -1103,10 +1088,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       pfpcontainer.classList.add('w-full')
       pfpcontainer.classList.add('aspect-square')
       pfpcontainer.classList.add('object-contain')
-      // editPfpContainer.innerHTML = BLONKSsvg;
-      // editPfpContainer.classList.add('w-full')
-      // editPfpContainer.classList.add('aspect-square')
-      // editPfpContainer.classList.add('object-contain')
       blonksInfo.style.display = "block";
       blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
     }
@@ -1136,12 +1117,8 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           _queryContract(account);
         }
         
-        var chainDisplay = document.getElementById('chain-info')
-        var chainText = document.getElementById('chain-name')
-        chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-        var chainImg = document.getElementById('chain-img')
-        chainDisplay.appendChild(chainImg)
-        chainDisplay.appendChild(chainText)
+        var chainText = document.getElementById('chain-display')
+        chainText.innerHTML = '(' + chain + ')';
       } else {
         
         console.log('exception ' + account)
@@ -1167,12 +1144,10 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           _queryContract(account);
         }
 
-        var chainDisplay = document.getElementById('chain-info')
-        var chainText = document.getElementById('chain-name')
-        chainText.innerHTML = ' ' + chain.charAt(0).toUpperCase() + chain.slice(1);
-        var chainImg = document.getElementById('chain-img')
-        chainDisplay.appendChild(chainImg)
-        chainDisplay.appendChild(chainText)
+
+        var chainText = document.getElementById('chain-display')
+        chainText.innerHTML = '(' + chain +')';
+
       } else {
         applyQuery(account)
       }
