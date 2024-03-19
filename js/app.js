@@ -82,6 +82,8 @@ const respectingHeading = document.querySelector("[text-content=respecting-headi
 const respectReceivingContainer = document.querySelector("[data-content-list=receiving]");
 const respectGivingContainer = document.querySelector("[data-content-list=giving]");
 
+const notesSentModule = document.querySelector("[data-module=notes-sent]");
+
 const notesModule = document.querySelector("[data-module=notes]");
 const notesContainer = document.querySelector("[data-content=notes]");
 
@@ -819,6 +821,7 @@ if (searchParams.get("address")) {
           }
           if (notesPresent) {
             notesModule.style.display = "block";
+            notesSentModule.style.display = "block"
             notesContainer.textContent = "";
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
