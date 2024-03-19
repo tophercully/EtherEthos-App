@@ -82,6 +82,8 @@ const respectingHeading = document.querySelector("[text-content=respecting-headi
 const respectReceivingContainer = document.querySelector("[data-content-list=receiving]");
 const respectGivingContainer = document.querySelector("[data-content-list=giving]");
 
+const notesSentModule = document.querySelector("[data-module=notes-sent]");
+
 const notesModule = document.querySelector("[data-module=notes]");
 const notesContainer = document.querySelector("[data-content=notes]");
 
@@ -102,34 +104,36 @@ function isValidEthereumAddress(address) {
 
 //only run when home page or on profile page, else only handle account
 if(window.location.pathname == '/' || window.location.pathname.includes('address')) {
-// Function to toggle visibility based on Ethereum address validity
-function mainIsVisible(isValid) {
-  console.log("Toggling visibility based on address validity..." + isValid);
-    if (isValid) {
-      mainContent.classList.remove("hidden");
-      view_btn.classList.remove("hidden");
-    } else {
-      mainContent.classList.add("hidden");
-    }
-}
+  
 
-function abbreviateAndUpdate(account) {
-  abbrvAccount = `${account.slice(0, 4)}-${account.slice(-4)}`;
-  accountNameElements.forEach((element) => {
-    element.textContent = abbrvAccount; 
-  });
-}
-
-if (searchParams.get("address")) {
-  const isValid = isValidEthereumAddress(searchParams.get("address"));
-  if (isValid) {
-    account = searchParams.get("address");
-    console.log("Account accepted from URL parameter: " + account);
-    abbreviateAndUpdate(account);
-    mainIsVisible(true);
-    // _queryContract(account);
+  // Function to toggle visibility based on Ethereum address validity
+  function mainIsVisible(isValid) {
+    console.log("Toggling visibility based on address validity..." + isValid);
+      if (isValid) {
+        mainContent.classList.remove("hidden");
+        view_btn.classList.remove("hidden");
+      } else {
+        mainContent.classList.add("hidden");
+      }
   }
-}
+
+  function abbreviateAndUpdate(account) {
+    abbrvAccount = `${account.slice(0, 4)}-${account.slice(-4)}`;
+    accountNameElements.forEach((element) => {
+      element.textContent = abbrvAccount; 
+    });
+  }
+
+  if (searchParams.get("address")) {
+    const isValid = isValidEthereumAddress(searchParams.get("address"));
+    if (isValid) {
+      account = searchParams.get("address");
+      console.log("Account accepted from URL parameter: " + account);
+      abbreviateAndUpdate(account);
+      mainIsVisible(true);
+      // _queryContract(account);
+    }
+  }
 
 
 
@@ -203,6 +207,8 @@ if (searchParams.get("address")) {
           applyQuery(account)
         }
     })
+
+
   }
 
   //refresh page when user changes networks from metamask
@@ -327,8 +333,6 @@ if (searchParams.get("address")) {
           accountVerificationElement.textContent = "[nothing set]";
         }
         console.log(accountStatus);
-        // accountStatusElement.textContent = accountStatus;
-        // accountEditStatusElement.textContent = accountStatus;
         accountStatusElement.forEach((element) => {
           element.textContent = accountStatus; 
         });
@@ -581,7 +585,6 @@ if (searchParams.get("address")) {
           var links = [socialDiv, websiteDiv, galleryDiv]
           //populate the priority link
           var priorityIndex = eeArray[0][5]
-          console.log('priority link ' + priorityIndex)
           profileLinkContainer.appendChild(links[priorityIndex])
           for(let i = 0; i < links.length; i++) {
             if(i != priorityIndex) {
@@ -792,15 +795,7 @@ if (searchParams.get("address")) {
                 etherscanImage.setAttribute("src", "./svg/etherscan.svg");
                 etherscanImage.setAttribute("alt", "etherscan logo");
                 etherscanAtag.appendChild(etherscanImage);
-                // const etherethosAtag = document.createElement("a");
-                // etherethosAtag.setAttribute("href", "#");
-                // const etherethosImage = document.createElement("img");
-                // etherethosImage.className = "h-5 w-5";
-                // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-                // etherethosImage.setAttribute("alt", "etherethos logo");
-                // etherethosAtag.appendChild(etherethosImage);
                 iconDiv.appendChild(etherscanAtag);
-                // iconDiv.appendChild(etherethosAtag);
                 listItem.appendChild(iconDiv);
                 respectGivingContainer.appendChild(listItem);
               }
@@ -819,6 +814,7 @@ if (searchParams.get("address")) {
           }
           if (notesPresent) {
             notesModule.style.display = "block";
+            notesSentModule.style.display = "block"
             notesContainer.textContent = "";
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
@@ -862,16 +858,7 @@ if (searchParams.get("address")) {
                 etherscanImage.setAttribute("src", "./svg/etherscan.svg");
                 etherscanImage.setAttribute("alt", "etherscan logo");
                 etherscanAtag.appendChild(etherscanImage);
-                
-                // etherethosAtag = document.createElement("a");
-                // etherethosAtag.setAttribute("href", "#");
-                // etherethosImage = document.createElement("img");
-                // etherethosImage.className = "h-5 w-5";
-                // etherethosImage.setAttribute("src", "./svg/etherethos.svg");
-                // etherethosImage.setAttribute("alt", "etherethos logo");
-                // etherethosAtag.appendChild(etherethosImage);
                 iconDiv.appendChild(etherscanAtag);
-                // iconDiv.appendChild(etherethosAtag);
                 centeringDiv.appendChild(noteSenderAtag);
                 centeringDiv.appendChild(iconDiv);
                 
@@ -879,7 +866,6 @@ if (searchParams.get("address")) {
                 if(currentAccount) {
 
                   if(account.toLowerCase() == currentAccount.toLowerCase()) {
-                    console.log('accounts match, can delete received notes')
                     var thisDelete = document.createElement('button')
                     thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0 self-center items-center')
                     thisDelete.setAttribute('data-delete', '')

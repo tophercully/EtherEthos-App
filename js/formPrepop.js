@@ -5,9 +5,6 @@ function prepopulate(profileArray, verificationData, accountPermission) {
     //depopulate in case of previous account info remaining
     document.querySelectorAll('[data-edit-field="alias"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="detail"]')[0].innerHTML = ""
-    // document.querySelectorAll('[data-edit-field="social"]')[0].innerHTML = ""
-    // document.querySelectorAll('[data-edit-field="website"]')[0].innerHTML = ""
-    // document.querySelectorAll('[data-edit-field="gallery"]')[0].innerHTML = ""
     document.getElementById('edit-profile-links').innerHTML = ''
     document.querySelectorAll('[data-edit-field="pfp-id"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="pfp-address"]')[0].innerHTML = ""
@@ -18,7 +15,6 @@ function prepopulate(profileArray, verificationData, accountPermission) {
     document.querySelectorAll('[data-edit-field="associated"]')[0].innerHTML = ""
     document.querySelectorAll('[data-edit-field="custom-data"]')[0].innerHTML = ""
     //autopopulate form info when available
-    console.log(profileArray)
     if(verificationData != null) {
         //verification info prepopulate
         const editVerification = document.querySelectorAll('[data-edit-field="user-verification"]')[0]
@@ -451,7 +447,6 @@ function prepopulate(profileArray, verificationData, accountPermission) {
         const notes = profileArray[6]
         const notesEditParent = document.querySelectorAll('[data-edit-field="notes"]')[0]
         const notesViewParent = document.querySelectorAll('[data-view-field="notes"]')[0]
-        console.log(notesViewParent.parentElement.parentElement)
         
         function createNoteInput(notesContainer, index, defaultDesc, defaultAddress) {
             indexTuple = index * 2 //should target this address in the doubled array [1a, 1b, 2a, 2b]
