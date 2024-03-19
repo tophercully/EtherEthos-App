@@ -73,3 +73,40 @@ const createStatusMsg = (msg) => {
         statusBody.remove()
     }, 10000)
 }
+
+const createNoWalletMsg = (msg) => {
+    //check for existing messages
+    var existingMsg = document.getElementById('wallet-status-msg')
+    if(existingMsg) {
+        existingMsg.remove()
+    }
+    //build message module
+    var statusBody = document.createElement('div')
+    var statusMsg = document.createElement('h1')
+    statusBody.setAttribute('id', "wallet-status-msg")
+    var closeButton = document.createElement('button')
+    
+    //style
+    statusBody.className = 'fixed top-half left-0 w-full h-28 z-100 px-5 flex items-center justify-between bg-blue'
+
+    // statusMsg.setAttribute('class', '')
+    closeButton.setAttribute('class', 'w-1/10 aspect-square bg-red-400')
+    
+    //fill message text
+    statusMsg.innerHTML = 'Please install Metamask!'
+    statusBody.appendChild(statusMsg)
+    
+    //button event
+    closeButton.innerHTML = 'Close'
+    closeButton.addEventListener('click', ()=>{
+        statusBody.remove()
+    })
+    statusBody.appendChild(closeButton)
+
+    //attach to document
+    document.body.appendChild(statusBody)
+
+    setTimeout(()=>{
+        statusBody.remove()
+    }, 10000)
+}

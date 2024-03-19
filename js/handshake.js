@@ -5,7 +5,9 @@ const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OP
 const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
 let currentChain = null;
 let currentAccount = null;
+window.sessionStorage.setItem('chainIDLoaded', false)
 
+// arbitrum and polygon not yet supported
 let chains = [
   {
     name: 'mainnet',
@@ -62,6 +64,8 @@ if(chainParams.has("chain")) {
       
     })
   } else {
+    //Use default (mainnet)
+    chainIndex = 0
     EE_ADDRESS = "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
   }
 }
@@ -85,6 +89,7 @@ async function getProvider() {
     startApp(provider);
   } else {
     console.log("Please install MetaMask!");
+    createNoWalletMsg()
   }
 }
 
@@ -110,6 +115,7 @@ function startApp(provider) {
       // Convert the chain ID from hex to decimal
       currentChainId = parseInt(chainId, 16);
       console.log("Current Chain ID:", currentChainId);
+      window.sessionStorage.setItem('chainIDLoaded', true)
       // You can now use currentChainId in other parts of your app
     })
     .catch(handleError);
@@ -142,6 +148,9 @@ function handleAccountsChanged(accounts) {
 
 function handleError(error) {
   console.error(error);
+  if(!currentChainId) {
+    currentChainId = 1
+  }
 }
 
 function connectWallet() {
@@ -165,7 +174,6 @@ function connectWallet() {
 window.addEventListener('load', ()=> {
   if (connectButton) {
     if(!currentAccount) {
-      console.log('account oesnt exist')
       connectButton.addEventListener("click", function (event) {
         event.preventDefault();
         connectWallet();
@@ -183,6 +191,8 @@ window.addEventListener('load', ()=> {
       const myProfileButton = document.createElement('a')
       myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
       myProfileButton.style.height = '5rem'
+      myProfileButton.onclick = ''
+      myProfileButton.href = window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
       
       myProfileButton.innerHTML = "My Profile"
       
@@ -215,14 +225,22 @@ window.addEventListener('load', ()=> {
       reconnectButton.addEventListener('click', ()=>{
         connectWallet();
       })
-      myProfileButton.addEventListener('click', ()=>{
-        var profileParams = new URLSearchParams
-        profileParams.set('address', currentAccount)
+      // myProfileButton.addEventListener('click', ()=>{
+        
+      //   // var profileLink = window.location
+      //   // if(window.location.origin.includes('faq.html')) {
+      //   //   window.location.origin.replace('faq.html', '')
+      //   // }
 
-        var profileLink = window.location
-        profileLink.search = profileParams
-        console.log('my profile link ' + profileLink)
-      })
+      //   // var profileParams = new URLSearchParams(profileLink)
+      //   // profileParams.set('address', currentAccount)
+
+      //   profileURL = 'https://' + window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
+      //   window.location = profileURL
+      //   // window.location = profileLink + profileParams
+      //   console.log('my profile link ' + profileLink)
+      //   console.log(profileParams)
+      // })
     }
   }
 }) 

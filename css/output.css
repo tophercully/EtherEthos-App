@@ -577,6 +577,9 @@ video {
 .top-0{
   top: 0;
 }
+.top-half{
+  top: 50%;
+}
 .top-full{
   top: 100%;
 }
