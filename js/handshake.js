@@ -186,14 +186,13 @@ window.addEventListener('load', ()=> {
       profileDropdown.setAttribute('id', 'profile-dropdown')
       profileDropdown.style.height = '0px'
       profileDropdown.style.border = 'none'
-      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary top-full right-0 overflow-hidden hover:opacity-100"      
+      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary top-full right-0 overflow-hidden hover:opacity-100"
 
       const myProfileButton = document.createElement('a')
       myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
       myProfileButton.style.height = '5rem'
       myProfileButton.onclick = ''
-      myProfileButton.href = window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
-      
+      // myProfileButton.setAttribute('href', `${window.location.origin}?address=${currentAccount}`)
       myProfileButton.innerHTML = "My Profile"
       
       const reconnectButton = document.createElement('button')
@@ -225,22 +224,23 @@ window.addEventListener('load', ()=> {
       reconnectButton.addEventListener('click', ()=>{
         connectWallet();
       })
-      // myProfileButton.addEventListener('click', ()=>{
+      myProfileButton.addEventListener('click', ()=>{
         
-      //   // var profileLink = window.location
-      //   // if(window.location.origin.includes('faq.html')) {
-      //   //   window.location.origin.replace('faq.html', '')
-      //   // }
+        // var profileLink = window.location
+        // if(window.location.origin.includes('faq.html')) {
+        //   window.location.origin.replace('faq.html', '')
+        // }
 
-      //   // var profileParams = new URLSearchParams(profileLink)
-      //   // profileParams.set('address', currentAccount)
+        // var profileParams = new URLSearchParams(profileLink)
+        // profileParams.set('address', currentAccount)
 
-      //   profileURL = 'https://' + window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
-      //   window.location = profileURL
-      //   // window.location = profileLink + profileParams
-      //   console.log('my profile link ' + profileLink)
-      //   console.log(profileParams)
-      // })
+        // profileURL = 'https://' + window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
+        // window.location = profileURL
+        window.location.href = `${window.location.origin}?address=${currentAccount}`
+        // window.location = profileLink + profileParams
+        console.log('my profile link ' + profileLink)
+        console.log(profileParams)
+      })
     }
   }
 }) 

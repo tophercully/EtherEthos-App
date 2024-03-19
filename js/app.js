@@ -180,7 +180,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         applyQuery(account)
       }
     })
-  } else if(currentAccount) {
+  } else {
     // currentChainId is aynsc, so we need to wait for it to be set before we can use it
     window.addEventListener('load', ()=>{
 
@@ -209,30 +209,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     })
 
 
-  } else {
-    //no account connected or wallet installed
-    var hasID = chains.find(o => o.id === Number(1))
-        chainIndex = chains.indexOf(hasID);
-        console.log('chainIndex ' + chainIndex)
-        if (chainIndex > -1) {
-          var currentNetwork = chains[chainIndex]
-          chain = currentNetwork.name;
-          chainScan = currentNetwork.explorerBaseUrl;
-          console.log("Chain detected: " + chain);
-          chainContent.forEach((element) => {
-            element.textContent = `(${chain})`;
-          });
-          contractLink.href = chainScan + EE_ADDRESS + "#code";
-          if (account) {
-            _queryContract(account);
-          }
-
-          var chainText = document.getElementById('chain-display')
-          chainText.innerHTML = '(' + chain + ')';
-
-        } else {
-          applyQuery(account)
-        }
   }
 
   //refresh page when user changes networks from metamask
