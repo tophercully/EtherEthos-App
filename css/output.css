@@ -1256,6 +1256,22 @@ video {
   .md\:flex-row {
     flex-direction: row;
   }
+  .md\:self-end {
+    align-self: flex-end;
+  }
+  .md\:self-center {
+    align-self: center;
+  }
+  .md\:self-start {
+    align-self: flex-start;
+  }
+
+  .md\:text-center {
+    text-align: center;
+  }
+  .md\:text-left {
+    text-align: left;
+  }
 
   .md\:relative {
     position: relative;
