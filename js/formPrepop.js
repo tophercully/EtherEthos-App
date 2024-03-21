@@ -56,7 +56,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
             //create name
             var names = ['Social:', 'Website:', 'Gallery:']
             var thisName = document.createElement('h5')
-            thisName.setAttribute('class', 'mb-2 w-28')
+            thisName.setAttribute('class', 'mb-2 w-28 basics')
             thisName.innerHTML = names[index]
             thisLink.appendChild(thisName)
 
@@ -179,6 +179,41 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         submitAll.addEventListener('click', ()=> {
             console.log('submitting all basics')
             setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value)
+        })
+        const basicTitles = document.getElementsByClassName('basics')
+        submitAll.addEventListener('mouseover', () => {
+            allBasics.alias.style.transition = "500ms ease-out"
+            allBasics.detail.style.transition = "500ms ease-out"
+            allBasics.social.style.transition = "500ms ease-out"
+            allBasics.website.style.transition = "500ms ease-out"
+            allBasics.gallery.style.transition = "500ms ease-out"
+            allBasics.alias.style.filter = "invert(100%)"
+            allBasics.detail.style.filter = "invert(100%)"
+            allBasics.social.style.filter = "invert(100%)"
+            allBasics.website.style.filter = "invert(100%)"
+            allBasics.gallery.style.filter = "invert(100%)"
+            for(let i = 0; i < basicTitles.length; i++) {
+                basicTitles[i].style.transition = "250ms ease-out"
+                basicTitles[i].style.fontWeight = "800"
+            }
+
+            
+        })
+        submitAll.addEventListener('mouseout', () => {
+            allBasics.alias.style.transition = "500ms ease-out"
+            allBasics.detail.style.transition = "500ms ease-out"
+            allBasics.social.style.transition = "500ms ease-out"
+            allBasics.website.style.transition = "500ms ease-out"
+            allBasics.gallery.style.transition = "500ms ease-out"
+            allBasics.alias.style.filter = "invert(0%)"
+            allBasics.detail.style.filter = "invert(0%)"
+            allBasics.social.style.filter = "invert(0%)"
+            allBasics.website.style.filter = "invert(0%)"
+            allBasics.gallery.style.filter = "invert(0%)"
+            for(let i = 0; i < basicTitles.length; i++) {
+                basicTitles[i].style.transition = "500ms ease-out"
+                basicTitles[i].style.fontWeight = ""
+            }
         })
 
 

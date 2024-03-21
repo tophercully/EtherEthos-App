@@ -544,10 +544,9 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-#submit-all:hover * .basics {
+#submit-all:hover #edit-alias {
   font-weight: 800;
   transform: scale(1.1);
-
 }
 
 .basics {
@@ -969,7 +968,11 @@ video {
 
 
 .self-end {
-  align-self: end;
+  align-self: flex-end;
+}
+
+.justify-self-end {
+  justify-self: end;
 }
 
 .text-wrap {
