@@ -225,19 +225,9 @@ window.addEventListener('load', ()=> {
         connectWallet();
       })
       myProfileButton.addEventListener('click', ()=>{
-        
-        // var profileLink = window.location
-        // if(window.location.origin.includes('faq.html')) {
-        //   window.location.origin.replace('faq.html', '')
-        // }
 
-        // var profileParams = new URLSearchParams(profileLink)
-        // profileParams.set('address', currentAccount)
-
-        // profileURL = 'https://' + window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
-        // window.location = profileURL
         window.location.href = `${window.location.origin}?address=${currentAccount}`
-        // window.location = profileLink + profileParams
+
         console.log('my profile link ' + profileLink)
         console.log(profileParams)
       })

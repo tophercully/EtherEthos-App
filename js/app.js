@@ -377,7 +377,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         
         if (composable) {
           console.log(eeArray);
-          prepopulate(eeArray, verificationResponse, accountPermitted)
+          prepopulate(eeArray, verificationResponse, accountPermitted, chainScan)
           basicData.style.display = "block";
 
           // PFP DATA
@@ -388,6 +388,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             if (typeof tokenId === 'number') {
               console.log("Token ID: ", tokenId);
               pfpId.textContent = tokenId;
+              
               
               const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
               const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);

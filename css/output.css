@@ -544,6 +544,16 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+#submit-all:hover * .basics {
+  font-weight: 800;
+  transform: scale(1.1);
+
+}
+
+.basics {
+  transition: 250ms ease-in-out;
+}
+
 .static {
   position: static;
 }
