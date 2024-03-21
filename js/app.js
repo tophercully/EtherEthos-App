@@ -45,6 +45,7 @@ const accountEditComposableElementTrue = document.querySelector("[data-edit-comp
 const accountEditComposableElementFalse = document.querySelector("[data-edit-composable=false]");
 const accountComposableSection = document.querySelector("[data-view-section=composable]");
 const accountComposableTooltip = document.getElementById("composable-tooltip");
+const accountEditComposableTooltip = document.getElementById("edit-composable-tooltip");
 
 
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
@@ -340,6 +341,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
           element.textContent = accountStatus; 
         });
         accountComposableTooltip.textContent = accountStatus
+        accountEditComposableTooltip.textContent = accountStatus
       } catch (errorMessage) {
         error = true;
       }

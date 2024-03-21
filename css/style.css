@@ -282,3 +282,19 @@ code {
   visibility: visible;
   opacity: 100%;
 }
+#edit-composable-tooltip {
+  position: relative;
+  visibility: hidden;
+  opacity: 0%;
+  transition: 250ms;
+
+  bottom: -100%;
+  max-width: 50vw;
+  width: fit-content;
+  padding: 10px;
+
+}
+#edit-composable-icon:hover #edit-composable-tooltip {
+  visibility: visible;
+  opacity: 100%;
+}
