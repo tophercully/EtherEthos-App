@@ -304,6 +304,31 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         /// add other chains here
 
         ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
+        
+        // Handle address copy link
+        function buildCopyAccount(a) {
+          if(a) {
+            a.addEventListener('click', ()=> {
+              navigator.clipboard.writeText(account)
+            })
+            a.addEventListener('mouseover', () => {
+              a.style.cursor = "pointer"
+            })
+            a.addEventListener('mouseout', () => {
+              a.style.cursor = ""
+            })
+          }
+        }
+        const copyAccount = document.getElementById('account-copy')
+        const copyAccountEdit = document.getElementById('edit-account-copy')
+        buildCopyAccount(copyAccount)
+        buildCopyAccount(copyAccountEdit)
+        
+
+        
+
+
+        // Handle composable icons and tooltip
         console.log("Permissions retrieved: ", permissions);
         let accountStatus = "";
         if (composable) {

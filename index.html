@@ -88,7 +88,12 @@
           <div data-module-view class="module-view">
             <div>
               <div class="flex flex-col lg:flex-row lg:items-baseline mb-10">
-                <h2>EtherEthos of <span data-account-name>[account address]</span> <span text-content-chain></span></h2>
+                <span class="flex flex-row items-center font-bold title-2">
+                  <span>EtherEthos of </span>
+                  <span data-account-name class="ml-2">[account address]</span>
+                  <img id="account-copy" src="svg/copy.svg" class="h-4 w-4 flex mx-2"/>
+                  <span text-content-chain></span>
+                </span>
                 <div class="my-1 flex lg:ml-6">
                   <div id="composable-icon" data-view-section="composable" class="mr-2 flex h-4 w-4 flex-col lg:mr-4">
                     <img data-composable="true" class="hidden h-full w-full object-contain" src="./svg/composable.svg" alt="composable"/>
@@ -310,13 +315,18 @@
         <!-- Public Data Edit -->
         <div data-module-edit class="">
           <div class="">
-            <div class="flex flex-col">
-              <h2>EtherEthos of <span data-account-name>[account address]</span> <span text-content-chain></span></h2>
-              <div class="my-1 flex items-center">
+            <div class="flex flex-col lg:flex-row lg:items-baseline mb-10">
+              <span class="flex flex-row items-center font-bold title-2 h-4">
+                <span>EtherEthos of </span>
+                <span data-account-name class="ml-2">[account address]</span>
+                <img id="edit-account-copy" src="svg/copy.svg" class="h-4 w-4 mx-2"/>
+                <span text-content-chain></span>
+              </span>
+              <div class="my-1 flex lg:ml-6 items-center">
                 <div id="edit-composable-icon" data-edit-fieldset="composable" class="mr-2 flex h-4 w-4 flex-col">
                   <img data-edit-composable="true" class="hidden h-full w-full object-contain" src="./svg/composable.svg" alt="composable" />
                   <img data-edit-composable="false" class="hidden h-full w-full object-contain" src="./svg/not-composable.svg" alt="composable" />
-                  <span id="edit-composable-tooltip" class="bg-main text-secondary">testing</span>
+                  <span id="edit-composable-tooltip" class="bg-main text-secondary font-normal text-base">testing</span>
                 </div>
                 <div data-view-section="blocked" data-blocked class="mr-2 flex h-4 w-4 lg:mr-4">
                   <img data-content="blocked" class="hidden h-full w-full object-contain" src="./svg/blocked.svg" alt="blocked" />
@@ -324,10 +334,7 @@
                 <div data-view-section="moderator" data-mod class="mr-2 flex h-4 w-4 lg:mr-4">
                   <img data-content="moderator" class="hidden h-full w-full object-contain" src="./svg/moderator.svg" alt="moderator" />
                 </div>
-                <button id="composable-button" data-composable-toggle class="rounded bg-main px-3 py-1 text-secondary">Toggle Composability</button>
-              </div>
-              <div class="mb-5">
-                <p class="mt-4 lg:max-w-2xl" data-content-account-status></p>
+                <button id="composable-button" data-composable-toggle class="rounded bg-main px-3 text-base font-normal py-1 text-secondary">Toggle Composability</button>
               </div>
             </div>
             <!-- <div class="mb-5">
