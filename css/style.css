@@ -274,7 +274,7 @@ code {
 
   bottom: -100%;
   max-width: 50vw;
-  width: fit-content;
+  width: 25vw;
   padding: 10px;
 
 }
@@ -290,11 +290,41 @@ code {
 
   bottom: -100%;
   max-width: 50vw;
-  width: fit-content;
+  width: 25vw;
   padding: 10px;
 
 }
 #edit-composable-icon:hover #edit-composable-tooltip {
   visibility: visible;
   opacity: 100%;
+}
+#timestamp-tooltip {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0%;
+  transition: 250ms;
+
+  bottom: 92%;
+  max-width: 50vw;
+  width: 25vw;
+  overflow: visible;
+
+  padding: 10px;
+}
+#timestamp-title:hover ~ #timestamp-tooltip {
+  visibility: visible;
+  opacity: 100%;
+}
+
+@media (orientation:portrait) {
+  #edit-composable-tooltip{
+    width: 50vw;
+  }
+  #composable-tooltip{
+    width: 50vw;
+  }
+  #timestamp-tooltip{
+    width: 50vw;
+  }
+
 }
