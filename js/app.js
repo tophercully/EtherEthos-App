@@ -263,7 +263,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       console.log(`account ${account}, currentAccount ${currentAccount}`)
       if (account.toLowerCase() == currentAccount.toLowerCase()) {
         accountPermitted = true
-        console.log(account.toLowerCase(), currentAccount.toLowerCase())
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");
           
@@ -487,7 +486,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 error = true;
               }
               if (!error) {
-                console.log("TokenURI: ", tokenURI);
 
                 // Function to check the string and parse the image value
                 async function parseTokenURI(tokenURI) {
@@ -510,7 +508,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 
                 parseTokenURI(tokenURI)
                   .then((imageData) => {
-                    console.log("Image Data:", imageData);
                     
                     
                     if (!pfpcontainer || !editPfpContainer) {
