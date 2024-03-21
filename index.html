@@ -113,13 +113,13 @@
             </div>
             <div class="w-full flex flex-col items-center md:flex-row">
                 <!-- PING -->
-                <section data-module="ping" class="w-1/2 ping module mb-8 hidden">
+                <section data-module="ping" class=" w-full  ping module mb-8 hidden md:w-1/2">
                   <div data-module-view class="module-view">
                     <div class="flex flex-col md:justify-start">
-                      <h3 id="timestamp-title" class="self-center text-center text-2xl md:self-start md:text-left">Timestamp Ping</h3>
+                      <h3 id="timestamp-title" class="text-2xl w-fit">Timestamp Ping</h3>
                       <p id="timestamp-tooltip" class="bg-main text-secondary">Timestamp of last ping (useful for apps to manage user data across layers).</p>
                     </div>
-                    <ul data-content-list class="mt-4 flex flex-col items-center md:items-start">
+                    <ul data-content-list class="mt-4 flex flex-col items-start">
                       <li class="tag-item mr-2 ">
                         <code data-content-text data-content="ping" class="h-9 self-center md:self-start">[ping-data]</code>
                       </li>

@@ -273,7 +273,7 @@ code {
   transition: 250ms;
 
   bottom: -100%;
-  max-width: 50vw;
+  max-width: fit-content;
   width: 25vw;
   padding: 10px;
 
@@ -289,7 +289,7 @@ code {
   transition: 250ms;
 
   bottom: -100%;
-  max-width: 50vw;
+  max-width: fit-content;
   width: 25vw;
   padding: 10px;
 
