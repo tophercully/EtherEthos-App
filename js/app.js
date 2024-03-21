@@ -43,6 +43,9 @@ const accountComposableElementTrue = document.querySelector("[data-composable=tr
 const accountComposableElementFalse = document.querySelector("[data-composable=false]");
 const accountEditComposableElementTrue = document.querySelector("[data-edit-composable=true]");
 const accountEditComposableElementFalse = document.querySelector("[data-edit-composable=false]");
+const accountComposableSection = document.querySelector("[data-view-section=composable]");
+const accountComposableTooltip = document.getElementById("composable-tooltip");
+
 
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
 const accountEditBlockedElement = document.querySelector("[data-edit-section=blocked]");
@@ -336,6 +339,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         accountStatusElement.forEach((element) => {
           element.textContent = accountStatus; 
         });
+        accountComposableTooltip.textContent = accountStatus
       } catch (errorMessage) {
         error = true;
       }

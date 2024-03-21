@@ -544,11 +544,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-#submit-all:hover #edit-alias {
-  font-weight: 800;
-  transform: scale(1.1);
-}
-
 .basics {
   transition: 250ms ease-in-out;
 }
@@ -1236,7 +1231,7 @@ video {
 }
 
 .hover\:opacity-80:hover {
-  filter: contrast(90%);
+  filter: contrast(110%);
 }
 
 @media (min-width: 640px) {
@@ -1671,3 +1666,4 @@ video {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+

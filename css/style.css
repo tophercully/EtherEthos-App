@@ -259,14 +259,26 @@ code {
 }
 #profile-dropdown{
   width: 15rem;
-  /* height: 15rem; */
-  /* position: fixed;
-  top: 0px;
-  right: 0px; */
-  /* background-color: red; */
   border: 1px solid black;
 
   padding: 0;
 
   transition: 250ms ease-out;
+}
+
+#composable-tooltip {
+  position: relative;
+  visibility: hidden;
+  opacity: 0%;
+  transition: 250ms;
+
+  bottom: -100%;
+  max-width: 50vw;
+  width: fit-content;
+  padding: 10px;
+
+}
+#composable-icon:hover #composable-tooltip {
+  visibility: visible;
+  opacity: 100%;
 }
