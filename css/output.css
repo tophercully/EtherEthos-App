@@ -1017,6 +1017,9 @@ video {
 .border-t {
   border-top-width: 1px;
 }
+.border-l {
+  border-left-width: 1px;
+}
 
 .border-solid {
   border-style: solid;
