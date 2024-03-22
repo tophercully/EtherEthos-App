@@ -1,4 +1,4 @@
-function prepopulate(profileArray, verificationData, accountPermission) {
+function prepopulate(profileArray, verificationData, accountPermission, chainScan) {
 
 
     
@@ -56,7 +56,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             //create name
             var names = ['Social:', 'Website:', 'Gallery:']
             var thisName = document.createElement('h5')
-            thisName.setAttribute('class', 'mb-2 w-28')
+            thisName.setAttribute('class', 'mb-2 w-28 basics')
             thisName.innerHTML = names[index]
             thisLink.appendChild(thisName)
 
@@ -112,24 +112,27 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                 }
             })
             //create delete button
-            var thisDelete = document.createElement('button')
-            thisDelete.setAttribute('class', 'mx-2 h-7 aspect-square rounded-full bg-main p-0')
-            var deleteImg = document.createElement('img')
-            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            deleteImg.setAttribute('src', './svg/delete.svg')
-            deleteImg.setAttribute('alt', 'Wallet Logo')
-            thisDelete.appendChild(deleteImg)
-            thisLink.appendChild(thisDelete)
+            if(profileLinks[index]) {
 
-            thisDelete.addEventListener('click', ()=>{
-                if(index == 0) {
-                    setSocialToContract(' ')
-                } else if(index == 1) {
-                    setWebsiteToContract(' ')
-                } else if(index == 2) {
-                    setGalleryToContract(' ')
-                }
-            })
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 aspect-square rounded-full bg-main p-0')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+                thisLink.appendChild(thisDelete)
+                
+                thisDelete.addEventListener('click', ()=>{
+                    if(index == 0) {
+                        setSocialToContract(' ')
+                    } else if(index == 1) {
+                        setWebsiteToContract(' ')
+                    } else if(index == 2) {
+                        setGalleryToContract(' ')
+                    }
+                })
+            }
 
             if(index == priorityIndex) {
                 //show is already favorite
@@ -177,6 +180,41 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             console.log('submitting all basics')
             setMainBasicsToContract(allBasics.alias.value, allBasics.detail.value, allBasics.social.value, allBasics.website.value, allBasics.gallery.value)
         })
+        const basicTitles = document.getElementsByClassName('basics')
+        submitAll.addEventListener('mouseover', () => {
+            allBasics.alias.style.transition = "500ms ease-out"
+            allBasics.detail.style.transition = "500ms ease-out"
+            allBasics.social.style.transition = "500ms ease-out"
+            allBasics.website.style.transition = "500ms ease-out"
+            allBasics.gallery.style.transition = "500ms ease-out"
+            allBasics.alias.style.filter = "invert(100%)"
+            allBasics.detail.style.filter = "invert(100%)"
+            allBasics.social.style.filter = "invert(100%)"
+            allBasics.website.style.filter = "invert(100%)"
+            allBasics.gallery.style.filter = "invert(100%)"
+            for(let i = 0; i < basicTitles.length; i++) {
+                basicTitles[i].style.transition = "250ms ease-out"
+                basicTitles[i].style.fontWeight = "800"
+            }
+
+            
+        })
+        submitAll.addEventListener('mouseout', () => {
+            allBasics.alias.style.transition = "500ms ease-out"
+            allBasics.detail.style.transition = "500ms ease-out"
+            allBasics.social.style.transition = "500ms ease-out"
+            allBasics.website.style.transition = "500ms ease-out"
+            allBasics.gallery.style.transition = "500ms ease-out"
+            allBasics.alias.style.filter = "invert(0%)"
+            allBasics.detail.style.filter = "invert(0%)"
+            allBasics.social.style.filter = "invert(0%)"
+            allBasics.website.style.filter = "invert(0%)"
+            allBasics.gallery.style.filter = "invert(0%)"
+            for(let i = 0; i < basicTitles.length; i++) {
+                basicTitles[i].style.transition = "500ms ease-out"
+                basicTitles[i].style.fontWeight = ""
+            }
+        })
 
 
 
@@ -209,17 +247,25 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             thisWrite.appendChild(writeImg)
             thisTag.appendChild(thisWrite)
             //create delete button
-            var thisDelete = document.createElement('button')
-            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            thisDelete.setAttribute('data-delete', '')
-            var deleteImg = document.createElement('img')
-            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            deleteImg.setAttribute('src', './svg/delete.svg')
-            deleteImg.setAttribute('alt', 'Wallet Logo')
-            thisDelete.appendChild(deleteImg)
+            if(defaultInput) {
+
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                thisDelete.setAttribute('data-delete', '')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+                thisTag.appendChild(thisDelete)
+
+                thisDelete.addEventListener('click', ()=> {
+                    console.log('deleting tag ' + defaultInput)
+                    deleteTagToContract(index)
+                })
+            }
 
             //attach li to list
-            thisTag.appendChild(thisDelete)
   
             //prepopulate if available
             tagsContainer.appendChild(thisTag)
@@ -235,10 +281,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                 pushTagToContract(thisInput.value)
               }
             })
-            thisDelete.addEventListener('click', ()=> {
-                console.log('deleting tag ' + defaultInput)
-                deleteTagToContract(index)
-            })
+            
           }
           //populate all existing
           for(let i = 0; i < allTags.length; i++) {
@@ -290,14 +333,25 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             thisWrite.appendChild(writeImg)
             thisLink.appendChild(thisWrite)
             //create delete button
-            var thisDelete = document.createElement('button')
-            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            var deleteImg = document.createElement('img')
-            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            deleteImg.setAttribute('src', './svg/delete.svg')
-            deleteImg.setAttribute('alt', 'Wallet Logo')
-            thisDelete.appendChild(deleteImg)
-            thisLink.appendChild(thisDelete)
+            if(defaultName || defaultURL) {
+
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+                thisLink.appendChild(thisDelete)
+
+                thisDelete.addEventListener('click', () => {
+                    //delete existing entry
+                    console.log('deleting link at tuple 2d index ' + index)
+                    
+                    deleteAdditionalLinkToContract(index)
+                    
+                })
+            }
 
             
 
@@ -330,13 +384,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                 }
             })
 
-            thisDelete.addEventListener('click', () => {
-                //delete existing entry
-                console.log('deleting link at tuple 2d index ' + index)
-                
-                deleteAdditionalLinkToContract(index)
-                
-            })
+            
           }
           //populate all existing
           for(let i = 0; i < allLinks.length; i++) {
@@ -380,6 +428,21 @@ function prepopulate(profileArray, verificationData, accountPermission) {
         inputAddress.setAttribute('class', 'mr-4 max-h-10 w-28 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
         inputAddress.setAttribute('data-field-edit', 'associated-address')
         thisEOA.appendChild(inputAddress)
+
+        if(defaultAddress || defaultDesc) {
+            const copyButton = document.createElement('button')
+            copyButton.className = "mr-2 lg:mr-4";
+            copyButton.addEventListener('click', ()=>{
+                var toCopy = defaultAddress
+                navigator.clipboard.writeText(toCopy);
+            })
+            const copyImage = document.createElement("img");
+            copyImage.className = "h-5 w-5";
+            copyImage.setAttribute("src", "./svg/copy.svg");
+            copyImage.setAttribute("alt", "copy icon");
+            copyButton.appendChild(copyImage);
+            thisEOA.appendChild(copyButton)
+        }
         //create write button
         var thisWrite = document.createElement('button')
         thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
@@ -391,15 +454,29 @@ function prepopulate(profileArray, verificationData, accountPermission) {
         thisWrite.appendChild(writeImg)
         thisEOA.appendChild(thisWrite)
         //create delete button
-        var thisDelete = document.createElement('button')
-        thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-        thisDelete.setAttribute('data-delete', '')
-        var deleteImg = document.createElement('img')
-        deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-        deleteImg.setAttribute('src', './svg/delete.svg')
-        deleteImg.setAttribute('alt', 'Wallet Logo')
-        thisDelete.appendChild(deleteImg)
-        thisEOA.appendChild(thisDelete)
+        if(defaultAddress || defaultDesc) {
+
+            var thisDelete = document.createElement('button')
+            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+            thisDelete.setAttribute('data-delete', '')
+            var deleteImg = document.createElement('img')
+            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+            deleteImg.setAttribute('src', './svg/delete.svg')
+            deleteImg.setAttribute('alt', 'Wallet Logo')
+            thisDelete.appendChild(deleteImg)
+            thisEOA.appendChild(thisDelete)
+
+            thisDelete.addEventListener('click', () => {
+                console.log('deleting index[', indexTuple, 'and', (indexTuple+1) + ']')
+                inputAddress.value = ' '
+                inputDesc.value = ' '
+                if(defaultAddress || defaultDesc) {
+                deleteAssociatedAccountToContract(index)
+                }
+            })
+
+            
+        }
         
         //attach li to list
         EOAContainer.appendChild(thisEOA)
@@ -422,14 +499,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             pushAssociatedAccountToContract(inputAddress.value, inputDesc.value)
             }
         })
-        thisDelete.addEventListener('click', () => {
-            console.log('deleting index[', indexTuple, 'and', (indexTuple+1) + ']')
-            inputAddress.value = ' '
-            inputDesc.value = ' '
-            if(defaultAddress || defaultDesc) {
-            deleteAssociatedAccountToContract(index)
-            }
-        })
+        
         }
         //populate all existing
         for(let i = 0; i < EOAs.length/2; i++) {
@@ -493,6 +563,17 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                 copyImage.setAttribute("alt", "copy icon");
                 copyButton.appendChild(copyImage);
                 thisNote.appendChild(copyButton);
+
+                const etherscanAtag = document.createElement("a");
+                etherscanAtag.className = "mr-2 lg:mr-4";
+                etherscanAtag.setAttribute("href", chainScan + profileArray[2][index]);
+                etherscanAtag.setAttribute("target", "_blank");
+                const etherscanImage = document.createElement("img");
+                etherscanImage.className = "h-5 w-5";
+                etherscanImage.setAttribute("src", "./svg/etherscan.svg");
+                etherscanImage.setAttribute("alt", "etherscan logo");
+                etherscanAtag.appendChild(etherscanImage);
+                thisNote.appendChild(etherscanAtag);
 
                 if(accountPermission) {
                     //create delete button
@@ -611,6 +692,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                     thisRespect.setAttribute('class', 'my-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     thisRespect.setAttribute('data-edit-item', '')
                     //create input
+
                     var thisInput = document.createElement('input')
                     thisInput.setAttribute('type', 'text')
                     thisInput.setAttribute('placeholder', 'Address To Respect')
@@ -643,9 +725,13 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                     thisRespect.setAttribute('class', 'my-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     //display existing address
                     var thisDisplay = document.createElement('code')
-                    thisDisplay.setAttribute('class', 'mr-2 h-9')
+                    thisDisplay.setAttribute('class', 'mr-2 h-9 bg-blue underline')
                     thisDisplay.innerHTML = defaultInput
-                    thisRespect.appendChild(thisDisplay)
+                    var thisAnchor = document.createElement('a')
+                    thisAnchor.setAttribute("href", `${this.location.origin}?address=${defaultInput}`)
+                    thisAnchor.setAttribute('class', 'mr-2 h-9')
+                    thisAnchor.appendChild(thisDisplay)
+                    thisRespect.appendChild(thisAnchor)
                     //copy button
                     const copyButton = document.createElement('button')
                     copyButton.className = "mr-2 lg:mr-4";
@@ -660,20 +746,23 @@ function prepopulate(profileArray, verificationData, accountPermission) {
                     copyButton.appendChild(copyImage);
                     thisRespect.appendChild(copyButton);
                     //create delete/revoke button
-                    var thisDelete = document.createElement('button')
-                    thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-                    thisDelete.setAttribute('data-delete', '')
-                    var deleteImg = document.createElement('img')
-                    deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-                    deleteImg.setAttribute('src', './svg/delete.svg')
-                    deleteImg.setAttribute('alt', 'Wallet Logo')
-                    thisDelete.appendChild(deleteImg)
-                    thisRespect.appendChild(thisDelete)
+                    if(defaultInput) {
 
-                    thisDelete.addEventListener('click', () => {
-                        console.log('revoking respect to ' + defaultInput)
-                        revokeRespectToContract(defaultInput)
-                    })
+                        var thisDelete = document.createElement('button')
+                        thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                        thisDelete.setAttribute('data-delete', '')
+                        var deleteImg = document.createElement('img')
+                        deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                        deleteImg.setAttribute('src', './svg/delete.svg')
+                        deleteImg.setAttribute('alt', 'Wallet Logo')
+                        thisDelete.appendChild(deleteImg)
+                        thisRespect.appendChild(thisDelete)
+                        
+                        thisDelete.addEventListener('click', () => {
+                            console.log('revoking respect to ' + defaultInput)
+                            revokeRespectToContract(defaultInput)
+                        })
+                    }
                 }
 
                 //attach li to list
@@ -716,17 +805,26 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             thisWrite.appendChild(writeImg)
             thisCD.appendChild(thisWrite)
             //create delete button
-            var thisDelete = document.createElement('button')
-            thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            thisDelete.setAttribute('data-delete', '')
-            var deleteImg = document.createElement('img')
-            deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            deleteImg.setAttribute('src', './svg/delete.svg')
-            deleteImg.setAttribute('alt', 'Wallet Logo')
-            thisDelete.appendChild(deleteImg)
+            if(defaultInput && defaultInput != ' ') {
+
+                var thisDelete = document.createElement('button')
+                thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                thisDelete.setAttribute('data-delete', '')
+                var deleteImg = document.createElement('img')
+                deleteImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                deleteImg.setAttribute('src', './svg/delete.svg')
+                deleteImg.setAttribute('alt', 'Wallet Logo')
+                thisDelete.appendChild(deleteImg)
+
+                thisDelete.addEventListener('click', () => {
+                    console.log('deleting custom data')
+                    setCustomDataToContract(' ')
+                })
+                thisCD.appendChild(thisDelete)
+            }
             
             //attach li to list
-            thisCD.appendChild(thisDelete)
+            
             
             //prepopulate if available
             CDContainer.appendChild(thisCD)
@@ -740,10 +838,7 @@ function prepopulate(profileArray, verificationData, accountPermission) {
             })
 
 
-            thisDelete.addEventListener('click', () => {
-                console.log('deleting custom data')
-                setCustomDataToContract(' ')
-            })
+            
         }
         
         

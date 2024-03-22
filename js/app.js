@@ -43,6 +43,10 @@ const accountComposableElementTrue = document.querySelector("[data-composable=tr
 const accountComposableElementFalse = document.querySelector("[data-composable=false]");
 const accountEditComposableElementTrue = document.querySelector("[data-edit-composable=true]");
 const accountEditComposableElementFalse = document.querySelector("[data-edit-composable=false]");
+const accountComposableSection = document.querySelector("[data-view-section=composable]");
+const accountComposableTooltip = document.getElementById("composable-tooltip");
+const accountEditComposableTooltip = document.getElementById("edit-composable-tooltip");
+
 
 const accountBlockedElement = document.querySelector("[data-view-section=blocked]");
 const accountEditBlockedElement = document.querySelector("[data-edit-section=blocked]");
@@ -259,7 +263,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
       console.log(`account ${account}, currentAccount ${currentAccount}`)
       if (account.toLowerCase() == currentAccount.toLowerCase()) {
         accountPermitted = true
-        console.log(account.toLowerCase(), currentAccount.toLowerCase())
         if (edit_btn.classList.contains("hidden")) {
           edit_btn.classList.remove("hidden");
           
@@ -300,6 +303,31 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         /// add other chains here
 
         ({ composable, accountIsBlocked, moderator, verificationResponse } = permissions);
+        
+        // Handle address copy link
+        function buildCopyAccount(a) {
+          if(a) {
+            a.addEventListener('click', ()=> {
+              navigator.clipboard.writeText(account)
+            })
+            a.addEventListener('mouseover', () => {
+              a.style.cursor = "pointer"
+            })
+            a.addEventListener('mouseout', () => {
+              a.style.cursor = ""
+            })
+          }
+        }
+        const copyAccount = document.getElementById('account-copy')
+        const copyAccountEdit = document.getElementById('edit-account-copy')
+        buildCopyAccount(copyAccount)
+        buildCopyAccount(copyAccountEdit)
+        
+
+        
+
+
+        // Handle composable icons and tooltip
         console.log("Permissions retrieved: ", permissions);
         let accountStatus = "";
         if (composable) {
@@ -336,6 +364,8 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         accountStatusElement.forEach((element) => {
           element.textContent = accountStatus; 
         });
+        accountComposableTooltip.textContent = accountStatus
+        accountEditComposableTooltip.textContent = accountStatus
       } catch (errorMessage) {
         error = true;
       }
@@ -377,7 +407,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
         
         if (composable) {
           console.log(eeArray);
-          prepopulate(eeArray, verificationResponse, accountPermitted)
+          prepopulate(eeArray, verificationResponse, accountPermitted, chainScan)
           basicData.style.display = "block";
 
           // PFP DATA
@@ -388,6 +418,7 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
             if (typeof tokenId === 'number') {
               console.log("Token ID: ", tokenId);
               pfpId.textContent = tokenId;
+              
               
               const EE_NFTContract_Alchemy = new web3Main.eth.Contract(NFT_ABI, eeArray[0][6]);
               const EE_NFTContract_Alchemy_Sepolia = new web3Sepolia.eth.Contract(NFT_ABI, eeArray[0][6]);
@@ -455,7 +486,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
                 error = true;
               }
               if (!error) {
-                console.log("TokenURI: ", tokenURI);
 
                 // Function to check the string and parse the image value
                 async function parseTokenURI(tokenURI) {
@@ -478,7 +508,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
 
                 parseTokenURI(tokenURI)
                   .then((imageData) => {
-                    console.log("Image Data:", imageData);
                     
                     
                     if (!pfpcontainer || !editPfpContainer) {
@@ -812,9 +841,16 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
               break;
             }
           }
+          let notesSentPresent = false
+          if(eeArray[6][0]) {
+            notesSentPresent = true
+            notesSentModule.style.display = "block"
+
+          }
+          
           if (notesPresent) {
             notesModule.style.display = "block";
-            notesSentModule.style.display = "block"
+            
             notesContainer.textContent = "";
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {

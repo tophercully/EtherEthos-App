@@ -186,7 +186,7 @@ window.addEventListener('load', ()=> {
       profileDropdown.setAttribute('id', 'profile-dropdown')
       profileDropdown.style.height = '0px'
       profileDropdown.style.border = 'none'
-      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary top-full right-0 overflow-hidden hover:opacity-100"
+      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary  right-0 overflow-hidden"
 
       const myProfileButton = document.createElement('a')
       myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
@@ -225,19 +225,9 @@ window.addEventListener('load', ()=> {
         connectWallet();
       })
       myProfileButton.addEventListener('click', ()=>{
-        
-        // var profileLink = window.location
-        // if(window.location.origin.includes('faq.html')) {
-        //   window.location.origin.replace('faq.html', '')
-        // }
 
-        // var profileParams = new URLSearchParams(profileLink)
-        // profileParams.set('address', currentAccount)
-
-        // profileURL = 'https://' + window.location.hostname + ':' + window.location.port + '/?address=' + currentAccount
-        // window.location = profileURL
         window.location.href = `${window.location.origin}?address=${currentAccount}`
-        // window.location = profileLink + profileParams
+
         console.log('my profile link ' + profileLink)
         console.log(profileParams)
       })
