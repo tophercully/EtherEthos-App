@@ -841,9 +841,16 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
               break;
             }
           }
+          let notesSentPresent = false
+          if(eeArray[6][0]) {
+            notesSentPresent = true
+            notesSentModule.style.display = "block"
+
+          }
+          
           if (notesPresent) {
             notesModule.style.display = "block";
-            notesSentModule.style.display = "block"
+            
             notesContainer.textContent = "";
             for (let i = 0; i < eeArray[5].length; i += 2) {
               if (eeArray[5][i].length > 0) {
