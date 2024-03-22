@@ -186,7 +186,7 @@ window.addEventListener('load', ()=> {
       profileDropdown.setAttribute('id', 'profile-dropdown')
       profileDropdown.style.height = '0px'
       profileDropdown.style.border = 'none'
-      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary top-full right-0 overflow-hidden"
+      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary  right-0 overflow-hidden"
 
       const myProfileButton = document.createElement('a')
       myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
