@@ -692,6 +692,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
                     thisRespect.setAttribute('class', 'my-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     thisRespect.setAttribute('data-edit-item', '')
                     //create input
+
                     var thisInput = document.createElement('input')
                     thisInput.setAttribute('type', 'text')
                     thisInput.setAttribute('placeholder', 'Address To Respect')
@@ -724,9 +725,13 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
                     thisRespect.setAttribute('class', 'my-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     //display existing address
                     var thisDisplay = document.createElement('code')
-                    thisDisplay.setAttribute('class', 'mr-2 h-9')
+                    thisDisplay.setAttribute('class', 'mr-2 h-9 bg-blue underline')
                     thisDisplay.innerHTML = defaultInput
-                    thisRespect.appendChild(thisDisplay)
+                    var thisAnchor = document.createElement('a')
+                    thisAnchor.setAttribute("href", `${this.location.origin}?address=${defaultInput}`)
+                    thisAnchor.setAttribute('class', 'mr-2 h-9')
+                    thisAnchor.appendChild(thisDisplay)
+                    thisRespect.appendChild(thisAnchor)
                     //copy button
                     const copyButton = document.createElement('button')
                     copyButton.className = "mr-2 lg:mr-4";
