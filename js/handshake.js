@@ -138,11 +138,13 @@ function handleAccountsChanged(accounts) {
     console.log("Please connect to MetaMask.");
     connectButtonText.textContent = "Connect MetaMask";
   } else if (accounts[0] !== currentAccount) {
+    const firstConnection = currentAccount ? false : true
+    console.log('setting currentAccount')
     currentAccount = accounts[0];
     console.log("Account connected:", currentAccount);
     console.log(currentAccount);
     connectButtonText.textContent = typeof currentAccount == 'string' ? `${currentAccount.slice(0, 6)}...${currentAccount.slice(-4)}` : currentAccount;
-    
+
   }
 }
 
@@ -156,7 +158,7 @@ function handleError(error) {
 function connectWallet() {
   if(!currentAccount) {
     //initial connection
-    ethereum.request({ method: "eth_requestAccounts" }).then(handleAccountsChanged).catch(handleError);
+    ethereum.request({ method: "eth_requestAccounts" }).then(!currentAccount ? handleAccountsChanged : ()=> {}).catch(handleError);
   } else {
     //connect new account
     ethereum.request({
@@ -166,53 +168,49 @@ function connectWallet() {
           eth_accounts: {}
         }
       ]
-    }).then(handleAccountsChanged).then(()=>{window.location.reload()}).catch(handleError);
+    }).then(handleAccountsChanged).catch(handleError);
     console.log('reconnecting')
   }
 }
 
-window.addEventListener('load', ()=> {
+function manageDropdown () {
   if (connectButton) {
     if(!currentAccount) {
+      const profileDropdown = document.getElementById('profile-dropdown')
+      profileDropdown.classList.remove('flex')
+      profileDropdown.classList.add('hidden')
+      profileDropdown.style.border = 'none'
+
       connectButton.addEventListener("click", function (event) {
         event.preventDefault();
         connectWallet();
       });
-    } else {
-      
-
+    } else if(currentAccount) {
+      removeEventListener('click', connectButton)
       let profileDropped = false
-      const profileDropdown = document.createElement('div')
-      profileDropdown.setAttribute('id', 'profile-dropdown')
-      profileDropdown.style.height = '0px'
+      const profileDropdown = document.getElementById('profile-dropdown')
       profileDropdown.style.border = 'none'
-      profileDropdown.className = "absolute flex flex-col items-center w-full border-main bg-secondary  right-0 overflow-hidden"
+      const myProfileButton = document.getElementById('my-profile')
+      myProfileButton.style.height = '0'
+      const reconnectButton = document.getElementById('reconnect')
+      reconnectButton.style.height = '0'
 
-      const myProfileButton = document.createElement('a')
-      myProfileButton.className = "w-full h-5 bg-main text-secondary text-center hover-invert"
-      myProfileButton.style.height = '5rem'
-      myProfileButton.onclick = ''
-      // myProfileButton.setAttribute('href', `${window.location.origin}?address=${currentAccount}`)
-      myProfileButton.innerHTML = "My Profile"
-      
-      const reconnectButton = document.createElement('button')
-      reconnectButton.className = "w-full h-5 bg-main text-secondary hover-invert"
-      reconnectButton.style.height = '5rem'
-      reconnectButton.innerHTML = "Connect Other Account"
-
-      profileDropdown.appendChild(myProfileButton)
-      profileDropdown.appendChild(reconnectButton)
-      connectButton.appendChild(profileDropdown)
 
       function toggleProfileDropdown() {
         if(profileDropped) {
           profileDropdown.style.height = '0px'
+          myProfileButton.style.height = '0px'
+          reconnectButton.style.height = '0px'
           profileDropdown.style.border = 'none'
+          profileDropdown.classList.add('hidden')
           profileDropped = false
           
         } else {
           profileDropdown.style.height = '10rem'
+          myProfileButton.style.height = '5rem'
+          reconnectButton.style.height = '5rem'
           profileDropdown.style.border = '1px solid black'
+          profileDropdown.classList.remove('hidden')
           profileDropped = true
         }
       }
@@ -233,5 +231,9 @@ window.addEventListener('load', ()=> {
       })
     }
   }
+}
+
+window.addEventListener('load', ()=> {
+  manageDropdown()
 }) 
   

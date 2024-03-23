@@ -187,7 +187,6 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
   } else {
     // currentChainId is aynsc, so we need to wait for it to be set before we can use it
     window.addEventListener('load', ()=>{
-
         var hasID = chains.find(o => o.id === Number(currentChainId))
         chainIndex = chains.indexOf(hasID);
         console.log('chainIndex ' + chainIndex)
@@ -1107,9 +1106,9 @@ if(window.location.pathname == '/' || window.location.pathname.includes('address
     if (!error) {
       blonksPlaceholder = true
       pfpcontainer.innerHTML = BLONKSsvg;
-      pfpcontainer.classList.add('w-full')
+      pfpcontainer.classList.add('h-full')
       pfpcontainer.classList.add('aspect-square')
-      pfpcontainer.classList.add('object-contain')
+      pfpcontainer.classList.add('object-cover')
       blonksInfo.style.display = "block";
       blonksInfo.textContent = `Showing BLONKS #${randTokenId}, using the '${rendererStrings[renderer]}' EVM renderer, appearing as if it was owned by this account. (Learn more at BLONKS.xyz)`;
     }

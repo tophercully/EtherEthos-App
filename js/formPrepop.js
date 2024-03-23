@@ -51,24 +51,20 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         function createProfileLinkInput(container, index, value) {
             //create the li
             var thisLink = document.createElement("div")
-            thisLink.setAttribute('class', 'my-2 flex items-center')
+            thisLink.setAttribute('class', 'mb-2 flex items-center')
             thisLink.setAttribute('data-edit-item', '')
             //create name
             var names = ['Social:', 'Website:', 'Gallery:']
             var thisName = document.createElement('h5')
-            thisName.setAttribute('class', 'mb-2 w-28 basics')
+            thisName.setAttribute('class', 'mb-2 w-52 basics')
             thisName.innerHTML = names[index]
             thisLink.appendChild(thisName)
-
-            
-            
-
 
             //create input
             var thisInput = document.createElement('input')
             thisInput.setAttribute('type', 'text')
             thisInput.setAttribute('placeholder', 'Link')
-            thisInput.setAttribute('class', 'mr-4 w-1/2 max-h-10 rounded-md border border-main px-3 py-3 text-md')
+            thisInput.setAttribute('class', 'mr-4 left-[20%] w-1/2 max-h-10 rounded-md border border-main px-3 py-3 text-md')
             thisLink.appendChild(thisInput)
 
             //add inputs to main data form
@@ -227,7 +223,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
           function createTagInput(tagsContainer, index, defaultInput) {
             //create the li
             var thisTag = document.createElement("li")
-            thisTag.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisTag.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisTag.setAttribute('data-edit-item', '')
             //create input
             var thisInput = document.createElement('input')
@@ -304,7 +300,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
 
             //create the li
             var thisLink = document.createElement("li")
-            thisLink.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisLink.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisLink.setAttribute('data-edit-item', '')
             //create input1
             var inputName = document.createElement('input')
@@ -407,7 +403,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
 
         //create the li
         var thisEOA = document.createElement("li")
-        thisEOA.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+        thisEOA.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
         thisEOA.setAttribute('data-edit-item', '')
         //create input1
         var inputDesc = document.createElement('input')
@@ -525,7 +521,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
             //create a div to collapse
             //create the li
             var thisNote = document.createElement("li")
-            thisNote.setAttribute('class', 'my-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisNote.setAttribute('class', 'mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisNote.setAttribute('data-edit-item', '')
             if(defaultAddress || defaultDesc) {
                 //create display for desc
@@ -689,7 +685,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
                 //create the li
                 var thisRespect = document.createElement("li")
                 if(!defaultInput) {
-                    thisRespect.setAttribute('class', 'my-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+                    thisRespect.setAttribute('class', 'mb-2 flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     thisRespect.setAttribute('data-edit-item', '')
                     //create input
 
@@ -722,7 +718,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
                     })
                 } else {
                     //style as code block
-                    thisRespect.setAttribute('class', 'my-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+                    thisRespect.setAttribute('class', 'mb-2 flex flex-wrap items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
                     //display existing address
                     var thisDisplay = document.createElement('code')
                     thisDisplay.setAttribute('class', 'mr-2 h-9 bg-blue underline')
@@ -785,7 +781,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         function createCDInput(CDContainer, defaultInput) {
             //create the li
             var thisCD = document.createElement("li")
-            thisCD.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisCD.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisCD.setAttribute('data-edit-item', '')
             //create input
             var thisInput = document.createElement('input')
@@ -875,7 +871,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         function createProfileLinkInput(container, index, value) {
             //create the li
             var thisLink = document.createElement("div")
-            thisLink.setAttribute('class', 'my-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
+            thisLink.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisLink.setAttribute('data-edit-item', '')
             //create name
             var names = ['Social:', 'Website:', 'Gallery:']
@@ -891,7 +887,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
             var thisInput = document.createElement('input')
             thisInput.setAttribute('type', 'text')
             thisInput.setAttribute('placeholder', 'Link')
-            thisInput.setAttribute('class', 'mr-4 w-1/1 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+            thisInput.setAttribute('class', 'mr-4 w-2/3 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
             thisInput.setAttribute('data-field-edit', 'tag')
             thisLink.appendChild(thisInput)
 

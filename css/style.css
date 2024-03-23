@@ -260,9 +260,7 @@ code {
 #profile-dropdown{
   width: 15rem;
   border: 1px solid black;
-
   padding: 0;
-
   transition: 250ms ease-out;
 }
 

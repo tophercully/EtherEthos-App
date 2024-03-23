@@ -29,15 +29,18 @@
           <img class="h-full w-full object-cover" src="img/EtherEthos.png" alt="logo" />
           <span class="flex flex-col justify-end items-start text-left md:flex-row md:items-end gap-2 transition-all-250">
             <h1 class="ml-4 h-2/3 text-3xl font-bold md:ml-10 md:text-4xl transition-all-250">EtherEthos</h1>
-            <p id="chain-display" class="self-start mb-1 ml-4 text-center align-bottom md:self-center md:ml-0"></p>
+            <p id="chain-display" class="self-start mb-1 ml-4 text-center align-bottom md:self-end md:ml-0"></p>
           </span>
         </a>
         <div class="flex w-100 h-full items-center">
           <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          
-          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1 z-10">
+          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:contrast-125 lg:px-12 lg:py-1 z-10">
             <span class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden" />
+            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden"/>
+            <div id="profile-dropdown" class="absolute border-none flex-col  items-center w-full border-main bg-secondary right-0 top-[102%] overflow-hidden transition-all">
+              <div id="my-profile" class="relative flex border-none justify-center items-center w-full bg-main text-secondary text-center align-middle hover:invert overflow-hidden">My Profile</div>
+              <div id="reconnect" class="relative flex border-none justify-center items-center w-full bg-main text-secondary align-middle hover:invert overflow-hidden">Connect Other Wallet</div>
+            </div>
           </button>
         </div>
       </div>
@@ -91,7 +94,7 @@
                 <span class="flex flex-row flex-wrap items-center font-bold title-2">
                   <span>EtherEthos of </span>
                   <span data-account-name class="ml-2">[account address]</span>
-                  <img id="account-copy" src="svg/copy.svg" class="h-4 w-4 flex mx-2"/>
+                  <img id="account-copy" src="svg/copy.svg" class="h-5 w-4 flex mx-2"/>
                   <span text-content-chain></span>
                 </span>
                 <div class="my-1 flex lg:ml-6">
@@ -128,24 +131,23 @@
   
                 </section>
               
-              <div data-view-section="verification" class="w-full my-8 flex flex-col items-center lg:my-0 lg:justify-center">
+              <div data-view-section="verification" class="w-full my-8 flex flex-col items-start lg:my-0 lg:justify-center">
                 <h3 class="mb-1 md:self-end lg:mb-3 text-2xl">Authentication Challenge</h3>
                 <code class="md:self-end" data-content="verification"></code>
               </div>
-              
             </div>
 
 
         <!-- BASIC DATA-->
         <section data-module="basic" class="hidden">
           <div data-module-view class="module-view">
-            <h3 class="mb-4">Basic Data</h3>
+            <h3 class="mb-4 mt-4">Basic Data</h3>
             <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
               <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-                <div id="pfpContainer" class="flex items-center justify-center object-contain md:border-r md:border-main w-full aspect-square"></div>
-                <div class="flex flex-col justify-between items-start gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-r md:border-t md:border-main">
-                  <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="ml-2 font-normal">[id]</code></p>
-                  <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-normal bg-blue underline lg:text-xl">[contract]</a></p>
+                <div id="pfpContainer" class="flex items-center justify-center object-cover md:border-main w-full h-fit"></div>
+                <div class="flex flex-col justify-between items-start gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-t md:border-main">
+                  <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="font-normal">[id]</code></p>
+                  <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-normal bg-blue underline md:text-sm">[contract]</a></p>
                   <p class="text-base font-bold lg:text-xl" data-content="pfp-verification"></p>
                   <p class="text-base font-bold lg:text-xl"><a data-content="pfp-actual-owner" target="_blank" href="#" class="flex w-fit items-center text-base font-bold bg-blue underline lg:text-xl hidden">[actual-owner]</a></p>
                   <p class="text-base font-bold lg:text-xl hidden" data-content="blonks-info"></p>
@@ -162,14 +164,14 @@
                     <code data-content="detail" class="w-fit">[detail]</code>
                   </div>
                 </div>
-                <div id="profile-links" data-view-section="links" class="border-t p-4 lg:p-10">
+                <div id="profile-links" data-view-section="links" class="border-t p-4 lg:p-10 md:border-l">
 
                 </div>
               </div>
             </div>
             <br>
-          <hr class="mb-4" />
           </div>
+          <hr class="mb-4" />
           
 
         </section>
@@ -253,24 +255,7 @@
 
         
 
-        <!-- CUSTOM FIELD -->
-        <section data-module="custom" class="custom module mb-8 hidden">
-          <div data-module-view class="module-view">
-            <div class="">
-              <h3 class="title">Custom Data</h3>
-              <p class="subtitle">This data is intented for any customized use by a community or developer.</p>
-            </div>
-            <ul data-content-list class="mt-4 flex">
-              <li class="tag-item mr-2">
-                <code data-content-text data-content="custom" class="h-9">[custom-data]</code>
-              </li>
-            </ul>
-            <br>
-          <hr class="mb-4" />
-          </div>
-          
-          
-        </section>
+        
 
         
 
@@ -304,6 +289,25 @@
           <hr class="mb-4" />
           </div>
         </section>
+          
+        </section>
+
+        <!-- CUSTOM FIELD -->
+        <section data-module="custom" class="custom module mb-8 hidden">
+          <div data-module-view class="module-view">
+            <div class="">
+              <h3 class="title">Custom Data</h3>
+              <p class="subtitle">This data is intented for any customized use by a community or developer.</p>
+            </div>
+            <ul data-content-list class="mt-4 flex">
+              <li class="tag-item mr-2">
+                <code data-content-text data-content="custom" class="h-9">[custom-data]</code>
+              </li>
+            </ul>
+            <br>
+          <hr class="mb-4" />
+          </div>
+          
           
         </section>
       </section>
@@ -343,7 +347,6 @@
             <div data-module-edit class="w-1/2">
               <div class="w-full md:w-3/4">
                 <h3 class="text-center">Timestamp Ping</h3>
-                <p class="subtitle hidden lg:block">Timestamp of last ping (useful for apps to manage user data across layers).</p>
                 <ul data-edit-fieldset class="mt-4 flex flex-col ml-auto">
                     <button id="ping-button" data-ping-button class="rounded bg-main px-3 py-1 text-secondary">Ping the Chain</button>
                 </ul>
