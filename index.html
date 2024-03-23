@@ -142,9 +142,9 @@
         <section data-module="basic" class="hidden">
           <div data-module-view class="module-view">
             <h3 class="mb-4 mt-4">Basic Data</h3>
-            <div class="basic-data module mb-4 grid max-w-[1440pxc] border border-main md:grid-cols-[1fr,3fr]">
-              <div data-view-section="pfp" class="grid md:grid-rows-[5fr,4fr]">
-                <div id="pfpContainer" class="flex items-center justify-center object-cover md:border-main w-full h-fit"></div>
+            <div class="basic-data module mb-4 grid border border-main md:flex">
+              <div data-view-section="pfp" class="grid md:flex md:flex-col md:w-1/4">
+                <div id="pfpContainer" class="flex items-center justify-center object-contain md:border-main w-full aspect-square"></div>
                 <div class="flex flex-col justify-between items-start gap-4 p-4 md:flex-col md:items-start md:justify-start md:border-t md:border-main">
                   <p class="text-base font-bold lg:text-xl">PFP TokenID : <code data-content="pfp-id" class="font-normal">[id]</code></p>
                   <p class="text-base font-bold lg:text-xl">PFP Contract : <a data-content="pfp-contract" target="_blank" href="#" class="flex w-fit items-center text-base font-normal bg-blue underline md:text-sm">[contract]</a></p>
@@ -153,8 +153,8 @@
                   <p class="text-base font-bold lg:text-xl hidden" data-content="blonks-info"></p>
                 </div>
               </div>
-              <div class="grid md:grid-rows-[5fr,4fr]">
-                <div data-view-section="personal" class="border-t border-l p-4 md:border-t-0 lg:p-10 lg:pr-20">
+              <div class="grid md:flex md:flex-col md:w-3/4 md:border-l">
+                <div data-view-section="personal" class="border-t p-4 md:border-t-0 lg:p-10 lg:pr-20">
                   <div class="mb-6 lg:mb-3 lg:grid lg:grid-cols-[1fr,6fr]">
                     <h5 class="mb-2 lg:mb-0">Alias:</h5>
                     <code data-content="alias" class="w-fit font-bold">[alias]</code>
@@ -164,7 +164,7 @@
                     <code data-content="detail" class="w-fit">[detail]</code>
                   </div>
                 </div>
-                <div id="profile-links" data-view-section="links" class="border-t p-4 lg:p-10 md:border-l">
+                <div id="profile-links" data-view-section="links" class="border-t p-4 lg:p-10">
 
                 </div>
               </div>

@@ -19,7 +19,7 @@ let chains = [
     name: 'sepolia',
     id: 11155111,
     explorerBaseUrl: "https://sepolia.etherscan.io/address/",
-    contractAddress: "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    contractAddress: "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb"
   },
   {
     name: 'optimism',
@@ -66,7 +66,7 @@ if(chainParams.has("chain")) {
   } else {
     //Use default (mainnet)
     chainIndex = 0
-    EE_ADDRESS = "0x1f5A0f2FA2C0289a8b9639Cb18884a4d2c60c409"
+    EE_ADDRESS = "0x96E7F0a77f2272865e431F6e41B41d580AeEa0eb"
   }
 }
 const EE_Contract_Alchemy = new web3Main.eth.Contract(EE_ABI, chains[0].contractAddress);
