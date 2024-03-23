@@ -48,23 +48,26 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
         const profileLinks = profileArray[0].slice(2, 5)
         const priorityIndex = profileArray[0][5]
         //generate fields
-        function createProfileLinkInput(container, index, value) {
+        function createProfileLinkInput(container, index) {
             //create the li
             var thisLink = document.createElement("div")
-            thisLink.setAttribute('class', 'mb-2 flex items-center')
+            thisLink.setAttribute('class', 'mb-2 flex justify-evenly items-center')
             thisLink.setAttribute('data-edit-item', '')
             //create name
+            var thisNameContainer = document.createElement('div')
+            thisNameContainer.setAttribute('class', "w-1/2 h-full")
             var names = ['Social:', 'Website:', 'Gallery:']
             var thisName = document.createElement('h5')
             thisName.setAttribute('class', 'mb-2 w-52 basics')
             thisName.innerHTML = names[index]
-            thisLink.appendChild(thisName)
+            thisNameContainer.appendChild(thisName)
+            thisLink.appendChild(thisNameContainer)
 
             //create input
             var thisInput = document.createElement('input')
             thisInput.setAttribute('type', 'text')
             thisInput.setAttribute('placeholder', 'Link')
-            thisInput.setAttribute('class', 'mr-4 left-[20%] w-1/2 max-h-10 rounded-md border border-main px-3 py-3 text-md')
+            thisInput.setAttribute('class', 'mr-4 w-full max-h-10 rounded-md border border-main px-3 py-3 text-md')
             thisLink.appendChild(thisInput)
 
             //add inputs to main data form
@@ -135,7 +138,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
                 var thisIsFave = document.createElement('button')
                 thisIsFave.setAttribute('class', 'mx-2 h-7 aspect-square rounded-full p-0')
                 var isFaveImg = document.createElement('img')
-                isFaveImg.setAttribute('class', 'm-auto h-full w-full object-contain')
+                isFaveImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
                 isFaveImg.setAttribute('src', './svg/star-full.svg')
                 isFaveImg.setAttribute('alt', 'Wallet Logo')
                 thisIsFave.appendChild(isFaveImg)
@@ -225,26 +228,37 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
             var thisTag = document.createElement("li")
             thisTag.setAttribute('class', 'mb-2 flex items-center before:mr-4 before:inline-block before:h-2 before:w-2 before:rounded-full before:bg-main')
             thisTag.setAttribute('data-edit-item', '')
-            //create input
-            var thisInput = document.createElement('input')
-            thisInput.setAttribute('type', 'text')
-            thisInput.setAttribute('placeholder', 'Tag Name')
-            thisInput.setAttribute('class', 'mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
-            thisInput.setAttribute('data-field-edit', 'tag')
-            thisTag.appendChild(thisInput)
-            //create write button
-            var thisWrite = document.createElement('button')
-            thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
-            thisWrite.setAttribute('data-write', '')
-            var writeImg = document.createElement('img')
-            writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
-            writeImg.setAttribute('src', './svg/write.svg')
-            writeImg.setAttribute('alt', 'Wallet Logo')
-            thisWrite.appendChild(writeImg)
-            thisTag.appendChild(thisWrite)
+            
+            if(!defaultInput) {
+                //create input
+                var thisInput = document.createElement('input')
+                thisInput.setAttribute('type', 'text')
+                thisInput.setAttribute('placeholder', 'Tag Name')
+                thisInput.setAttribute('class', 'mr-4 max-h-10 rounded-md border border-main px-3 py-3 text-md lg:w-1/3')
+                thisInput.setAttribute('data-field-edit', 'tag')
+                thisTag.appendChild(thisInput)
+                //create write button
+                var thisWrite = document.createElement('button')
+                thisWrite.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
+                thisWrite.setAttribute('data-write', '')
+                var writeImg = document.createElement('img')
+                writeImg.setAttribute('class', 'm-auto h-3/5 w-3/5 object-contain')
+                writeImg.setAttribute('src', './svg/write.svg')
+                writeImg.setAttribute('alt', 'Wallet Logo')
+                thisWrite.appendChild(writeImg)
+                thisTag.appendChild(thisWrite)
+
+                thisWrite.addEventListener('click', ()=> {
+                    console.log('creating tag')
+                    pushTagToContract(thisInput.value)
+                  })
+            }
             //create delete button
             if(defaultInput) {
-
+                var thisInput = document.createElement('code')
+                thisInput.setAttribute('class', 'mr-2 h-9 bg-blue')
+                thisInput.innerHTML = defaultInput
+                thisTag.appendChild(thisInput)
                 var thisDelete = document.createElement('button')
                 thisDelete.setAttribute('class', 'mx-2 h-7 w-7 rounded-full bg-main p-0')
                 thisDelete.setAttribute('data-delete', '')
@@ -269,14 +283,7 @@ function prepopulate(profileArray, verificationData, accountPermission, chainSca
               thisInput.value = defaultInput
             }
   
-            thisWrite.addEventListener('click', ()=> {
-              console.log('updating tag')
-              if(defaultInput) {
-                updateTagToContract(index, thisInput.value)
-              } else {
-                pushTagToContract(thisInput.value)
-              }
-            })
+            
             
           }
           //populate all existing

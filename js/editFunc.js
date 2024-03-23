@@ -236,25 +236,6 @@ const pushTagToContract = async (value) => {
         error = true;
     }
 }
-const updateTagToContract = async (index, value) => {
-    try {
-        createStatusMsg()
-        await EE_Contract_User.methods.pushTag(currentAccount, index, value).send(
-          {
-            from: currentAccount
-          },
-          function (err, res) {
-            if (err) {
-              console.log(err);
-              return;
-            }
-          }
-        );
-    } catch (errorMessage) {
-        createErrorMsg(errorMessage.message)
-        error = true;
-    }
-}
 const deleteTagToContract = async (index) => {
     try {
         createStatusMsg()
