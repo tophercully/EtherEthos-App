@@ -35,13 +35,12 @@
         </a>
         <div class="flex w-100 h-full items-center">
           <a href="./faq.html" class="ml-4 mr-4 underline lg:px-10 lg:font-bold">FAQ</a>
-          
-          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:opacity-80 lg:px-12 lg:py-1 z-10">
+          <button data-connect class="h-full rounded-none bg-main p-3 transition-all hover:contrast-125 lg:px-12 lg:py-1 z-10">
             <span class="absolute hidden h-full text-[22px] font-bold text-secondary md:relative md:flex md:items-center">CONNECT</span>
-            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden" />
-            <div id="profile-dropdown" class="absolute h-0 flex flex-col items-center w-full bg-secondary right-0 overflow-hidden">
-              <button id="my-profile" class="w-full h-[5rem] bg-main text-secondary text-center hover-invert overflow-hidden">My Profile</button>
-              <button id="reconnect" class="w-full h-[5rem] bg-main text-secondary hover:invert overflow-hidden">Connect Other Wallet</button>
+            <img src="./svg/wallet.svg" alt="Wallet logo" class="h-full w-full md:hidden"/>
+            <div id="profile-dropdown" class="absolute border-none flex-col  items-center w-full border-main bg-secondary right-0 top-[102%] overflow-hidden transition-all">
+              <div id="my-profile" class="relative flex border-none justify-center items-center w-full bg-main text-secondary text-center align-middle hover:invert overflow-hidden">My Profile</div>
+              <div id="reconnect" class="relative flex border-none justify-center items-center w-full bg-main text-secondary align-middle hover:invert overflow-hidden">Connect Other Wallet</div>
             </div>
           </button>
         </div>
@@ -119,7 +118,7 @@
       </section>
     </main>
   </body>
-  <script src="js/DevAPIKeys.js"></script>
+  <script src="LockedAPIKeys.js"></script>
   <script src="js/web3.min.js"></script>
   <script src="js/EE_ABI.js"></script>
   <script src="js/NFT_ABI.js"></script>

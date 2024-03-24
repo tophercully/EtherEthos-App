@@ -1,8 +1,8 @@
 let currentChainId = null;
-const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${window.ENV.ALCHEMY_MAIN}`);
-const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${window.ENV.ALCHEMY_SEPOLIA}`);
-const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${window.ENV.ALCHEMY_OPTIMISM}`);
-const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${window.ENV.ALCHEMY_BASE}`);
+const web3Main = new Web3(`https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_MAIN}`);
+const web3Sepolia = new Web3(`https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_SEPOLIA}`);
+const web3Optimism = new Web3(`https://opt-mainnet.g.alchemy.com/v2/${ALCHEMY_OPTIMISM}`);
+const web3Base = new Web3(`https://base-mainnet.g.alchemy.com/v2/${ALCHEMY_BASE}`);
 let currentChain = null;
 let currentAccount = null;
 window.sessionStorage.setItem('chainIDLoaded', false)
