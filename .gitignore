@@ -13,4 +13,3 @@ dist/
 .env
 .DS_Store
 DevAPIKeys.js
-LockedAPIKeys.js
